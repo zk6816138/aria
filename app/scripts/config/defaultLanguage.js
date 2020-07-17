@@ -273,14 +273,15 @@
             'Maximize': 'Maximize',
             'Restore Down': 'Restore Down',
             'Runtime Environment': 'Runtime Environment',
-            'Reload AriaNg Native': 'Reload AriaNg Native',
             'Create New Task': 'Create New Task',
             'menu': {
-                'Quit': 'Quit AriaNg Native',
+                'Quit': 'Quit AriaNg',
             },
             'tray': {
-                'ShowAriaNgNative': '&Show AriaNg Native',
+                'ShowAriaNgNative': '&Show AriaNg',
                 'Exit': 'E&xit',
+                'ShowFloatWindow': 'Show &Float Window',
+                'HideFloatWindow': 'Hide &Float Window'
             },
             'error': {
                 'unknown': 'Unknown error occurred.',

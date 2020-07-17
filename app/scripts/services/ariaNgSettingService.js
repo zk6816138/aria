@@ -417,6 +417,9 @@
 
                 return protocol + '://' + rpcHost + ':' + rpcPort + '/' + rpcInterface;
             },
+            getCurrentRpcPort: function(){
+                return getOption('rpcPort');
+            },
             getCurrentRpcHttpMethod: function () {
                 return getOption('httpMethod');
             },

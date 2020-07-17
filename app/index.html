@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" name="viewport">
     <meta name="description" content="AriaNg, a modern web frontend making aria2 easier to use.">
     <meta name="format-detection" content="telephone=no"/>
-    <title>AriaNg Native</title>
+    <title>AriaNg</title>
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="../node_modules/admin-lte/dist/css/AdminLTE.min.css"/>
@@ -50,23 +50,8 @@
             <div class="logo-mini">AriaNg</div>
             <div class="logo-lg" title="AriaNg {{ariaNgVersion}}">
                 <div class="dropdown">
-                    <span class="dropdown-toggle" data-toggle="dropdown">
+                    <span class="dropdown-toggle" style="-webkit-app-region: no-drag" data-toggle="dropdown">
                         <span class="logo-lg-title">AriaNg</span><i class="fa fa-caret-right fa-right-bottom fa-rotate-45 fa-half" aria-hidden="true"></i>
-                    </span>
-                    <ul class="dropdown-menu dropdown-menu-right rpcselect-dropdown" role="menu">
-                        <li ng-repeat="setting in rpcSettings" ng-class="{'active': setting.isDefault}">
-                            <a class="pointer-cursor" ng-click="switchRpcSetting(setting)">
-                                <span ng-bind="(setting.rpcAlias ? setting.rpcAlias : setting.rpcHost + ':' + setting.rpcPort)">RPC</span>
-                                <i class="fa" ng-class="{'fa-check': setting.isDefault}"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="current-rpc pointer-cursor">
-                <div class="dropdown">
-                    <span class="dropdown-toggle" data-toggle="dropdown">
-                        <span ng-bind="(currentRpcProfile.rpcAlias ? currentRpcProfile.rpcAlias : currentRpcProfile.rpcHost + ':' + currentRpcProfile.rpcPort)">RPC</span><i class="fa fa-caret-right fa-right-bottom fa-rotate-45 fa-half" aria-hidden="true"></i>
                     </span>
                     <ul class="dropdown-menu dropdown-menu-right rpcselect-dropdown" role="menu">
                         <li ng-repeat="setting in rpcSettings" ng-class="{'active': setting.isDefault}">

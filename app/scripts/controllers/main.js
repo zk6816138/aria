@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').controller('MainController', ['$rootScope', '$scope', '$route', '$window', '$location', '$document', '$interval', 'clipboard', 'aria2RpcErrors', 'ariaNgCommonService', 'ariaNgNotificationService', 'ariaNgLocalizationService', 'ariaNgSettingService', 'ariaNgMonitorService', 'ariaNgTitleService', 'aria2TaskService', 'aria2SettingService', 'ariaNgNativeElectronService', function ($rootScope, $scope, $route, $window, $location, $document, $interval, clipboard, aria2RpcErrors, ariaNgCommonService, ariaNgNotificationService, ariaNgLocalizationService, ariaNgSettingService, ariaNgMonitorService, ariaNgTitleService, aria2TaskService, aria2SettingService, ariaNgNativeElectronService) {
+    angular.module('ariaNg').controller('MainController', ['$rootScope', '$scope', '$route', '$window', '$location', '$document', '$interval', 'clipboard', 'aria2RpcErrors', 'ariaNgCommonService', 'ariaNgNotificationService', 'ariaNgLocalizationService', 'ariaNgSettingService', 'ariaNgMonitorService', 'ariaNgTitleService', 'aria2TaskService', 'aria2SettingService', 'ariaNgNativeElectronService','$filter', function ($rootScope, $scope, $route, $window, $location, $document, $interval, clipboard, aria2RpcErrors, ariaNgCommonService, ariaNgNotificationService, ariaNgLocalizationService, ariaNgSettingService, ariaNgMonitorService, ariaNgTitleService, aria2TaskService, aria2SettingService, ariaNgNativeElectronService,$filter) {
         var pageTitleRefreshPromise = null;
         var globalStatRefreshPromise = null;
 
@@ -24,6 +24,12 @@
 
                 if (response.success) {
                     $scope.globalStat = response.data;
+                    var sendData = {
+                        downloadSpeed: $filter('readableVolume')($scope.globalStat.downloadSpeed)+'/s',
+                        uploadSpeed: $filter('readableVolume')($scope.globalStat.uploadSpeed)+'/s',
+                        numActive: $scope.globalStat.numActive
+                    }
+                    ariaNgNativeElectronService.sendDownloadSpeedToMainProcess(sendData);
                     ariaNgMonitorService.recordGlobalStat(response.data);
                 }
 

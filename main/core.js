@@ -2,6 +2,7 @@
 
 let core = {
     mainWindow: null,
+    floatWindow: null,
     isConfirmExit: false
 };
 

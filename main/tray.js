@@ -5,6 +5,8 @@ const path = require('path');
 const electron = require('electron');
 
 const core = require('./core');
+const config = require('./config');
+const ipc = require('./ipc')
 
 const app = electron.app;
 const Menu = electron.Menu;
@@ -16,7 +18,7 @@ let iconPath = path.join(__dirname, '..', 'assets', 'AriaNg.ico');
 let init = function () {
     if (instance === null && os.platform() === 'win32') {
         instance = new Tray(iconPath);
-        instance.setToolTip('AriaNg Native');
+        instance.setToolTip('AriaNg');
         instance.setContextMenu(Menu.buildFromTemplate([
             {
                 label: 'Quit', click: function () {
@@ -25,13 +27,9 @@ let init = function () {
                 }
             }
         ]));
-        instance.on('double-click', () => {
-            if (!core.mainWindow.isVisible()) {
-                core.mainWindow.show();
-                core.mainWindow.focus();
-            } else {
-                core.mainWindow.hide();
-            }
+        instance.on('click', () => {
+            core.mainWindow.show();
+            core.mainWindow.focus();
         });
     }
 };
@@ -42,6 +40,20 @@ let setContextMenu = function (context) {
             {
                 label: context.labels.ShowAriaNgNative, click: function () {
                     core.mainWindow.show();
+                }
+            },
+            {
+                label: context.labels.ShowFloatWindow, click: function () {
+                    if (core.floatWindow.isVisible()){
+                        core.floatWindow.hide();
+                        config.showFloat = false;
+                    }
+                    else {
+                        core.floatWindow.show();
+                        config.showFloat = true;
+                    }
+                    config.save('showFloat');
+                    ipc.showFloatWindowMessage();
                 }
             },
             {

@@ -491,6 +491,10 @@
     background-color: #f9f9f9;
 }
 
+.progress{
+    background-color: #eee;
+}
+
 .skin-aria-ng .task-table > .task-table-body > div.row:hover {
     background-color: #f5f5f5;
 }
@@ -528,4 +532,15 @@
 /* new-task-table */
 .skin-aria-ng .new-task-table {
     background-color: #fff;
+}
+
+.main-header .logo {
+    line-height: 74px;
+}
+.sidebar-menu>li .label{
+    margin-top: 2px;
+}
+
+#quickSettingModal,.sweet-overlay,#import-settings-modal,#export-settings-modal{
+    -webkit-app-region: no-drag;
 }

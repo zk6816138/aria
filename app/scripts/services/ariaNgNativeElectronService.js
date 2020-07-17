@@ -14,6 +14,7 @@
         var menu = remote.require('./menu') || {};
         var tray = remote.require('./tray') || {};
         var localfs = remote.require('./localfs') || {};
+        var option = remote.require('./option') || {};
 
         var getSetting = function (item) {
             if (!remote || !remote.getGlobal) {
@@ -54,6 +55,9 @@
         };
 
         return {
+            writeAria2cOption: function(k,v){
+                return option.write(k,v);
+            },
             getRuntimeEnvironment: function () {
                 if (!remote.process || !remote.process.versions) {
                     return null;
@@ -114,10 +118,10 @@
                 return localfs.isExists(fullpath);
             },
             openProjectLink: function () {
-                return shell.openExternal && shell.openExternal('https://github.com/mayswind/AriaNg-Native');
+                // return shell.openExternal && shell.openExternal('https://github.com/mayswind/AriaNg-Native');
             },
             openProjectReleaseLink: function () {
-                return shell.openExternal && shell.openExternal('https://github.com/mayswind/AriaNg-Native/releases');
+                // return shell.openExternal && shell.openExternal('https://github.com/mayswind/AriaNg-Native/releases');
             },
             openFileInDirectory: function (dir, filename) {
                 var fullpath = localfs.getFullPath(dir, filename);
@@ -134,6 +138,9 @@
             },
             onMainProcessShowError: function (callback) {
                 onMainProcessMessage('show-error', callback);
+            },
+            onMainProcessShowFloatWindow: function(callback){
+                onMainProcessMessage('show-float-window', callback);
             },
             onMainProcessNewTaskFromFile: function (callback) {
                 onMainProcessMessage('new-task-from-file', callback);
@@ -156,6 +163,9 @@
             sendNewDropTextMessageToMainProcess: function (message) {
                 sendMessageToMainProcess('new-drop-text', message);
             },
+            sendDownloadSpeedToMainProcess: function (message) {
+                sendMessageToMainProcess('download-speed', message);
+            },
             setApplicationMenu: function () {
                 if (menu.setApplicationMenu) {
                     menu.setApplicationMenu({
@@ -170,6 +180,7 @@
                     tray.setContextMenu({
                         labels: {
                             ShowAriaNgNative: ariaNgLocalizationService.getLocalizedText('tray.ShowAriaNgNative'),
+                            ShowFloatWindow: ariaNgLocalizationService.getLocalizedText(config.showFloat?'tray.HideFloatWindow':'tray.ShowFloatWindow'),
                             Exit: ariaNgLocalizationService.getLocalizedText('tray.Exit')
                         }
                     });

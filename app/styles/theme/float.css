@@ -1,0 +1,64 @@
+body{
+    padding: 0;
+    margin: 0;
+    background: transparent;
+}
+section,.drag{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    transform: translate(-50%,-50%);
+}
+.drag{
+    -webkit-app-region: drag;
+}
+.wrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,.5);
+    backface-visibility: hidden;
+    transition: all .6s ease;
+}
+.logo-wrapper{
+    background-color: rgba(55,64,79, 0.85);
+    transform: rotateY(0deg);
+    background-image: url("../../../assets/float.png");
+    background-size: 85% 85%;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.speed-wrapper{
+    background: rgb(55,64,79);
+    transform: rotateY(180deg);
+    overflow: hidden;
+}
+.speed-wrapper span{
+    color: white;
+    font-size: 11px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+.speed-wrapper span.s1{
+    bottom: 11px;
+}
+.downloading .logo-wrapper{
+    transform: rotateY(180deg);
+}
+.downloading .speed-wrapper{
+    transform: rotateY(0deg);
+}
+#speed-echart{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 46px;
+    height: 46px;
+    background: #1296DB;
+}

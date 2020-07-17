@@ -44,6 +44,10 @@ let showErrorMessage = function (message) {
     core.mainWindow.webContents.send('show-error', message);
 };
 
+let showFloatWindowMessage = function(){
+    core.mainWindow.webContents.send('show-float-window');
+}
+
 let onNewDropFile = function (callback) {
     ipcMain.on('new-drop-file', callback);
 };
@@ -51,6 +55,12 @@ let onNewDropFile = function (callback) {
 let onNewDropText = function (callback) {
     ipcMain.on('new-drop-text', callback);
 };
+
+let onDownloadSpeed = function(){
+    ipcMain.on('download-speed', function (e,arg) {
+        core.floatWindow.webContents.send('download-speed',arg);
+    });
+}
 
 let isContainsSupportedFileArg = function (arg) {
     if (!arg) {
@@ -134,5 +144,7 @@ module.exports = {
     newTaskFromFile: newTaskFromFile,
     asyncNewTaskFromFile: asyncNewTaskFromFile,
     newTaskFromText: newTaskFromText,
-    asyncNewTaskFromText: asyncNewTaskFromText
+    asyncNewTaskFromText: asyncNewTaskFromText,
+    showFloatWindowMessage: showFloatWindowMessage,
+    onDownloadSpeed: onDownloadSpeed
 };

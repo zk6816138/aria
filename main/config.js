@@ -12,7 +12,7 @@ const userSettingsSchema = {
     },
     height: {
         type: 'number',
-        minimum: 400
+        minimum: 600
     },
     maximized: {
         type: 'boolean'
@@ -25,6 +25,9 @@ const userSettingsSchema = {
     },
     pos_y: {
         type: 'number'
+    },
+    showFloat: {
+        type: 'boolean'
     }
 };
 
@@ -32,13 +35,16 @@ const userSettingsStore = new Store({userSettingsSchema});
 
 let config = {
     lang: userSettingsStore.get('lang'),
-    width: userSettingsStore.get('width') || 950,
-    height: userSettingsStore.get('height') || 600,
+    width: userSettingsStore.get('width') || 1200,
+    height: userSettingsStore.get('height') || 800,
     x: userSettingsStore.get('x'),
     y: userSettingsStore.get('y'),
     maximized: !!userSettingsStore.get('maximized'),
     defaultPosition: userSettingsStore.get('defaultPosition') || 'last-position',
     minimizedToTray: userSettingsStore.get('minimizedToTray', true),
+    showFloat: userSettingsStore.get('showFloat',true),
+    floatX: userSettingsStore.get('floatX'),
+    floatY: userSettingsStore.get('floatY'),
     save: function (item) {
         if (item && this[item] != undefined) {
             userSettingsStore.set(item, this[item]);

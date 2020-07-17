@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').controller('Aria2SettingsController', ['$rootScope', '$scope', '$location', 'ariaNgConstants', 'ariaNgLocalizationService', 'aria2SettingService', function ($rootScope, $scope, $location, ariaNgConstants, ariaNgLocalizationService, aria2SettingService) {
+    angular.module('ariaNg').controller('Aria2SettingsController', ['$rootScope', '$scope', '$location', 'ariaNgConstants', 'ariaNgLocalizationService', 'aria2SettingService','ariaNgNativeElectronService', function ($rootScope, $scope, $location, ariaNgConstants, ariaNgLocalizationService, aria2SettingService, ariaNgNativeElectronService) {
         var location = $location.path().substring($location.path().lastIndexOf('/') + 1);
 
         $scope.context = {
@@ -21,6 +21,7 @@
         $scope.setGlobalOption = function (key, value, optionStatus) {
             return aria2SettingService.setGlobalOption(key, value, function (response) {
                 if (response.success && response.data === 'OK') {
+                    ariaNgNativeElectronService.writeAria2cOption(key,value);
                     optionStatus.setSuccess();
                 } else {
                     optionStatus.setFailed(response.data.message);

@@ -130,3 +130,6 @@ Temporary Items
 .cache
 
 .vscode/
+
+aria2.conf
+aria2.session

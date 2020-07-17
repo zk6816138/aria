@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AriaNg 悬浮窗</title>
+    <link rel="stylesheet" href="styles/theme/float.css">
+</head>
+<body>
+    <section>
+        <div class="wrapper logo-wrapper"></div>
+        <div class="wrapper speed-wrapper">
+            <div id="speed-echart"></div>
+            <span class="s1">0</span>
+            <span class="s2">B/s</span>
+        </div>
+    </section>
+    <div class="drag"></div>
+</body>
+<script>
+    if (window.require) {
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+    }
+</script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/echarts/dist/echarts.common.min.js"></script>
+<script src="scripts/core/float.js"></script>
+</html>

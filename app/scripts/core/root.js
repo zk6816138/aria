@@ -424,6 +424,10 @@
             ariaNgLocalizationService.showError(message);
         });
 
+        ariaNgNativeElectronService.onMainProcessShowFloatWindow(function () {
+            ariaNgNativeElectronService.setTrayMenu();
+        });
+
         ariaNgSettingService.setDebugMode(ariaNgNativeElectronService.isDevMode());
 
         ariaNgSettingService.onApplicationCacheUpdated(function () {

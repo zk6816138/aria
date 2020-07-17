@@ -12,14 +12,14 @@ let init = function () {
     if (!core.mainWindow) {
         return;
     }
-    
+
     if (os.platform() === 'darwin') {
         let menu = Menu.buildFromTemplate([
             {
                 label: app.getName(),
                 submenu: [
                     {
-                        label: 'Quit AriaNg Native',
+                        label: 'Quit AriaNg',
                         role: 'quit',
                         click: function () {
                             core.isConfirmExit = true;

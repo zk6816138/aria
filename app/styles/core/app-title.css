@@ -6,10 +6,6 @@
     height: 74px;
 }
 
-.custom-app-title .main-header .logo .logo-lg i.fa-caret-right {
-    display: none;
-}
-
 .custom-app-title .main-header .current-rpc {
     font-size: 14px;
     line-height: 2px;

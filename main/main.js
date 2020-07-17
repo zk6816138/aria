@@ -11,13 +11,16 @@ const cmd = require('./cmd');
 const ipc = require('./ipc');
 const menu = require('./menu');
 const tray = require('./tray');
+const aria2c = require('./aria2c');
+const float = require('./float');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 const singletonLock = app.requestSingleInstanceLock();
+const isRun = aria2c.isRunning();
 
-if (!singletonLock) {
+if (!singletonLock || isRun) {
     app.quit();
 }
 
@@ -36,6 +39,10 @@ global.settings = {
 
 if (!app.isPackaged) {
     global.settings.isDevMode = true;
+}
+
+if (!isRun){
+    aria2c.start();
 }
 
 app.setAppUserModelId(pkgfile.appId);
@@ -87,11 +94,11 @@ app.on('second-instance', (event, argv, workingDirectory) => {
 
 app.on('ready', () => {
     core.mainWindow = new BrowserWindow({
-        title: 'AriaNg Native',
+        title: 'AriaNg',
         width: config.width,
         height: config.height,
         minWidth: 800,
-        minHeight: 400,
+        minHeight: 600,
         fullscreenable: false,
         frame: !global.settings.useCustomAppTitle,
         show: false,
@@ -153,14 +160,15 @@ app.on('ready', () => {
         });
     }
 
-    if (global.settings.isDevMode) {
+    // if (global.settings.isDevMode) {
         electronLocalshortcut.register(core.mainWindow, 'F12', () => {
             core.mainWindow.webContents.openDevTools();
         });
-    }
+    // }
 
     menu.init();
     tray.init();
+    float.init(core.mainWindow);
 
     if (ipc.isContainsSupportedFileArg(filePathInCommandLine)) {
         ipc.asyncNewTaskFromFile(filePathInCommandLine);
@@ -257,4 +265,6 @@ app.on('ready', () => {
             ipc.navigateToNewTask();
         }
     });
+
+    ipc.onDownloadSpeed();
 });

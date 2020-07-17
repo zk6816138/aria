@@ -26,7 +26,7 @@
                             <span translate>AriaNg Version</span>
                         </div>
                         <div class="setting-value col-sm-8">
-                            <span ng-bind="'AriaNg Native ' + context.ariaNgNativeVersion + ' (AriaNg ' + context.ariaNgVersion + ')'"></span>
+                            <span ng-bind="'AriaNg ' + context.ariaNgNativeVersion"></span>
                             <button class="btn btn-xs btn-default" ng-click="checkUpdate()" ng-disabled="context.isCurrentLatestVersion" promise-btn>
                                 <span ng-bind="(context.isCurrentLatestVersion ? 'Latest Version' : 'Check Update') | translate" translate>Check Update</span>
                             </button>
@@ -247,7 +247,7 @@
                             <span translate>Clear Settings History</span>
                         </button>
                         <button class="btn btn-xs btn-default" ng-click="reloadApp()">
-                            <span translate>Reload AriaNg Native</span>
+                            <span translate>Reload AriaNg</span>
                         </button>
                     </div>
                 </div>

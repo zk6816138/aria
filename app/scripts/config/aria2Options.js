@@ -803,7 +803,8 @@
             required: true
         },
         'save-session': {
-            type: 'string'
+            type: 'string',
+            readonly: true,
         },
         'save-session-interval': {
             type: 'integer',

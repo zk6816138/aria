@@ -261,3 +261,6 @@ td {
 .fade-in.ng-enter.ng-enter-active {
     opacity:1;
 }
+textarea{
+    resize: none;
+}
