@@ -59,7 +59,6 @@
     "bootstrap": "3.4.1",
     "bootstrap-contextmenu": "^1.0.0",
     "echarts": "3.8.5",
-    "electron-context-menu": "^2.2.0",
     "electron-localshortcut": "^3.2.1",
     "electron-store": "^3.3.0",
     "font-awesome": "^4.7.0",

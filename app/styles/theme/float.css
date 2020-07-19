@@ -3,16 +3,14 @@ body{
     margin: 0;
     background: transparent;
 }
-section,.drag{
+section{
+    -webkit-app-region: drag;
     position: absolute;
     top: 50%;
     left: 50%;
     width: 48px;
     height: 48px;
     transform: translate(-50%,-50%);
-}
-.drag{
-    -webkit-app-region: drag;
 }
 .wrapper{
     position: absolute;
@@ -60,5 +58,4 @@ section,.drag{
     transform: translate(-50%,-50%);
     width: 46px;
     height: 46px;
-    background: #1296DB;
 }

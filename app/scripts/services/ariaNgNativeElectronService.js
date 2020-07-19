@@ -15,6 +15,8 @@
         var tray = remote.require('./tray') || {};
         var localfs = remote.require('./localfs') || {};
         var option = remote.require('./option') || {};
+        var float = remote.require('./float') || {};
+        var core = remote.require('./core') || {};
 
         var getSetting = function (item) {
             if (!remote || !remote.getGlobal) {
@@ -113,6 +115,7 @@
             setMainWindowLanguage: function () {
                 this.setApplicationMenu();
                 this.setTrayMenu();
+                this.setFloatContextMenu();
             },
             isLocalFSExists: function (fullpath) {
                 return localfs.isExists(fullpath);
@@ -139,8 +142,8 @@
             onMainProcessShowError: function (callback) {
                 onMainProcessMessage('show-error', callback);
             },
-            onMainProcessShowFloatWindow: function(callback){
-                onMainProcessMessage('show-float-window', callback);
+            onMainProcessUpdateContextMenu: function(callback){
+                onMainProcessMessage('update-context-menu', callback);
             },
             onMainProcessNewTaskFromFile: function (callback) {
                 onMainProcessMessage('new-task-from-file', callback);
@@ -179,7 +182,18 @@
                 if (tray.setContextMenu) {
                     tray.setContextMenu({
                         labels: {
-                            ShowAriaNgNative: ariaNgLocalizationService.getLocalizedText('tray.ShowAriaNgNative'),
+                            ShowAriaNgNative: ariaNgLocalizationService.getLocalizedText(core.mainWindow.isVisible()?'tray.HideAriaNgNative':'tray.ShowAriaNgNative'),
+                            ShowFloatWindow: ariaNgLocalizationService.getLocalizedText(config.showFloat?'tray.HideFloatWindow':'tray.ShowFloatWindow'),
+                            Exit: ariaNgLocalizationService.getLocalizedText('tray.Exit')
+                        }
+                    });
+                }
+            },
+            setFloatContextMenu: function () {
+                if (float.setFloatContextMenu) {
+                    float.setFloatContextMenu({
+                        labels: {
+                            ShowAriaNgNative: ariaNgLocalizationService.getLocalizedText(core.mainWindow.isVisible()?'tray.HideAriaNgNative':'tray.ShowAriaNgNative'),
                             ShowFloatWindow: ariaNgLocalizationService.getLocalizedText(config.showFloat?'tray.HideFloatWindow':'tray.ShowFloatWindow'),
                             Exit: ariaNgLocalizationService.getLocalizedText('tray.Exit')
                         }

@@ -27,7 +27,8 @@
                     var sendData = {
                         downloadSpeed: $filter('readableVolume')($scope.globalStat.downloadSpeed)+'/s',
                         uploadSpeed: $filter('readableVolume')($scope.globalStat.uploadSpeed)+'/s',
-                        numActive: $scope.globalStat.numActive
+                        numActive: $scope.globalStat.numActive,
+                        originalSpeed: $scope.globalStat.downloadSpeed
                     }
                     ariaNgNativeElectronService.sendDownloadSpeedToMainProcess(sendData);
                     ariaNgMonitorService.recordGlobalStat(response.data);

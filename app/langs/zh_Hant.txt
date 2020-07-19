@@ -275,6 +275,7 @@ Quit=退出 AriaNg
 
 [tray]
 ShowAriaNgNative=顯示 AriaNg (&S)
+HideAriaNgNative=隱藏 AriaNg (&S)
 Exit=退出 (&X)
 ShowFloatWindow=顯示懸浮窗 (&H)
 HideFloatWindow=隱藏懸浮窗 (&H)

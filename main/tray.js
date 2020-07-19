@@ -39,7 +39,13 @@ let setContextMenu = function (context) {
         instance.setContextMenu(Menu.buildFromTemplate([
             {
                 label: context.labels.ShowAriaNgNative, click: function () {
-                    core.mainWindow.show();
+                    if (core.mainWindow.isVisible()) {
+                        core.mainWindow.hide();
+                    }
+                    else {
+                        core.mainWindow.show();
+                    }
+                    ipc.updateContextMenu();
                 }
             },
             {
@@ -53,7 +59,7 @@ let setContextMenu = function (context) {
                         config.showFloat = true;
                     }
                     config.save('showFloat');
-                    ipc.showFloatWindowMessage();
+                    ipc.updateContextMenu();
                 }
             },
             {

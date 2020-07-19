@@ -5,9 +5,12 @@ const core = require('./core');
 const electronLocalshortcut = require('electron-localshortcut');
 const url = require('url');
 const path = require('path');
-const contextMenu = require('electron-context-menu');
-
+const ipc = require('./ipc')
+const app = electron.app;
+const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
+
+let menu = null;
 
 let getIndexUrl = function () {
     return url.format({
@@ -17,9 +20,9 @@ let getIndexUrl = function () {
     });
 };
 
-let init = function (parentWindow) {
+let init = function (parentWindow=null) {
     core.floatWindow = new BrowserWindow({
-        parent: new BrowserWindow({parent:parentWindow,show: false}),
+        parent: parentWindow ? new BrowserWindow({parent:parentWindow,show: false}) : null,
         title: 'AriaNg 悬浮窗',
         width: 64,
         height: 64,
@@ -37,15 +40,12 @@ let init = function (parentWindow) {
         }
     })
 
-    contextMenu({
-        prepend: (params, browserWindow) => [{
-            label: 'Rainbow',
-        }]
-    });
-
-    core.floatWindow.hookWindowMessage(0x116,function (e) {
+    core.floatWindow.hookWindowMessage(0x116,()=>{
         core.floatWindow.setEnabled(false);
-        setTimeout(function () {
+        if (menu){
+            menu.popup(core.floatWindow)
+        }
+        setTimeout(()=>{
             core.floatWindow.setEnabled(true);
         },100)
     })
@@ -55,14 +55,20 @@ let init = function (parentWindow) {
         config.floatX = displays[0].workAreaSize.width*0.9;
         config.floatY = displays[0].workAreaSize.height - displays[0].workAreaSize.height *0.9;
     }
+
     core.floatWindow.setPosition(config.floatX,config.floatY);
 
     core.floatWindow.loadURL(getIndexUrl());
-    core.floatWindow.setAlwaysOnTop(true,'screen-saver');
 
     core.floatWindow.once('ready-to-show',()=>{
         if (config.showFloat){
             core.floatWindow.show();
+        }
+    })
+
+    core.floatWindow.on('show', () => {
+        if (!core.floatWindow.isAlwaysOnTop()){
+            core.floatWindow.setAlwaysOnTop(true,'screen-saver');
         }
     })
 
@@ -89,6 +95,46 @@ let init = function (parentWindow) {
     });
 }
 
+let setFloatContextMenu = function(context){
+    menu = Menu.buildFromTemplate([
+        {
+            label: context.labels.ShowAriaNgNative, click: function () {
+                if (core.mainWindow.isVisible()) {
+                    core.mainWindow.hide();
+                }
+                else {
+                    core.mainWindow.show();
+                }
+                ipc.updateContextMenu();
+            }
+        },
+        {
+            label: context.labels.ShowFloatWindow, click: function () {
+                if (core.floatWindow.isVisible()){
+                    core.floatWindow.hide();
+                    config.showFloat = false;
+                }
+                else {
+                    core.floatWindow.show();
+                    config.showFloat = true;
+                }
+                config.save('showFloat');
+                ipc.updateContextMenu();
+            }
+        },
+        {
+            type: 'separator'
+        },
+        {
+            label: context.labels.Exit, click: function () {
+                core.isConfirmExit = true;
+                app.quit();
+            }
+        }
+    ]);
+}
+
 module.exports = {
-    init: init
+    init: init,
+    setFloatContextMenu: setFloatContextMenu
 }

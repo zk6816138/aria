@@ -279,6 +279,7 @@
             },
             'tray': {
                 'ShowAriaNgNative': '&Show AriaNg',
+                'HideAriaNgNative': '&Hide AriaNg',
                 'Exit': 'E&xit',
                 'ShowFloatWindow': 'Show &Float Window',
                 'HideFloatWindow': 'Hide &Float Window'

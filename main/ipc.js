@@ -44,8 +44,8 @@ let showErrorMessage = function (message) {
     core.mainWindow.webContents.send('show-error', message);
 };
 
-let showFloatWindowMessage = function(){
-    core.mainWindow.webContents.send('show-float-window');
+let updateContextMenu = function(){
+    core.mainWindow.webContents.send('update-context-menu');
 }
 
 let onNewDropFile = function (callback) {
@@ -145,6 +145,6 @@ module.exports = {
     asyncNewTaskFromFile: asyncNewTaskFromFile,
     newTaskFromText: newTaskFromText,
     asyncNewTaskFromText: asyncNewTaskFromText,
-    showFloatWindowMessage: showFloatWindowMessage,
+    updateContextMenu: updateContextMenu,
     onDownloadSpeed: onDownloadSpeed
 };

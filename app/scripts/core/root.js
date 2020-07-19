@@ -424,8 +424,9 @@
             ariaNgLocalizationService.showError(message);
         });
 
-        ariaNgNativeElectronService.onMainProcessShowFloatWindow(function () {
+        ariaNgNativeElectronService.onMainProcessUpdateContextMenu(function () {
             ariaNgNativeElectronService.setTrayMenu();
+            ariaNgNativeElectronService.setFloatContextMenu();
         });
 
         ariaNgSettingService.setDebugMode(ariaNgNativeElectronService.isDevMode());

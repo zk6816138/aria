@@ -107,6 +107,13 @@ app.on('ready', () => {
         }
     });
 
+    core.mainWindow.hookWindowMessage(0x116,()=>{
+        core.mainWindow.setEnabled(false);
+        setTimeout(()=>{
+            core.mainWindow.setEnabled(true);
+        },100)
+    })
+
     let displays = electron.screen.getAllDisplays();
     let isLastPositionInScreen = false;
 
@@ -168,7 +175,7 @@ app.on('ready', () => {
 
     menu.init();
     tray.init();
-    float.init(core.mainWindow);
+    float.init();
 
     if (ipc.isContainsSupportedFileArg(filePathInCommandLine)) {
         ipc.asyncNewTaskFromFile(filePathInCommandLine);
@@ -205,11 +212,15 @@ app.on('ready', () => {
         if (isEnableCloseToHide() && !core.isConfirmExit) {
             event.preventDefault();
             core.mainWindow.hide();
+            ipc.updateContextMenu();
             event.returnValue = false;
         }
     });
 
     core.mainWindow.on('closed', () => {
+        if (core.floatWindow && !core.floatWindow.isDestroyed() && !core.floatWindow.getParentWindow()){
+            core.floatWindow.destroy();
+        }
         try {
             if (!config.maximized) {
                 if (config.width > 0) {
