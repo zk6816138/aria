@@ -26,3 +26,6 @@
 .settings-table .new-task-filter-title {
     padding-top: 6px;
 }
+.new-task-filter-title label,.new-task-filter-title input{
+    cursor: pointer!important;
+}

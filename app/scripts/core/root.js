@@ -254,13 +254,6 @@
 
                 return false;
             },
-            clearSelected: function(e){
-                if (e.target.id != 'content-body')return;
-                var location = $location.path().substring(1);
-                if (location=='downloading' || location=='waiting' || location=='stopped') {
-                    this.selected = {};
-                }
-            },
             selectAll: function () {
                 if (!this.list || !this.selected || this.list.length < 1) {
                     return;
@@ -438,6 +431,7 @@
 
         ariaNgNativeElectronService.onMainProcessSelectAll(function () {
             $rootScope.taskContext.selectAll();
+            $rootScope.$apply();
         })
 
         ariaNgSettingService.setDebugMode(ariaNgNativeElectronService.isDevMode());

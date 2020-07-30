@@ -589,6 +589,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     padding-right: 10px;
+    margin-bottom: 1px;
     border-top: 1px solid transparent;
     border-bottom: 1px solid transparent;
     position: relative;
@@ -621,6 +622,11 @@
     background-color: #E6F4FC;
     border-top-color: #C6E5F6;
     border-bottom-color: #C6E5F6;
+}
+.skin-aria-ng .task-table > .task-table-body.no-background > div.row:hover{
+    background-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
 }
 .skin-aria-ng .task-table > .task-table-body > div.row[data-selected=true],
 .row.gu-mirror[data-selected=true]{
@@ -697,4 +703,7 @@
     background: #75d8ff2b;
     border: 1px solid #70b1ff9e;
     z-index: 1000;
+}
+.main-header .navbar .nav > li{
+    margin-top: -1px;
 }

@@ -7,8 +7,17 @@
             link: function (scope, element) {
                 $(element).on('mousedown.dragselect', function (e) {
                     var location = $location.path().substring(1);
-                    if (e.target.id != 'content-body' || (location!='downloading' && location!='waiting' && location!='stopped'))return;
+                    if (e.target.id != 'content-body' || (location!='downloading' && location!='waiting' && location!='stopped')) return;
 
+                    if (JSON.stringify($rootScope.taskContext.selected) != '{}'){
+                        $rootScope.taskContext.selected = {};
+                        scope.$apply();
+                    }
+
+                    if ($('#task-table-contextmenu').hasClass('open')){
+                        $('#task-table-contextmenu').removeClass('open');
+                    }
+                    if (e.button!=0)return;
                     var border = $('<div class="drag-select-border"></div>');
                     var pageX = e.pageX;
                     var pageY = e.pageY;
@@ -18,8 +27,10 @@
                     var maxWidth = $(this).width();
                     var maxHeight = $(this).height();
                     var top = pageY, left = pageX, width = 0, height = 0;
+                    var rectY=0,rectHeight=0;
                     border.css({left: `${left}px`, top: `${top}px`, width: `${width}px`, height: `${height}px`});
                     $('body').append(border);
+                    $(element).find('div.task-table-body').addClass('no-background');
                     $(document).on('mousemove.dragselect', function (e) {
                         var x = e.pageX;
                         var y = e.pageY;
@@ -77,16 +88,37 @@
 
                         border.css({left: `${left}px`, top: `${top}px`, width: `${width}px`, height: `${height}px`});
 
-                        //todo
-
+                        rectY = border.offset().top;
+                        rectHeight = border.offset().top + border.height();
                         return false;
                     })
 
-                    $(document).on('mouseup', function (e) {
+                    $(document).on('mouseup.dragselect', function (e) {
+                        getSelectedId(rectY,rectHeight)
+                        $(element).find('div.task-table-body').removeClass('no-background');
                         border.remove();
                         $(document).off('.dragselect');
                     })
                 })
+
+                function getSelectedId(top,height) {
+                    var ids = {};
+                    $(element).find('div.row').each(function () {
+                        var t = $(this).offset().top;
+                        var b = $(this).offset().top + $(this).height();
+                        for (var i = t;i<=b;i++){
+                            if (i > top && i < height){
+                                var gid = $(this).attr('data-gid');
+                                ids[gid] = true;
+                                break;
+                            }
+                        }
+                    })
+                    if (JSON.stringify(ids)!='{}'){
+                        $rootScope.taskContext.selected = ids;
+                        scope.$apply();
+                    }
+                }
             }
         };
     }]);
