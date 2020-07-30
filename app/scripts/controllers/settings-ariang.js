@@ -85,6 +85,7 @@
 
         $scope.changeGlobalTab = function () {
             $scope.context.currentTab = 'global';
+            simulateScrollBar.reload();
         };
 
         $scope.isCurrentGlobalTab = function () {
@@ -93,6 +94,7 @@
 
         $scope.changeRpcTab = function (rpcIndex) {
             $scope.context.currentTab = 'rpc' + rpcIndex;
+            simulateScrollBar.reload();
         };
 
         $scope.isCurrentRpcTab = function (rpcIndex) {

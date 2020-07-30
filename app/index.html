@@ -17,11 +17,11 @@
     <link rel="stylesheet" href="../node_modules/angular-ui-notification/dist/angular-ui-notification.min.css"/>
     <link rel="stylesheet" href="../node_modules/angular-busy/dist/angular-busy.min.css"/>
     <link rel="stylesheet" href="../node_modules/angular-input-dropdown/inputDropdownStyles.css"/>
-    <link rel="stylesheet" href="../node_modules/angularjs-dragula/dist/dragula.min.css"/>
     <link rel="stylesheet" href="styles/core/core.css">
     <link rel="stylesheet" href="styles/core/extend.css">
     <link rel="stylesheet" href="styles/core/native-core.css">
     <link rel="stylesheet" href="styles/core/app-title.css">
+    <link rel="stylesheet" href="styles/controls/dragula.min.css"/>
     <link rel="stylesheet" href="styles/controls/global-status.css"/>
     <link rel="stylesheet" href="styles/controls/task-table.css"/>
     <link rel="stylesheet" href="styles/controls/settings-table.css"/>
@@ -89,7 +89,7 @@
             <div class="navbar-toolbar">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a class="toolbar" title="{{'New' | translate}}" ng-href="#!/new">
+                        <a class="toolbar" title="{{'New' | translate}}" ng-click="goto('/new')">
                             <i class="fa fa-plus"></i>
                             <span translate>New</span>
                         </a>
@@ -206,17 +206,17 @@
             <ul id="siderbar-menu" class="sidebar-menu" data-widget="tree" data-animation-speed="300">
                 <li class="header" translate>Download</li>
                 <li data-href-match="/downloading">
-                    <a href="#!/downloading"><i class="fa fa-arrow-circle-o-down"></i> <span ng-bind="('Downloading' | translate) + (globalStat && globalStat.numActive > 0 ? ' (' + globalStat.numActive + ')' : '')">Downloading</span></a>
+                    <a href="javascript:;" ng-click="goto('/downloading')"><i class="fa fa-arrow-circle-o-down"></i> <span ng-bind="('Downloading' | translate) + (globalStat && globalStat.numActive > 0 ? ' (' + globalStat.numActive + ')' : '')">Downloading</span></a>
                 </li>
                 <li data-href-match="/waiting">
-                    <a href="#!/waiting"><i class="fa fa-clock-o"></i> <span ng-bind="('Waiting' | translate) + (globalStat && globalStat.numWaiting > 0 ? ' (' + globalStat.numWaiting + ')' : '')">Waiting</span></a>
+                    <a href="javascript:;" ng-click="goto('/waiting')"><i class="fa fa-clock-o"></i> <span ng-bind="('Waiting' | translate) + (globalStat && globalStat.numWaiting > 0 ? ' (' + globalStat.numWaiting + ')' : '')">Waiting</span></a>
                 </li>
                 <li data-href-match="/stopped">
-                    <a href="#!/stopped"><i class="fa fa-check-circle-o"></i> <span ng-bind="('Finished / Stopped' | translate) + (globalStat && globalStat.numStopped > 0 ? ' (' + globalStat.numStopped + ')' : '')">Finished / Stopped</span></a>
+                    <a href="javascript:;" ng-click="goto('/stopped')"><i class="fa fa-check-circle-o"></i> <span ng-bind="('Finished / Stopped' | translate) + (globalStat && globalStat.numStopped > 0 ? ' (' + globalStat.numStopped + ')' : '')">Finished / Stopped</span></a>
                 </li>
                 <li class="header" translate>Settings</li>
                 <li data-href-match="/settings/ariang">
-                    <a href="#!/settings/ariang"><i class="fa fa-cog"></i> <span translate>AriaNg Settings</span></a>
+                    <a href="javascript:;" ng-click="goto('/settings/ariang')"><i class="fa fa-cog"></i> <span translate>AriaNg Settings</span></a>
                 </li>
                 <li class="treeview">
                     <a href="javascript:void(0);">
@@ -228,36 +228,36 @@
                     </a>
                     <ul class="treeview-menu">
                         <li data-href-match="/settings/aria2/basic">
-                            <a href="#!/settings/aria2/basic"> <span translate>Basic Settings</span></a>
+                            <a  href="javascript:;" ng-click="goto('/settings/aria2/basic')"> <span translate>Basic Settings</span></a>
                         </li>
                         <li data-href-match="/settings/aria2/http-ftp-sftp">
-                            <a href="#!/settings/aria2/http-ftp-sftp"> <span translate>HTTP/FTP/SFTP Settings</span></a>
+                            <a href="javascript:;" ng-click="goto('/settings/aria2/http-ftp-sftp')"> <span translate>HTTP/FTP/SFTP Settings</span></a>
                         </li>
                         <li data-href-match="/settings/aria2/http">
-                            <a href="#!/settings/aria2/http"> <span translate>HTTP Settings</span></a>
+                            <a href="javascript:;" ng-click="goto('/settings/aria2/http')"> <span translate>HTTP Settings</span></a>
                         </li>
                         <li data-href-match="/settings/aria2/ftp-sftp">
-                            <a href="#!/settings/aria2/ftp-sftp"> <span translate>FTP/SFTP Settings</span></a>
+                            <a href="javascript:;" ng-click="goto('/settings/aria2/ftp-sftp')"> <span translate>FTP/SFTP Settings</span></a>
                         </li>
                         <li data-href-match="/settings/aria2/bt">
-                            <a href="#!/settings/aria2/bt"> <span translate>BitTorrent Settings</span></a>
+                            <a href="javascript:;" ng-click="goto('/settings/aria2/bt')"> <span translate>BitTorrent Settings</span></a>
                         </li>
                         <li data-href-match="/settings/aria2/metalink">
-                            <a href="#!/settings/aria2/metalink"> <span translate>Metalink Settings</span></a>
+                            <a href="javascript:;" ng-click="goto('/settings/aria2/metalink')"> <span translate>Metalink Settings</span></a>
                         </li>
                         <li data-href-match="/settings/aria2/rpc">
-                            <a href="#!/settings/aria2/rpc"> <span translate>RPC Settings</span></a>
+                            <a href="javascript:;" ng-click="goto('/settings/aria2/rpc')"> <span translate>RPC Settings</span></a>
                         </li>
                         <li data-href-match="/settings/aria2/advanced">
-                            <a href="#!/settings/aria2/advanced"> <span translate>Advanced Settings</span></a>
+                            <a href="javascript:;" ng-click="goto('/settings/aria2/advanced')"> <span translate>Advanced Settings</span></a>
                         </li>
                     </ul>
                 </li>
                 <li class="ng-cloak" data-href-match="/debug" ng-if="enableDebugMode()">
-                    <a href="#!/debug"><i class="fa fa-wrench"></i> <span translate>AriaNg Debug Console</span></a>
+                    <a href="javascript:;" ng-click="goto('/debug')"><i class="fa fa-wrench"></i> <span translate>AriaNg Debug Console</span></a>
                 </li>
                 <li data-href-match="/status">
-                    <a href="#!/status">
+                    <a href="javascript:;" ng-click="goto('/status')">
                         <span class="label pull-right" ng-if="globalStatusContext.isEnabled || isCurrentRpcUseWebSocket" ng-class="{'label-primary': taskContext.rpcStatus === 'Connecting', 'label-success': taskContext.rpcStatus === 'Connected', 'label-danger': taskContext.rpcStatus === 'Disconnected'}" ng-bind="taskContext.rpcStatus | translate"></span>
                         <i class="fa fa-server"></i> <span translate>Aria2 Status</span>
                     </a>
@@ -267,7 +267,7 @@
     </aside>
 
     <div id="content-wrapper" class="content-wrapper">
-        <div id="content-body" class="content-body">
+        <div id="content-body" class="content-body" ng-drag-select ng-click="taskContext.clearSelected($event)">
             <div ng-view cg-busy="{ promise: loadPromise, message: ('Loading' | translate) }"></div>
         </div>
     </div>
@@ -307,6 +307,7 @@
                 </a>
             </div>
         </nav>
+        <img class="resize" draggable="false" src="../assets/resize.png">
     </footer>
 
     <ng-setting-dialog setting="quickSettingContext"></ng-setting-dialog>
@@ -350,8 +351,9 @@
 <script src="../node_modules/angular-promise-buttons/dist/angular-promise-buttons.min.js"></script>
 <script src="../node_modules/angular-clipboard/angular-clipboard.js"></script>
 <script src="../node_modules/angular-input-dropdown/inputDropdown.js"></script>
-<script src="../node_modules/angularjs-dragula/dist/angularjs-dragula.min.js"></script>
 <script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
+<script src="scripts/core/angularjs-dragula.js"></script>
+<script src="scripts/core/jquery-simulate-scroll.js"></script>
 <script src="scripts/core/__core.js"></script>
 <script src="scripts/core/__fix.js"></script>
 <script src="scripts/core/app.js"></script>
@@ -386,6 +388,7 @@
 <script src="scripts/directives/tooltip.js"></script>
 <script src="scripts/directives/validUrls.js"></script>
 <script src="scripts/directives/blobDownload.js"></script>
+<script src="scripts/directives/dragSelect.js"></script>
 <script src="scripts/filters/dateDuration.js"></script>
 <script src="scripts/filters/fileOrderBy.js"></script>
 <script src="scripts/filters/longDate.js"></script>

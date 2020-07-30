@@ -17,6 +17,7 @@
         var option = remote.require('./option') || {};
         var float = remote.require('./float') || {};
         var core = remote.require('./core') || {};
+        var icon = remote.require('./icon') || {};
 
         var getSetting = function (item) {
             if (!remote || !remote.getGlobal) {
@@ -145,6 +146,9 @@
             onMainProcessUpdateContextMenu: function(callback){
                 onMainProcessMessage('update-context-menu', callback);
             },
+            onMainProcessSelectAll: function(callback){
+                onMainProcessMessage('select-all', callback);
+            },
             onMainProcessNewTaskFromFile: function (callback) {
                 onMainProcessMessage('new-task-from-file', callback);
             },
@@ -223,6 +227,27 @@
             },
             exitApp: function () {
                 getCurrentWindow().close && getCurrentWindow().close();
+            },
+            getFileIcon: function (fileName) {
+                var arr = fileName.split('.');
+                var ext = arr[arr.length-1].trim();
+
+                var iconPath = icon.getSavePath(ext);
+                if (localfs.isExists(iconPath)){
+                    return iconPath;
+                }
+                else {
+                    return new Promise(function (resolve) {
+                        icon.getFileIcon(ext,function (res) {
+                            if (res){
+                                resolve(res);
+                            }
+                            else {
+                                resolve('../assets/default_icon.png')
+                            }
+                        })
+                    })
+                }
             }
         };
     }]);

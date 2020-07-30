@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').factory('aria2TaskService', ['$q', 'bittorrentPeeridService', 'ariaNgConstants', 'aria2Errors', 'aria2RpcService', 'ariaNgCommonService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgSettingService', function ($q, bittorrentPeeridService, ariaNgConstants, aria2Errors, aria2RpcService, ariaNgCommonService, ariaNgLocalizationService, ariaNgLogService, ariaNgSettingService) {
+    angular.module('ariaNg').factory('aria2TaskService', ['$q', 'bittorrentPeeridService', 'ariaNgConstants', 'aria2Errors', 'aria2RpcService', 'ariaNgCommonService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgSettingService','ariaNgNativeElectronService', function ($q, bittorrentPeeridService, ariaNgConstants, aria2Errors, aria2RpcService, ariaNgCommonService, ariaNgLocalizationService, ariaNgLogService, ariaNgSettingService,ariaNgNativeElectronService) {
         var getFileName = function (file) {
             if (!file) {
                 ariaNgLogService.warn('[aria2TaskService.getFileName] file is null');
@@ -310,6 +310,20 @@
             var taskNameResult = getTaskName(task);
             task.taskName = taskNameResult.name;
             task.hasTaskName = taskNameResult.success;
+
+            task.hasIcon = false;
+            if (task.hasTaskName && task.icon == undefined && !task.hasIcon){
+                task.hasIcon = true;
+                var icon = ariaNgNativeElectronService.getFileIcon(task.taskName);
+                if (typeof icon == "string"){
+                    task.icon = icon;
+                }
+                else {
+                    icon.then(function (res) {
+                        task.icon = res;
+                    })
+                }
+            }
 
             task.errorDescription = getTaskErrorDescription(task);
 

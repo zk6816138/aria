@@ -15,13 +15,6 @@
     cursor: pointer;
 }
 
-.task-table > .task-table-body.draggable {
-    cursor: move;
-    cursor: grab;
-    cursor: -moz-grab;
-    cursor: -webkit-grab;
-}
-
 .task-table > .task-table-body > div.row {
     padding-top: 8px;
     padding-bottom: 8px;
@@ -110,7 +103,7 @@
     margin-top: -12px;
 }
 
-.task-table .row:hover .task-right-arrow, .task-table .row[data-selected=true] .task-right-arrow {
+.task-table .row[data-selected=true] .task-right-arrow {
     visibility: visible;
 }
 

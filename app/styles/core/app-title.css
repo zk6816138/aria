@@ -18,7 +18,7 @@
 }
 
 .custom-app-title .main-header .navbar {
-    min-height: 74px;
+    height: 74px;
 }
 
 .custom-app-title .main-sidebar, .custom-app-title.fixed .content-wrapper, .custom-app-title.fixed .right-side {

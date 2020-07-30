@@ -48,6 +48,10 @@ let updateContextMenu = function(){
     core.mainWindow.webContents.send('update-context-menu');
 }
 
+let sendSelectAll = function(){
+    core.mainWindow.webContents.send('select-all');
+}
+
 let onNewDropFile = function (callback) {
     ipcMain.on('new-drop-file', callback);
 };
@@ -146,5 +150,6 @@ module.exports = {
     newTaskFromText: newTaskFromText,
     asyncNewTaskFromText: asyncNewTaskFromText,
     updateContextMenu: updateContextMenu,
-    onDownloadSpeed: onDownloadSpeed
+    onDownloadSpeed: onDownloadSpeed,
+    sendSelectAll:sendSelectAll
 };

@@ -69,18 +69,18 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <span translate>Filters</span><span>:&nbsp;</span>
-                                    <div class="checkbox checkbox-inline checkbox-primary">
+                                    <label for="optionFilterGlobal" class="checkbox checkbox-inline checkbox-primary" ng-click="optionFilterClick()">
                                         <input id="optionFilterGlobal" type="checkbox" ng-model="context.optionFilter['global']"/>
                                         <label for="optionFilterGlobal" translate>Global</label>
-                                    </div>
-                                    <div class="checkbox checkbox-inline checkbox-primary">
+                                    </label>
+                                    <label for="optionFilterHttp" class="checkbox checkbox-inline checkbox-primary" ng-click="optionFilterClick()">
                                         <input id="optionFilterHttp" type="checkbox" ng-model="context.optionFilter['http']"/>
                                         <label for="optionFilterHttp" translate>Http</label>
-                                    </div>
-                                    <div class="checkbox checkbox-inline checkbox-primary">
+                                    </label>
+                                    <label for="optionFilterBittorrent" class="checkbox checkbox-inline checkbox-primary" ng-click="optionFilterClick()">
                                         <input id="optionFilterBittorrent" type="checkbox" ng-model="context.optionFilter['bittorrent']"/>
                                         <label for="optionFilterBittorrent" translate>BitTorrent</label>
-                                    </div>
+                                    </label>
                                 </div>
                             </div>
                         </div>

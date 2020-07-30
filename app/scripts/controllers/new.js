@@ -128,7 +128,12 @@
             }
 
             $scope.context.currentTab = tabName;
+            simulateScrollBar.reload();
         };
+
+        $scope.optionFilterClick = function(){
+            simulateScrollBar.reload();
+        }
 
         $rootScope.swipeActions.extentLeftSwipe = function () {
             var tabIndex = tabOrders.indexOf($scope.context.currentTab);

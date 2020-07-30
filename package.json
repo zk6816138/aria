@@ -79,13 +79,20 @@
     "appId": "net.aria2c.ariang",
     "productName": "AriaNg",
     "copyright": "Copyright (c) 2017-2020 AriaNg All Rights Reserved.",
-    "extraResources": {
-      "from": "./aria2/",
-      "to": "aria2"
-    },
+    "extraResources": [
+      {
+        "from": "./aria2/",
+        "to": "aria2"
+      },
+      {
+        "from": "./assets/icon.exe",
+        "to": "icon.exe"
+      }
+    ],
     "files": [
       "!node_modules",
       "!aria2",
+      "!assets/icon.exe",
       {
         "from": "dist/node_modules",
         "to": "node_modules",

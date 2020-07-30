@@ -491,10 +491,6 @@
     background-color: #f9f9f9;
 }
 
-.progress{
-    background-color: #eee;
-}
-
 .skin-aria-ng .task-table > .task-table-body > div.row:hover {
     background-color: #f5f5f5;
 }
@@ -534,6 +530,8 @@
     background-color: #fff;
 }
 
+/*微调样式*/
+
 .main-header .logo {
     line-height: 74px;
 }
@@ -541,6 +539,162 @@
     margin-top: 2px;
 }
 
-#quickSettingModal,.sweet-overlay,#import-settings-modal,#export-settings-modal{
+#quickSettingModal,.sweet-overlay,#import-settings-modal,#export-settings-modal,#log-detail-modal{
     -webkit-app-region: no-drag;
+}
+.skin-aria-ng .task-table .checkbox-primary input[type="checkbox"]:checked + label::before,
+.skin-aria-ng .task-table .checkbox-primary input[type="checkbox"]:checked + label::after,
+.row.gu-mirror .checkbox-primary input[type="checkbox"]:checked + label::before,
+.row.gu-mirror .checkbox-primary input[type="checkbox"]:checked + label::after{
+    content: '';
+    width: 0;
+    height: 0;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+.skin-aria-ng .task-table .checkbox,.checkbox label,
+.row.gu-mirror .checkbox,.checkbox label{
+    padding-left: 0;
+    cursor: default;
+}
+.task-table .task-files,.task-table .checkbox,
+.row.gu-mirror .task-files,.row.gu-mirror .checkbox{
+    margin-left: 50px;
+}
+.task-table .row .file-icon,
+.row.gu-mirror .file-icon{
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.task-table .row .file-icon img,
+.row.gu-mirror .file-icon img{
+    display: block;
+    width: 32px;
+    height: 32px;
+}
+.row.gu-mirror .checkbox, .row.gu-mirror .radio {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.skin-aria-ng .task-table > .task-table-body > div.row:nth-of-type(odd),
+.row.gu-mirror:nth-of-type(odd){
+    background-color: unset;
+}
+.skin-aria-ng .task-table > .task-table-body > div.row,
+.row.gu-mirror{
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    position: relative;
+}
+.task-table .task-right-arrow,
+.row.gu-mirror .task-right-arrow{
+    position: absolute;
+    right: 34px;
+    margin-top: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: right .3s ease;
+    padding-bottom: 2px;
+}
+.task-table .row[data-selected=true] .task-right-arrow,
+.row.gu-mirror[data-selected=true] .task-right-arrow{
+    visibility: visible;
+    right: 24px;
+}
+.task-table .task-right-arrow a,
+.row.gu-mirror .task-right-arrow a{
+    display: block;
+}
+.task-table .task-right-arrow i,
+.row.gu-mirror .task-right-arrow i{
+    color: #c8c8c8;
+    font-size: 50px;
+}
+.skin-aria-ng .task-table > .task-table-body > div.row:hover{
+    background-color: #E6F4FC;
+    border-top-color: #C6E5F6;
+    border-bottom-color: #C6E5F6;
+}
+.skin-aria-ng .task-table > .task-table-body > div.row[data-selected=true],
+.row.gu-mirror[data-selected=true]{
+    background-color: #D2EFFF;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+.main-footer{
+    position: relative;
+}
+.main-footer .resize{
+    position: absolute;
+    bottom: 4px;
+    right: 4px;
+}
+.settings-table > div.row{
+    padding-right: 10px;
+}
+.piece-map{
+    padding-right: 10px;
+}
+/*进度条*/
+.task-table .progress,
+.row.gu-mirror .progress{
+    position: relative;
+    margin-bottom: 0;
+    background: #fff;
+    border: 1px solid #BFCFDC;
+    border-radius: 1px;
+}
+.task-table .progress-bar-primary,
+.row.gu-mirror .progress-bar-primary{
+    border-radius: 0;
+    background-color: #208fe5;
+}
+.task-table .progress span,
+.row.gu-mirror .progress span{
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: #333;
+    height: 100%;
+    line-height: 18px;
+    font-size: 12px;
+    text-align: center;
+}
+/*进度条*/
+.task-table .checkbox input[type="checkbox"],
+.row.gu-mirror .checkbox input[type="checkbox"]{
+    display:none;
+}
+.row.gu-mirror{
+    opacity: 1;
+    background-color: #9fdcff99!important;
+    box-shadow: 0px 0px 6px #999;
+    border: 1px solid #AAC0CD!important;
+    border-radius: 1px;
+}
+.row.gu-mirror > *{
+    opacity: .4;
+}
+.task-table .gu-transit{
+    opacity: 0;
+}
+.task-table .task-download-speed,.row.gu-mirror .task-download-speed{
+    font-size: 12px;
+}
+.task-table .row a{
+    cursor: pointer;
+}
+
+.drag-select-border{
+    position: absolute;
+    background: #75d8ff2b;
+    border: 1px solid #70b1ff9e;
+    z-index: 1000;
 }

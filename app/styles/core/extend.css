@@ -138,10 +138,3 @@ input-dropdown[input-class-name="form-control"] > .input-dropdown {
 .input-dropdown ul > li {
     padding: 2px 14px 2px 14px;
 }
-
-/* angular-dragula extend */
-.gu-mirror {
-    cursor: grabbing;
-    cursor: -moz-grabbing;
-    cursor: -webkit-grabbing;
-}

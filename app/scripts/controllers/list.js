@@ -7,6 +7,8 @@
         var pauseDownloadTaskRefresh = false;
         var needRequestWholeInfo = true;
 
+        var isCtrlDown = false;
+
         var refreshDownloadTask = function (silent) {
             if (pauseDownloadTaskRefresh) {
                 return;
@@ -31,7 +33,8 @@
                 if (isRequestWholeInfo) {
                     $rootScope.taskContext.list = taskList;
                     needRequestWholeInfo = false;
-                } else {
+                }
+                else {
                     if ($rootScope.taskContext.list && $rootScope.taskContext.list.length > 0) {
                         for (var i = 0; i < $rootScope.taskContext.list.length; i++) {
                             var task = $rootScope.taskContext.list[i];
@@ -74,6 +77,32 @@
             }, silent);
         };
 
+        $scope.taskMouseDown = function(e,gid){
+            if (e.button==2 && $rootScope.taskContext.selected[gid]){
+                return;
+            }
+
+            if (e.button == 0 && isCtrlDown){
+                $rootScope.taskContext.selected[gid]=!$rootScope.taskContext.selected[gid];
+            }
+            else {
+                $rootScope.taskContext.selected = {};
+                $rootScope.taskContext.selected[gid] = true;
+            }
+        }
+
+        $(document).on('keydown',function (e) {
+            if (e.keyCode==17){ //ctrl
+                isCtrlDown = true;
+            }
+        })
+
+        $(document).on('keyup',function (e) {
+            if (e.keyCode==17){
+                isCtrlDown = false;
+            }
+        })
+
         $scope.getOrderType = function () {
             return ariaNgSettingService.getDisplayOrder();
         };
@@ -91,6 +120,7 @@
         }
 
         dragulaService.options($scope, 'task-list', {
+            canMoveX:false,
             revertOnSpill: true,
             moves: function () {
                 return $scope.isSupportDragTask();
@@ -115,6 +145,9 @@
             if (downloadTaskRefreshPromise) {
                 $interval.cancel(downloadTaskRefreshPromise);
             }
+
+            $(document).off('keydown');
+            $(document).off('keyup');
         });
 
         $rootScope.loadPromise = refreshDownloadTask(false);

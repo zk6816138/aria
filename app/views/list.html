@@ -1,43 +1,22 @@
 <section class="content no-padding">
     <div id="task-table" class="task-table">
-        <div class="task-table-title">
-            <div class="row">
-                <div class="col-md-8 col-sm-7">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a ng-click="changeDisplayOrder('name:asc', true)" translate>File Name</a>
-                            <i class="fa" ng-class="{'fa-sort-asc fa-order-asc': isSetDisplayOrder('name:asc'), 'fa-sort-desc fa-order-desc': isSetDisplayOrder('name:desc')}"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-3">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <a ng-click="changeDisplayOrder('percent:desc', true)" translate>Progress</a>
-                            <i class="fa" ng-class="{'fa-sort-asc fa-order-asc': isSetDisplayOrder('percent:asc'), 'fa-sort-desc fa-order-desc': isSetDisplayOrder('percent:desc')}"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-2">
-                    <a ng-click="changeDisplayOrder('dspeed:desc', true)" translate>Download Speed</a>
-                    <i class="fa" ng-class="{'fa-sort-asc fa-order-asc': isSetDisplayOrder('dspeed:asc'), 'fa-sort-desc fa-order-desc': isSetDisplayOrder('dspeed:desc')}"></i>
-                </div>
-            </div>
-        </div>
         <div class="task-table-body" ng-class="{'draggable': isSupportDragTask()}" dragula="'task-list'" dragula-model="taskContext.list">
-            <div class="row pointer-cursor" ng-repeat="task in taskContext.list | filter: filterTask | taskOrderBy: getOrderType()"
+            <div class="row" ng-repeat="task in taskContext.list | filter: filterTask | taskOrderBy: getOrderType()"
                  data-gid="{{task.gid}}" data-selected="{{!!taskContext.selected[task.gid]}}" data-toggle="context" data-target="#task-table-contextmenu"
-                 ng-click="taskContext.selected[task.gid] = !taskContext.selected[task.gid]">
+                  ng-mousedown="taskMouseDown($event,task.gid)">
                 <div class="col-md-8 col-sm-7 col-xs-12">
+                    <div class="file-icon">
+                        <img draggable="false" ng-src="{{task.icon}}" src="../assets/default_icon.png">
+                    </div>
                     <div class="checkbox checkbox-primary" ng-class="{'checkbox-hide': !taskContext.selected[task.gid]}">
                         <input id="{{'task_' + task.gid}}" type="checkbox" ng-model="taskContext.selected[task.gid]"/>
-                        <label for="{{'task_' + task.gid}}">
+                        <label>
                             <span class="task-name auto-ellipsis" ng-bind="task.taskName" title="{{task.taskName}}"></span>
                         </label>
                     </div>
                     <div class="task-files">
                         <span ng-bind="task.totalLength | readableVolume"></span>
-                        <a ng-href="#!/task/detail/{{task.gid}}" title="{{'Click to view task detail' | translate}}">
+                        <a ng-click="goto('/task/detail/'+task.gid)" title="{{'Click to view task detail' | translate}}">
                             <span ng-if="task.files" ng-bind="('format.settings.file-count' | translate: {count: task.selectedFileCount})"></span>
                         </a><i class="icon-error fa fa-times" ng-if="task && task.status === 'error' && task.errorDescription" title="{{task.errorDescription | translate}}"></i><i class="icon-seeder fa fa-arrow-up" ng-if="task && task.status === 'active' && task.seeder" title="{{'Seeding' | translate}}"></i>
                         <a ng-if="isTaskRetryable(task)" ng-click="retryTask(task)" title="{{'Retry' | translate}}" translate>Retry</a>
@@ -49,8 +28,7 @@
                              ng-class="{'progress-bar-primary': task.status !== 'error', 'progress-bar-warning': task.status === 'error'}"
                              aria-valuenow="{{task.completePercent}}" aria-valuemin="1"
                              aria-valuemax="100" ng-style="{ width: task.completePercent + '%' }">
-                            <span ng-class="{'progress-lower': task.completePercent < 50}"
-                                ng-bind="(task.completePercent | percent: 2) + '%'"></span>
+                            <span ng-bind="(task.completePercent | percent: 2) + '%'"></span>
                         </div>
                     </div>
                     <div>
@@ -66,7 +44,7 @@
                           ng-bind="(task.status === 'active' && !task.verifyIntegrityPending && !task.verifiedLength ? (!task.seeder || task.downloadSpeed > 0 ? (task.downloadSpeed | readableVolume) + '/s' : '-') : (task | taskStatus: true | translate: {errorcode: task.errorCode, verifiedPercent: task.verifiedPercent}))"></span>
                 </div>
                 <div class="task-right-arrow visible-md visible-lg">
-                    <a ng-href="#!/task/detail/{{task.gid}}" title="{{'Click to view task detail' | translate}}">
+                    <a ng-click="goto('/task/detail/'+task.gid)" title="{{'Click to view task detail' | translate}}">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 </div>

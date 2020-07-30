@@ -161,12 +161,11 @@ app.on('ready', () => {
         electronLocalshortcut.register(core.mainWindow, 'CmdOrCtrl+V', () => {
             core.mainWindow.webContents.paste();
         });
-
-        electronLocalshortcut.register(core.mainWindow, 'CmdOrCtrl+A', () => {
-            core.mainWindow.webContents.selectAll();
-        });
     }
 
+    electronLocalshortcut.register(core.mainWindow, 'CmdOrCtrl+A', () => {
+        ipc.sendSelectAll();
+    });
     // if (global.settings.isDevMode) {
         electronLocalshortcut.register(core.mainWindow, 'F12', () => {
             core.mainWindow.webContents.openDevTools();

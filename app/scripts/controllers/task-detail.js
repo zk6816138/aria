@@ -83,7 +83,7 @@
                     }
 
                     var task = response.data;
-                    
+
                     processTask(task);
 
                     if (requireBtPeers(task)) {
@@ -224,6 +224,7 @@
             }
 
             $scope.context.currentTab = tabName;
+            simulateScrollBar.reload();
         };
 
         $rootScope.swipeActions.extentLeftSwipe = function () {
