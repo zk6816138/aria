@@ -1,4 +1,3 @@
-var simulateScrollBar = null;
 (function () {
     'use strict';
 
@@ -15,5 +14,4 @@ var simulateScrollBar = null;
     });
 
     fixContentWrapperHeight();
-    simulateScrollBar = $('#content-body').simulateScroll({duration:300});
 }());

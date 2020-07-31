@@ -224,7 +224,7 @@
             }
 
             $scope.context.currentTab = tabName;
-            simulateScrollBar.reload();
+            $rootScope.simulateScrollReload();
         };
 
         $rootScope.swipeActions.extentLeftSwipe = function () {

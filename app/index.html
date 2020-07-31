@@ -267,7 +267,7 @@
     </aside>
 
     <div id="content-wrapper" class="content-wrapper">
-        <div id="content-body" class="content-body" ng-drag-select>
+        <div id="content-body" class="content-body" ng-drag-select ng-simulate-scroll="{duration:300}">
             <div ng-view cg-busy="{ promise: loadPromise, message: ('Loading' | translate) }"></div>
         </div>
     </div>
@@ -322,7 +322,7 @@
     }
 </script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../node_modules/angular/angular.js"></script>
 <script src="../node_modules/angular-route/angular-route.min.js"></script>
 <script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="../node_modules/angular-touch/angular-touch.min.js"></script>
@@ -389,6 +389,7 @@
 <script src="scripts/directives/validUrls.js"></script>
 <script src="scripts/directives/blobDownload.js"></script>
 <script src="scripts/directives/dragSelect.js"></script>
+<script src="scripts/directives/simulateScroll.js"></script>
 <script src="scripts/filters/dateDuration.js"></script>
 <script src="scripts/filters/fileOrderBy.js"></script>
 <script src="scripts/filters/longDate.js"></script>

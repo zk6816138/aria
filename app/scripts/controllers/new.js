@@ -128,11 +128,11 @@
             }
 
             $scope.context.currentTab = tabName;
-            simulateScrollBar.reload();
+            $rootScope.simulateScrollReload();
         };
 
         $scope.optionFilterClick = function(){
-            simulateScrollBar.reload();
+            $rootScope.simulateScrollReload();
         }
 
         $rootScope.swipeActions.extentLeftSwipe = function () {

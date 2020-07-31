@@ -513,7 +513,7 @@
         $rootScope.$on('$viewContentLoaded', function () {
             ariaNgNativeElectronService.sendViewLoadedMessageToMainProcess($location.path());
 
-            simulateScrollBar.reload();
+            $rootScope.simulateScrollReload();
         });
 
         $rootScope.$on('$translateChangeSuccess', function(event, current, previous) {
