@@ -29,7 +29,7 @@
 }
 
 .skin-aria-ng .main-header .navbar .nav > li > a {
-    color: #707070;
+    color: #747474;
     font-size: 16px;
 }
 
@@ -41,6 +41,13 @@
 .skin-aria-ng .main-header .navbar .nav .open > a:focus,
 .skin-aria-ng .main-header .navbar .nav > .active > a {
     color: #0080ff;
+    box-shadow: none;
+}
+
+.skin-aria-ng .main-header .navbar .nav .open > a,
+.skin-aria-ng .main-header .navbar .nav .open > a:hover,
+.skin-aria-ng .main-header .navbar .nav > li > a:active{
+    color: #015FC7;
 }
 
 .skin-aria-ng .main-header .navbar .nav > li.disabled > a {
@@ -55,7 +62,9 @@
     position: relative;
     top: 15px;
 }
-
+.skin-aria-ng .main-header .navbar .nav .open > a{
+    background: none;
+}
 .skin-aria-ng .main-header .navbar .navbar-searchbar .form-control-icon {
     color: #999999;
 }
@@ -130,7 +139,7 @@
 }
 
 .skin-aria-ng .sidebar-menu > li:hover > a {
-    color: #dfdfdf;
+    color: #fff;
     background-color: #313a42;
 }
 
@@ -166,7 +175,7 @@
 }
 
 .skin-aria-ng .sidebar-menu > li.treeview > ul.treeview-menu > li > a:hover {
-    color: #dfdfdf;
+    color: #fff;
     background-color: #313a42;
 }
 
@@ -504,7 +513,9 @@
 .skin-aria-ng .settings-table {
     background-color: #fff;
 }
-
+.skin-aria-ng .settings-table.striped > div.row{
+    background: #fff;
+}
 .skin-aria-ng .settings-table.striped > div.row:nth-of-type(odd) {
     background-color: #f9f9f9;
 }
@@ -706,4 +717,45 @@
 }
 .main-header .navbar .nav > li{
     margin-top: -1px;
+}
+.content-mask{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(100% - 230px);
+    height: 100%;
+}
+.nav>li>a:hover, .nav>li>a:active, .nav>li>a:focus{
+    background: none;
+}
+
+.navbar-searchbar input{
+    background: #DCDCDC;
+    border-radius: 3px;
+}
+.navbar-searchbar input:hover{
+    background: #EEEEEE;
+}
+.navbar-searchbar input:focus{
+    background: #FCFCFC;
+}
+.modal,.skin-aria-ng .popover,.log-detail-modal{
+    z-index: 10000;
+}
+.modal-dialog{
+    overflow: hidden;
+}
+.task-table > .task-table-body > div.row img.bt-file-icon{
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+}
+.modal-dialog .form-control{
+    background-color: #fff!important;
+}
+.modal-dialog .btn-default {
+    background-color: #f4f4f4!important;
 }

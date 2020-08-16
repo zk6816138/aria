@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh" ng-app="float" ng-controller="floatCtrl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,14 +7,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AriaNg 悬浮窗</title>
     <link rel="stylesheet" href="styles/theme/float.css">
+
+    <!--阿里云图标库-->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_8j9i40443qd.css">
+
+    <style ng-if="mainTheme=='custom-theme'">
+        .custom-theme .logo-wrapper{
+            background-color: rgba({{customColor}},.85);
+        }
+        .custom-theme .speed-wrapper{
+            background-color: rgb({{customColor}})!important;
+        }
+        .custom-theme .logo-wrapper i{
+            color: rgb({{customColor}});
+            filter: brightness(2.5);
+        }
+    </style>
 </head>
-<body>
-    <section>
-        <div class="wrapper logo-wrapper"></div>
+<body ng-class="mainTheme">
+    <section ng-class="{'downloading':numActive>0}">
+        <div class="wrapper logo-wrapper">
+            <i class="iconfont icon-huojian"></i>
+        </div>
         <div class="wrapper speed-wrapper">
             <div id="speed-echart"></div>
-            <span class="s1">0</span>
-            <span class="s2">B/s</span>
+            <span class="s1">{{text1}}</span>
+            <span class="s2">{{text2}}</span>
         </div>
     </section>
 </body>
@@ -27,6 +45,7 @@
     }
 </script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/angular/angular.min.js"></script>
 <script src="../node_modules/echarts/dist/echarts.min.js"></script>
-<script src="scripts/core/__float.js"></script>
+<script src="scripts/controllers/float.js"></script>
 </html>

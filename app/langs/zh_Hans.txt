@@ -264,6 +264,7 @@ Tap to configure and get started with AriaNg.=您还没有进行过设置, 点�
 Cannot initialize WebSocket!=无法初始化 WebSocket!
 Access Denied!=拒绝访问!
 You cannot use AriaNg because this browser does not meet the minimum requirements for data storage.=您无法使用 AriaNg, 因为这个浏览器不满足数据存储的最低要求.
+SkinCenter=皮肤中心
 Minimize=最小化
 Maximize=最大化
 Restore Down=向下还原
@@ -279,6 +280,8 @@ HideAriaNgNative=隐藏 AriaNg (&S)
 Exit=退出 (&X)
 ShowFloatWindow=显示悬浮窗 (&H)
 HideFloatWindow=隐藏悬浮窗 (&H)
+StartAllTask=开始全部任务
+StopAllTask=暂停全部任务
 
 [error]
 unknown=未知错误.

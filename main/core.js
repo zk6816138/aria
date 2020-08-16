@@ -3,6 +3,7 @@
 let core = {
     mainWindow: null,
     floatWindow: null,
+    themeWindow: null,
     isConfirmExit: false
 };
 

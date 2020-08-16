@@ -192,6 +192,20 @@
             }, (gids.length > 1));
         };
 
+        ariaNgNativeElectronService.onMainProcessTaskState(function (e, arg) {
+            var type = arg == 'start' ? 'waiting' : 'downloading';
+            return  aria2TaskService.getTaskList(type,false, function (resp) {
+                var selected = {};
+                resp.data.forEach((item)=>{
+                    if (item.status!='waiting'){
+                        selected[item.gid] = true;
+                    }
+                })
+                $rootScope.taskContext.selected = selected;
+                $scope.changeTasksState(arg);
+            },true)
+        });
+
         $scope.retryTask = function (task) {
             ariaNgLocalizationService.confirm('Confirm Retry', 'Are you sure you want to retry the selected task? AriaNg will create same task after clicking OK.', 'info', function () {
                 $rootScope.loadPromise = aria2TaskService.retryTask(task.gid, function (response) {
@@ -435,6 +449,10 @@
         $scope.minimizeWindow = function () {
             ariaNgNativeElectronService.minimizeWindow();
         };
+
+        $scope.skinCenter = function(){
+            ariaNgNativeElectronService.sendSkinCenterStatusToMainProcess()
+        }
 
         $scope.maximizeOrRestoreWindow = function () {
             ariaNgNativeElectronService.maximizeOrRestoreWindow();

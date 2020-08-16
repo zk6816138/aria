@@ -7,8 +7,6 @@
         var pauseDownloadTaskRefresh = false;
         var needRequestWholeInfo = true;
 
-        var isCtrlDown = false;
-
         var refreshDownloadTask = function (silent) {
             if (pauseDownloadTaskRefresh) {
                 return;
@@ -82,7 +80,7 @@
                 return;
             }
 
-            if (e.button == 0 && isCtrlDown){
+            if (e.button == 0 && e.ctrlKey){
                 $rootScope.taskContext.selected[gid]=!$rootScope.taskContext.selected[gid];
             }
             else {
@@ -90,18 +88,6 @@
                 $rootScope.taskContext.selected[gid] = true;
             }
         }
-
-        $(document).on('keydown',function (e) {
-            if (e.keyCode==17){ //ctrl
-                isCtrlDown = true;
-            }
-        })
-
-        $(document).on('keyup',function (e) {
-            if (e.keyCode==17){
-                isCtrlDown = false;
-            }
-        })
 
         $scope.getOrderType = function () {
             return ariaNgSettingService.getDisplayOrder();
@@ -145,9 +131,6 @@
             if (downloadTaskRefreshPromise) {
                 $interval.cancel(downloadTaskRefreshPromise);
             }
-
-            $(document).off('keydown');
-            $(document).off('keyup');
         });
 
         $rootScope.loadPromise = refreshDownloadTask(false);

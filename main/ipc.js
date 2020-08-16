@@ -52,6 +52,10 @@ let sendSelectAll = function(){
     core.mainWindow.webContents.send('select-all');
 }
 
+let sendTaskState = function(message){
+    core.mainWindow.webContents.send('task-state',message);
+}
+
 let onNewDropFile = function (callback) {
     ipcMain.on('new-drop-file', callback);
 };
@@ -63,6 +67,33 @@ let onNewDropText = function (callback) {
 let onDownloadSpeed = function(){
     ipcMain.on('download-speed', function (e,arg) {
         core.floatWindow.webContents.send('download-speed',arg);
+    });
+}
+
+let onSkinCenterStatus = function(callback){
+    ipcMain.on('skin-center-status', callback);
+}
+
+let onSelectedTheme = function(){
+    ipcMain.on('selected-theme', function (e,arg) {
+        core.mainWindow.webContents.send('selected-theme',arg);
+        core.floatWindow.webContents.send('selected-theme',arg);
+    });
+}
+
+let onColorChange = function(){
+    ipcMain.on('color-change', function (e,arg) {
+        core.mainWindow.webContents.send('color-change',arg);
+        if (arg.name=='MainColor'){
+            core.floatWindow.webContents.send('color-change',arg);
+        }
+    });
+}
+
+let onLanguageChange = function(){
+    ipcMain.on('language-change', function (e,arg) {
+        core.themeWindow.webContents.send('language-change',arg);
+        core.floatWindow.webContents.send('language-change',arg);
     });
 }
 
@@ -151,5 +182,10 @@ module.exports = {
     asyncNewTaskFromText: asyncNewTaskFromText,
     updateContextMenu: updateContextMenu,
     onDownloadSpeed: onDownloadSpeed,
-    sendSelectAll:sendSelectAll
+    sendSelectAll:sendSelectAll,
+    sendTaskState: sendTaskState,
+    onSkinCenterStatus: onSkinCenterStatus,
+    onSelectedTheme: onSelectedTheme,
+    onColorChange: onColorChange,
+    onLanguageChange: onLanguageChange
 };

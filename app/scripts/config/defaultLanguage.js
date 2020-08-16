@@ -269,6 +269,7 @@
             'Cannot initialize WebSocket!': 'Cannot initialize WebSocket!',
             'Access Denied!': 'Access Denied!',
             'You cannot use AriaNg because this browser does not meet the minimum requirements for data storage.': 'You cannot use AriaNg because this browser does not meet the minimum requirements for data storage.',
+            'SkinCenter': 'Skin Center',
             'Minimize': 'Minimize',
             'Maximize': 'Maximize',
             'Restore Down': 'Restore Down',
@@ -282,7 +283,9 @@
                 'HideAriaNgNative': '&Hide AriaNg',
                 'Exit': 'E&xit',
                 'ShowFloatWindow': 'Show &Float Window',
-                'HideFloatWindow': 'Hide &Float Window'
+                'HideFloatWindow': 'Hide &Float Window',
+                'StartAllTask': 'Start All Task',
+                'StopAllTask': 'Stop All Task',
             },
             'error': {
                 'unknown': 'Unknown error occurred.',

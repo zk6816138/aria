@@ -3,6 +3,66 @@ body{
     margin: 0;
     background: transparent;
 }
+body.default, body.custom-theme{
+    --main-color: 55,64,79;
+    --logo-color: #1AACEC;
+    --brightness: 1;
+}
+body.atrovirens {
+    --main-color: 31,96,109;
+    --logo-color: #37A5BB;
+    --brightness: 1.2;
+}
+body.blue {
+    --main-color: 27,72,118;
+    --logo-color: #2F7BC8;
+    --brightness: 1.4;
+}
+body.brown {
+    --main-color: 119,102,19;
+    --logo-color: #CDB024;
+    --brightness: 1.2;
+}
+body.red {
+    --main-color: 113,27,27;
+    --logo-color: #C03131;
+    --brightness: 1.4;
+}
+body.violet {
+    --main-color: 79,30,125;
+    --logo-color: #603588;
+    --brightness: 2;
+}
+body.theme-img0{
+    --main-color: 59,29,103;
+    --logo-color: #6B37BB;
+    --brightness: 2;
+}
+body.theme-img1{
+    --main-color: 108,86,24;
+    --logo-color: #C49C2D;
+    --brightness: 1.2;
+}
+body.theme-img2{
+    --main-color: 55,64,79;
+    --logo-color: #0F97E5;
+    --brightness: 1;
+}
+body.theme-img3{
+    --main-color: 99,53,32;
+    --logo-color: #B4613D;
+    --brightness: 1.2;
+}
+body.theme-img4{
+    --main-color: 32,80,99;
+    --logo-color: #3D91B4;
+    --brightness: 1.4;
+}
+body.theme-img5{
+    --main-color: 76,75,75;
+    --logo-color: #5E5D5D;
+    --brightness: 1.6;
+}
 section{
     -webkit-app-region: drag;
     position: absolute;
@@ -22,15 +82,19 @@ section{
     transition: all .6s ease;
 }
 .logo-wrapper{
-    background-color: rgba(55,64,79, 0.85);
+    background-color: rgba(var(--main-color),.85);
     transform: rotateY(0deg);
-    background-image: url("../../../assets/float.png");
-    background-size: 85% 85%;
-    background-repeat: no-repeat;
-    background-position: center center;
+    text-align: center;
+    line-height: 48px;
+}
+.logo-wrapper i{
+    font-size: 30px;
+    color: var(--logo-color);
+    transition: all .6s ease;
+    filter: brightness(var(--brightness));
 }
 .speed-wrapper{
-    background: rgb(55,64,79);
+    background-color: rgb(var(--main-color))!important;
     transform: rotateY(180deg);
     overflow: hidden;
 }

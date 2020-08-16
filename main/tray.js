@@ -66,6 +66,19 @@ let setContextMenu = function (context) {
                 type: 'separator'
             },
             {
+                label: context.labels.StartAllTask, click: function () {
+                    ipc.sendTaskState('start');
+                }
+            },
+            {
+                label: context.labels.StopAllTask, click: function () {
+                    ipc.sendTaskState('pause');
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
                 label: context.labels.Exit, click: function () {
                     core.isConfirmExit = true;
                     app.quit();

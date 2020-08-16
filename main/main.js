@@ -13,6 +13,7 @@ const menu = require('./menu');
 const tray = require('./tray');
 const aria2c = require('./aria2c');
 const float = require('./float');
+const theme = require('./theme');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -277,4 +278,17 @@ app.on('ready', () => {
     });
 
     ipc.onDownloadSpeed();
+
+    ipc.onSkinCenterStatus(function () {
+        if (core.themeWindow == null){
+            theme.show(core.mainWindow);
+        }
+        else {
+            theme.close();
+        }
+    })
+
+    ipc.onSelectedTheme();
+    ipc.onColorChange();
+    ipc.onLanguageChange();
 });

@@ -84,6 +84,10 @@
 
                     var task = response.data;
 
+                    for (var i = 0;i<task.files.length;i++){
+                        task.files[i].icon = ariaNgNativeElectronService.getFileIcon(task.files[i].fileName);
+                    }
+
                     processTask(task);
 
                     if (requireBtPeers(task)) {
@@ -94,7 +98,8 @@
                         }, silent, includeLocalPeer);
                     }
                 }, silent, addVirtualFileNode);
-            } else {
+            }
+            else {
                 return aria2TaskService.getTaskStatusAndBtPeers($routeParams.gid, function (response) {
                     if (!response.success) {
                         return processError(response.data.message);

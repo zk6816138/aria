@@ -7,16 +7,19 @@
             link: function (scope, element) {
                 $(element).on('mousedown.dragselect', function (e) {
                     var location = $location.path().substring(1);
-                    if (e.target.id != 'content-body' || (location!='downloading' && location!='waiting' && location!='stopped')) return;
+                    if ((e.target.id != 'content-body' && e.target.tagName.toLowerCase() != 'section') || (location!='downloading' && location!='waiting' && location!='stopped')) return;
 
                     if (JSON.stringify($rootScope.taskContext.selected) != '{}'){
                         $rootScope.taskContext.selected = {};
                         scope.$apply();
                     }
 
-                    if ($('#task-table-contextmenu').hasClass('open')){
-                        $('#task-table-contextmenu').removeClass('open');
-                    }
+                    $('#task-table-contextmenu.open').removeClass('open');
+
+                    $('.main-header .navbar .nav .open').removeClass('open');
+
+                    $('.main-footer > .navbar > .navbar-toolbar > .nav > .open').removeClass('open');
+
                     if (e.button!=0)return;
                     var border = $('<div class="drag-select-border"></div>');
                     var pageX = e.pageX;

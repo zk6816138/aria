@@ -258,6 +258,7 @@
                                     <label for="{{'node_' + file.nodePath}}" class="allow-word-break" ng-bind="file.nodeName" title="{{file.nodeName}}"></label>
                                 </div>
                             </div>
+                            <img class="bt-file-icon" ng-src="{{file.icon}}" ng-if="!file.isDir">
                             <div class="col-sm-8" ng-if="!file.isDir" style="{{(task.multiDir ? ('padding-left: ' + (11 + 6 + file.level * 16) + 'px') : '')}}">
                                 <div class="checkbox checkbox-primary">
                                     <input id="{{'file_' + file.index}}" type="checkbox" ng-disabled="!task || !task.files || task.files.length <= 1 || (task.status !== 'waiting' && task.status !== 'paused')"

@@ -155,6 +155,15 @@
             onMainProcessNewTaskFromText: function (callback) {
                 onMainProcessMessage('new-task-from-text', callback);
             },
+            onMainProcessTaskState: function (callback) {
+                onMainProcessMessage('task-state', callback);
+            },
+            onMainSelectedTheme: function (callback) {
+                onMainProcessMessage('selected-theme', callback);
+            },
+            onMainColorChange: function (callback) {
+                onMainProcessMessage('color-change', callback);
+            },
             removeMainProcessNewTaskFromFileCallback: function (callback) {
                 removeMainProcessCallback('new-task-from-file', callback);
             },
@@ -173,6 +182,12 @@
             sendDownloadSpeedToMainProcess: function (message) {
                 sendMessageToMainProcess('download-speed', message);
             },
+            sendSkinCenterStatusToMainProcess: function(){
+                sendMessageToMainProcess('skin-center-status','');
+            },
+            sendLanguageChangeToMainProcess: function(message){
+                sendMessageToMainProcess('language-change',message);
+            },
             setApplicationMenu: function () {
                 if (menu.setApplicationMenu) {
                     menu.setApplicationMenu({
@@ -188,6 +203,8 @@
                         labels: {
                             ShowAriaNgNative: ariaNgLocalizationService.getLocalizedText(core.mainWindow.isVisible()?'tray.HideAriaNgNative':'tray.ShowAriaNgNative'),
                             ShowFloatWindow: ariaNgLocalizationService.getLocalizedText(config.showFloat?'tray.HideFloatWindow':'tray.ShowFloatWindow'),
+                            StartAllTask: ariaNgLocalizationService.getLocalizedText('tray.StartAllTask'),
+                            StopAllTask: ariaNgLocalizationService.getLocalizedText('tray.StopAllTask'),
                             Exit: ariaNgLocalizationService.getLocalizedText('tray.Exit')
                         }
                     });
@@ -199,6 +216,8 @@
                         labels: {
                             ShowAriaNgNative: ariaNgLocalizationService.getLocalizedText(core.mainWindow.isVisible()?'tray.HideAriaNgNative':'tray.ShowAriaNgNative'),
                             ShowFloatWindow: ariaNgLocalizationService.getLocalizedText(config.showFloat?'tray.HideFloatWindow':'tray.ShowFloatWindow'),
+                            StartAllTask: ariaNgLocalizationService.getLocalizedText('tray.StartAllTask'),
+                            StopAllTask: ariaNgLocalizationService.getLocalizedText('tray.StopAllTask'),
                             Exit: ariaNgLocalizationService.getLocalizedText('tray.Exit')
                         }
                     });
@@ -248,6 +267,9 @@
                         })
                     })
                 }
+            },
+            getCustomColors: function () {
+                return config.getCustomColors();
             }
         };
     }]);

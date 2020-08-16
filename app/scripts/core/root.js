@@ -1,7 +1,17 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').run(['$window', '$rootScope', '$location', '$document', 'ariaNgCommonService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgSettingService', 'aria2TaskService', 'ariaNgNativeElectronService', function ($window, $rootScope, $location, $document, ariaNgCommonService, ariaNgLocalizationService, ariaNgLogService, ariaNgSettingService, aria2TaskService, ariaNgNativeElectronService) {
+    angular.module('ariaNg').run(['$window', '$rootScope', '$location', '$document', 'ariaNgCommonService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgSettingService', 'aria2TaskService', 'ariaNgNativeElectronService','ariaNgStorageService', function ($window, $rootScope, $location, $document, ariaNgCommonService, ariaNgLocalizationService, ariaNgLogService, ariaNgSettingService, aria2TaskService, ariaNgNativeElectronService,ariaNgStorageService) {
+
+        var theme = ariaNgStorageService.get('Theme');
+        $rootScope.mainTheme = (theme == null || theme == 'default' || theme == 'custom-theme') ? theme : (theme + ' theme');
+
+        $rootScope.customColors = {};
+        var customColors = ariaNgNativeElectronService.getCustomColors();
+        customColors.forEach((item)=>{
+            var store = ariaNgStorageService.get(`CustomTheme.${item.name}`);
+            $rootScope.customColors[item.name] = store ? store : item.default;
+        })
         var isUrlMatchUrl2 = function (url, url2) {
             if (url === url2) {
                 return true;
@@ -61,6 +71,7 @@
 
         var setNavbarSelected = function (location) {
             angular.element('section.sidebar > ul li').removeClass('active');
+            angular.element('section.sidebar > ul li').removeClass('menu-open');
             angular.element('section.sidebar > ul > li[data-href-match]').each(function (index, element) {
                 var match = angular.element(element).attr('data-href-match');
 
@@ -74,8 +85,13 @@
 
                 if (isUrlMatchUrl2(match, location)) {
                     angular.element(element).addClass('active').parent().parent().addClass('active');
+                    angular.element(element).addClass('active').parent().parent().addClass('menu-open');
                 }
             });
+
+            if (location.indexOf('/settings/aria2/')!=0){
+                $('.treeview-menu').css('display','none');
+            }
         };
 
         var initContentWrapper = function () {
@@ -406,6 +422,7 @@
         };
 
         $rootScope.useCustomAppTitle = ariaNgNativeElectronService.useCustomAppTitle();
+        $rootScope.customAppTitleClassName = $rootScope.useCustomAppTitle ? 'custom-app-title' : '';
         $rootScope.nativeWindowContext.maximized = ariaNgNativeElectronService.isMaximized();
 
         ariaNgNativeElectronService.onMainWindowMaximize(function () {
@@ -431,6 +448,16 @@
 
         ariaNgNativeElectronService.onMainProcessSelectAll(function () {
             $rootScope.taskContext.selectAll();
+            $rootScope.$apply();
+        })
+
+        ariaNgNativeElectronService.onMainSelectedTheme(function (e,arg) {
+            $rootScope.mainTheme = (arg == 'default' || arg == 'custom-theme') ? arg : (arg + ' theme');
+            $rootScope.$apply();
+        })
+
+        ariaNgNativeElectronService.onMainColorChange(function (e,arg) {
+            $rootScope.customColors[arg.name] = arg.color;
             $rootScope.$apply();
         })
 

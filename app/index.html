@@ -31,8 +31,129 @@
     <link rel="stylesheet" href="styles/controls/angular-promise-buttons.css"/>
     <link rel="stylesheet" href="styles/theme/default.css">
     <link rel="stylesheet" href="styles/theme/default-app-title.css">
+    <link rel="stylesheet" href="styles/theme/theme.css">
+
+    <!--阿里云图标库-->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_8j9i40443qd.css">
+
+    <style ng-if="mainTheme=='custom-theme'">
+        .skin-aria-ng.custom-theme .sidebar-menu > li:hover > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview > ul.treeview-menu > li > a:hover{
+            background-color: {{customColors.MainHoverColor}};
+        }
+
+        .skin-aria-ng.custom-theme .sidebar-menu > li.active > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview > ul.treeview-menu > li.active > a{
+            background-color: {{customColors.MainActiveColor}};
+        }
+
+        .skin-aria-ng.custom-theme .main-header .logo,
+        .skin-aria-ng.custom-theme .main-sidebar,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview > ul.treeview-menu,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview.active > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview.active:hover > a{
+            background-color: {{customColors.MainColor}}!important;
+            transition: background 0.6s ease;
+        }
+
+        .skin-aria-ng.custom-theme .sidebar-menu > li.header{
+            background-color: {{customColors.MainActiveColor}};
+            color: rgba(255,255,255,.6);
+            opacity: .7;
+        }
+
+        .skin-aria-ng.custom-theme .sidebar-menu > li > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview > ul.treeview-menu > li > a{
+            color: {{customColors.MenuNormalColor}};
+        }
+
+        .skin-aria-ng.custom-theme .sidebar-menu > li:hover > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview > ul.treeview-menu > li:hover > a {
+            color: #fff;
+        }
+
+        .skin-aria-ng.custom-theme .sidebar-menu > li.active > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview.active > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview.active:hover > a,
+        .skin-aria-ng.custom-theme .sidebar-menu > li.treeview > ul.treeview-menu > li.active > a{
+            color: {{customColors.MenuActiveColor}};
+        }
+
+        .skin-aria-ng.custom-theme .main-header .navbar .nav > li > a:hover,
+        .skin-aria-ng.custom-theme .main-footer > .navbar > .navbar-toolbar > .nav > li > a:hover{
+            color: {{customColors.ToolbarHoverColor}};
+        }
+
+        .skin-aria-ng.custom-theme .main-header .navbar .nav > li > a:active,
+        .skin-aria-ng.custom-theme .main-header .navbar .nav .open > a,
+        .skin-aria-ng.custom-theme .main-header .navbar .nav .open > a:hover,
+        .skin-aria-ng.custom-theme .main-footer > .navbar > .navbar-toolbar > .nav > li > a:active,
+        .skin-aria-ng.custom-theme .main-footer > .navbar > .navbar-toolbar > .nav > .open > a,
+        .skin-aria-ng.custom-theme .main-footer > .navbar > .navbar-toolbar > .nav > .open > a:hover{
+            color: {{customColors.ToolbarActiveColor}};
+        }
+
+        .skin-aria-ng.custom-theme .main-header .navbar-app-title .navbar-nav > li > a:hover{
+            color: {{customColors.ToolbarHoverColor}}!important;
+        }
+
+        .skin-aria-ng.custom-theme .main-header .navbar-app-title .navbar-nav > li > a:active,
+        .skin-aria-ng.custom-theme .main-header .navbar-app-title .navbar-nav > li > a:focus{
+            color: {{customColors.ToolbarActiveColor}}!important;;
+        }
+
+        .skin-aria-ng.custom-theme .navbar-searchbar input{
+            background: {{customColors.SearchbarNormalColor}};
+        }
+        .skin-aria-ng.custom-theme .navbar-searchbar input:hover{
+            background: {{customColors.SearchbarHoverColor}};
+        }
+        .skin-aria-ng.custom-theme .navbar-searchbar input:focus{
+            background: #FCFCFC;
+            border-color: {{customColors.MainColor}};
+        }
+
+        .skin-aria-ng.custom-theme .navbar-searchbar .fa-search{
+            color: {{customColors.MainColor}};
+            opacity: .5;
+        }
+
+        .skin-aria-ng.custom-theme .task-table > .task-table-body > div.row:hover {
+            background-color: {{customColors.TaskHoverColor}};
+            border-top-color: {{customColors.TaskBorderColor}};
+            border-bottom-color: {{customColors.TaskBorderColor}};
+        }
+
+        .skin-aria-ng.custom-theme .task-table > .task-table-body > div.row[data-selected=true]{
+            background-color: {{customColors.TaskSelectedColor}};
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+
+        .skin-aria-ng.custom-theme .task-table .task-right-arrow i,
+        .skin-aria-ng.custom-theme .row.gu-mirror .task-right-arrow i{
+            color: {{customColors.TaskArrowColor}};
+            transition: background 0.6s ease;
+        }
+
+        .skin-aria-ng.custom-theme .task-table .progress-bar-primary,
+        .skin-aria-ng.custom-theme .row.gu-mirror .progress-bar-primary{
+            background-color: {{customColors.TaskProcessColor}};
+            transition: background 0.6s ease;
+        }
+
+        .skin-aria-ng.custom-theme .task-table .progress,
+        .skin-aria-ng.custom-theme .row.gu-mirror .progress{
+            border-color: {{customColors.TaskProcessBorderColor}};
+            transition: background 0.6s ease;
+        }
+
+        .skin-aria-ng.custom-theme .row.gu-mirror{
+            background-color: {{customColors.TaskMirrorColor}}!important;
+        }
+    </style>
 </head>
-<body class="hold-transition skin-aria-ng sidebar-mini fixed ng-cloak" ng-class="{'custom-app-title': useCustomAppTitle}">
+<body class="hold-transition skin-aria-ng sidebar-mini fixed ng-cloak" ng-class="[customAppTitleClassName,mainTheme]">
 <div id="dropzone" class="dropzone">
     <div id="dropzone-filezone" class="dropzone-filezone"></div>
     <div class="dropzone-tip-container">
@@ -45,6 +166,7 @@
     </div>
 </div>
 <div class="wrapper" ng-controller="MainController" ng-swipe-left="swipeActions.leftSwipe()" ng-swipe-right="swipeActions.rightSwipe()" ng-swipe-disable-mouse>
+    <div class="content-mask"></div>
     <header class="main-header">
         <div class="logo">
             <div class="logo-mini">AriaNg</div>
@@ -68,6 +190,11 @@
         <nav class="navbar navbar-static-top" role="navigation">
             <div class="navbar-app-title pull-right">
                 <ul class="nav navbar-nav">
+                    <li>
+                        <a class="toolbar btn-title-minimize" title="{{'SkinCenter' | translate}}" ng-click="skinCenter()">
+                            <i class="iconfont icon-skin"></i>
+                        </a>
+                    </li>
                     <li>
                         <a class="toolbar btn-title-minimize" title="{{'Minimize' | translate}}" ng-click="minimizeWindow()">
                             <i class="fa fa-window-minimize"></i>
@@ -253,9 +380,9 @@
                         </li>
                     </ul>
                 </li>
-                <li class="ng-cloak" data-href-match="/debug" ng-if="enableDebugMode()">
-                    <a href="javascript:;" ng-click="goto('/debug')"><i class="fa fa-wrench"></i> <span translate>AriaNg Debug Console</span></a>
-                </li>
+<!--                <li class="ng-cloak" data-href-match="/debug" ng-if="enableDebugMode()">-->
+<!--                    <a href="javascript:;" ng-click="goto('/debug')"><i class="fa fa-wrench"></i> <span translate>AriaNg Debug Console</span></a>-->
+<!--                </li>-->
                 <li data-href-match="/status">
                     <a href="javascript:;" ng-click="goto('/status')">
                         <span class="label pull-right" ng-if="globalStatusContext.isEnabled || isCurrentRpcUseWebSocket" ng-class="{'label-primary': taskContext.rpcStatus === 'Connecting', 'label-success': taskContext.rpcStatus === 'Connected', 'label-danger': taskContext.rpcStatus === 'Disconnected'}" ng-bind="taskContext.rpcStatus | translate"></span>
@@ -322,7 +449,7 @@
     }
 </script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-<script src="../node_modules/angular/angular.js"></script>
+<script src="../node_modules/angular/angular.min.js"></script>
 <script src="../node_modules/angular-route/angular-route.min.js"></script>
 <script src="../node_modules/angular-sanitize/angular-sanitize.min.js"></script>
 <script src="../node_modules/angular-touch/angular-touch.min.js"></script>

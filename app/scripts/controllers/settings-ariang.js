@@ -178,7 +178,7 @@
             if (ariaNgSettingService.setLanguage(value)) {
                 ariaNgLocalizationService.applyLanguage(value);
             }
-
+            ariaNgNativeElectronService.sendLanguageChangeToMainProcess(value);
             $scope.updateTitlePreview();
         };
 
