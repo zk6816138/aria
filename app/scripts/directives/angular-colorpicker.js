@@ -281,7 +281,7 @@ angular.module('ui.colorpicker', [])
         };
     })
 
-.directive('colorpicker', ['$document', '$compile','colorpicker.transColor', 'colorpicker.slider', 'colorpicker.helper', function($document, $compile,Color, Slider, Helper) {
+.directive('colorpicker', ['$document', '$compile','colorpicker.transColor', 'colorpicker.slider', 'colorpicker.helper','$timeout', function($document, $compile,Color, Slider, Helper,$timeout) {
     'use strict';
     return {
         restrict: 'AE',
@@ -497,50 +497,8 @@ angular.module('ui.colorpicker', [])
             };
 
             var getColorpickerTemplatePosition = function() {
-                var positionValue;
-                var colorpickerWidth = $colorpicker.width();
-                var colorpickerHeight = $colorpicker.height();
-                var positionOfViewport = elem[0].getBoundingClientRect();
-                var pageX = positionOfViewport.left;
-                var pageY = positionOfViewport.top;
-                var winWidth = $(window).width();
-                var winHeight = $(window).height();
-
-                $colorpicker.removeClass('position-top');
-                $colorpicker.removeClass('position-right');
-                $colorpicker.removeClass('position-bottom');
-                $colorpicker.removeClass('position-left');
-
-                if (pageX > colorpickerWidth && winHeight - pageY >= colorpickerHeight) {
-                    positionValue = {
-                        'top': pageY - 6,
-                        'left': pageX - colorpickerWidth + 10
-                    };
-                    $colorpicker.addClass('position-left');
-                } else if (pageX < colorpickerWidth && winHeight - pageY >= colorpickerHeight) {
-                    positionValue = {
-                        'top': pageY - 6,
-                        'left': pageX + 20
-                    };
-                    $colorpicker.addClass('position-right');
-                } else if (pageX > colorpickerWidth && winHeight - pageY < colorpickerHeight) {
-                    positionValue = {
-                        'top': pageY - colorpickerHeight + 35,
-                        'left': pageX - colorpickerWidth + 10
-                    };
-                    $colorpicker.addClass('position-top');
-                } else {
-                    positionValue = {
-                        'top': pageY - colorpickerHeight + 35,
-                        'left': pageX + 20
-                    };
-                    $colorpicker.addClass('position-bottom');
-                }
-
-                return {
-                    'top': positionValue.top + 'px',
-                    'left': positionValue.left + 'px'
-                };
+                $colorpicker.removeClass('colorpicker-ani-abs');
+                $colorpicker.addClass('colorpicker-ani');
             };
 
             var showColorpickerTemplate = function(event) {
@@ -553,7 +511,7 @@ angular.module('ui.colorpicker', [])
                     $scope.show = true;
                     $scope.historyColorboxs = cookieColorArr;
                 });
-                // $colorpicker.css(getColorpickerTemplatePosition());
+                getColorpickerTemplatePosition();
                 $mask.css({
                     'z-index': parseInt(new Date().getTime(), 10)
                 });
@@ -572,7 +530,11 @@ angular.module('ui.colorpicker', [])
             });
             var hideColorpickerTemplate = function(flag) {
                 elem.parent('.color-btn').removeClass('selected');
-                $scope.show = false;
+                $colorpicker.removeClass('colorpicker-ani');
+                $colorpicker.addClass('colorpicker-ani-abs');
+                $timeout(function () {
+                    $scope.show = false;
+                },400)
                 if (flag !== "cancel") {
                     setColorCookie();
                 }

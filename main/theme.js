@@ -52,6 +52,9 @@ let init = function (parentWindow=null) {
     electronLocalshortcut.register(core.themeWindow, 'F12', () => {
         core.themeWindow.webContents.openDevTools();
     });
+    electronLocalshortcut.register(core.themeWindow, 'Esc', () => {
+        close();
+    });
 }
 
 let show = function(parent){

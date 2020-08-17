@@ -399,4 +399,14 @@ $task-mirror-rgb: (209,162,255),(253,232,177),(167,211,255),(236,194,176),(185,2
     .row.gu-mirror{
         background-color: rgba(var(--task-mirror-rgb),.5)!important;
     }
+
+    .nav-tabs-custom > .nav-tabs > li > a:hover,
+    .nav-tabs-custom > .nav-tabs > li:hover > a{
+        color: var(--toolbar-hover-color);
+    }
+    .nav-tabs-custom > .nav-tabs > li.active,
+    .nav-tabs-custom > .nav-tabs > li.active > a{
+        color: var(--toolbar-active-color);
+        border-bottom-color: var(--toolbar-active-color);
+    }
 }

@@ -7,6 +7,34 @@
     -webkit-app-region: no-drag;
     box-shadow: 0 0 5px rgba(0,0,0,.5);
 }
+.colorpicker-ani{
+    animation: ani-colorpicker-down .4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.colorpicker-ani-abs{
+    animation: ani-colorpicker-down-abs .4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+@keyframes ani-colorpicker-down{
+    0% {
+        top: -50%;
+        opacity: 0
+    }
+
+    100% {
+        top: 50%;
+        opacity: 1
+    }
+}
+@keyframes ani-colorpicker-down-abs{
+    0% {
+        top: 50%;
+        opacity: 1
+    }
+
+    100% {
+        top: -50%;
+        opacity: 0
+    }
+}
 .colorpicker-mask{
     -webkit-app-region: no-drag;
 }

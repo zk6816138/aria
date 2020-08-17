@@ -1,6 +1,6 @@
 var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
 
-    .controller('themeCtrl',function ($scope, $translate) {
+    .controller('themeCtrl',function ($rootScope,$scope, $translate, $timeout) {
         var options = JSON.parse(localStorage.getItem('AriaNg.Options'));
         $translate.use(options ? options.language : 'zh_Hans');
 
@@ -9,6 +9,7 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
         $scope.colors = remote.require('./config').getCustomColors();
         $scope.ipcRenderer = electron.ipcRenderer;
         $scope.confirmShow = false;
+        $rootScope.currentColor = JSON.parse(localStorage.getItem('AriaNg.CustomTheme.MainColor')) || '';
 
         $scope.ipcRenderer.on('language-change', function (e,resp) {
             $translate.use(resp);
@@ -22,9 +23,11 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
             if ($scope.currentTheme == 'custom-theme'){
                 $scope.selectedIndex = null;
                 $scope.tabIndex = 1;
+                angular.element('.header .reset').show();
             }
             else {
                 $scope.tabIndex = 0;
+                angular.element('.header .reset').hide();
             }
         })
 
@@ -38,9 +41,11 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
         $scope.selectTab = function(index){
             $scope.tabIndex = index;
             if (index == 0){
+                angular.element('.header .reset').fadeOut(500);
                 $scope.ipcRenderer.send('selected-theme',$scope.currentTheme);
             }
             else {
+                angular.element('.header .reset').fadeIn(500);
                 $scope.ipcRenderer.send('selected-theme','custom-theme');
             }
         }
@@ -59,10 +64,15 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
             })
             localStorage.setItem('AriaNg.Theme',JSON.stringify('custom-theme'));
             $scope.$emit('current-theme','custom-theme');
+            $rootScope.currentColor = $scope.colors[0].default;
         }
+
+        $timeout(function () {
+            angular.element('.content-body .content').css({transition: 'transform .5s ease'});
+        },500)
     })
 
-    .controller('customCtrl',function ($scope) {
+    .controller('customCtrl',function ($rootScope,$scope) {
         $scope.colors.forEach((item)=>{
             var store = localStorage.getItem(`AriaNg.CustomTheme.${item.name}`);
             item.color = store ? JSON.parse(store) : item.default;
@@ -73,6 +83,9 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
             localStorage.setItem('AriaNg.Theme',JSON.stringify('custom-theme'));
             localStorage.setItem(`AriaNg.CustomTheme.${resp.name}`,JSON.stringify(resp.color));
             $scope.$emit('current-theme','custom-theme');
+            if (resp.name == 'MainColor'){
+                $rootScope.currentColor = resp.color;
+            }
         })
     })
 

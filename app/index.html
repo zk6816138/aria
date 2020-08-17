@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="ariaNg">
+<html lang="zh" ng-app="ariaNg">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -150,6 +150,16 @@
 
         .skin-aria-ng.custom-theme .row.gu-mirror{
             background-color: {{customColors.TaskMirrorColor}}!important;
+        }
+
+        .skin-aria-ng.custom-theme .nav-tabs-custom > .nav-tabs > li > a:hover,
+        .skin-aria-ng.custom-theme .nav-tabs-custom > .nav-tabs > li:hover > a{
+            color: {{customColors.ToolbarHoverColor}};
+        }
+        .skin-aria-ng.custom-theme .nav-tabs-custom > .nav-tabs > li.active,
+        .skin-aria-ng.custom-theme .nav-tabs-custom > .nav-tabs > li.active > a{
+            color: {{customColors.ToolbarActiveColor}};
+            border-bottom-color: {{customColors.ToolbarActiveColor}};
         }
     </style>
 </head>

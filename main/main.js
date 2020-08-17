@@ -172,6 +172,9 @@ app.on('ready', () => {
             core.mainWindow.webContents.openDevTools();
         });
     // }
+    electronLocalshortcut.register(core.mainWindow, 'Esc', () => {
+        theme.close();
+    });
 
     menu.init();
     tray.init();

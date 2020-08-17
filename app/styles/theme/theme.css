@@ -875,5 +875,14 @@
 .skin-aria-ng.theme .row.gu-mirror {
   background-color: rgba(var(--task-mirror-rgb), 0.5) !important;
 }
+.skin-aria-ng.theme .nav-tabs-custom > .nav-tabs > li > a:hover,
+.skin-aria-ng.theme .nav-tabs-custom > .nav-tabs > li:hover > a {
+  color: var(--toolbar-hover-color);
+}
+.skin-aria-ng.theme .nav-tabs-custom > .nav-tabs > li.active,
+.skin-aria-ng.theme .nav-tabs-custom > .nav-tabs > li.active > a {
+  color: var(--toolbar-active-color);
+  border-bottom-color: var(--toolbar-active-color);
+}
 
 /*# sourceMappingURL=theme.css.map */

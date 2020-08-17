@@ -12,9 +12,16 @@
 
     <!--阿里云图标库-->
     <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_8j9i40443qd.css">
+
+    <style ng-if="currentTheme=='custom-theme'">
+        body.custom-theme .body-mask{
+            background-image: linear-gradient(to bottom, {{currentColor}} -60%,transparent 25%, transparent 100%);
+        }
+    </style>
 </head>
-<body>
+<body ng-class="currentTheme">
     <div class="wrapper">
+        <div class="body-mask"></div>
         <div class="header">
             <ul>
                 <li><a href="javascript:;" ng-class="{'selected':tabIndex==0}" ng-click="selectTab(0)" translate>Hot Skin</a></li>
@@ -23,13 +30,13 @@
             <a href="javascript:;" class="close" ng-click="close()" title="{{'Close' | translate}}">
                 <i class="fa fa-lg fa-close"></i>
             </a>
-            <a href="javascript:;" class="reset" ng-style="{display:tabIndex==1?'block':'none'}" ng-click="confirmShow=true" title="{{'Reset All Colors' | translate}}" >
+            <a href="javascript:;" class="reset" ng-click="confirmShow=true" title="{{'Reset All Colors' | translate}}" >
                 <i class="iconfont icon-zhongzhi"></i>
             </a>
         </div>
         <div class="content-body">
-            <div class="content hot-skin" ng-style="{display:(tabIndex==0?'block':'none')}" theme-list></div>
-            <div class="content my-skin" ng-style="{display:(tabIndex==1?'flex':'none')}" ng-controller="customCtrl">
+            <div class="content hot-skin" ng-style="{transform: tabIndex==0?'translateX(0px)':'translateX(-450px)'}" theme-list></div>
+            <div class="content custom-skin" ng-style="{transform: tabIndex==1?'translate(0px,-228px)':'translate(450px,-228px)'}" ng-controller="customCtrl">
                 <div class="color-btn" ng-repeat="item in colors">
                     <span class="color-title" ng-if="$index%2!=0" title="{{item.title | translate}}" translate>{{item.title}}</span>
                     <colorpicker color="item.color" color-type="{{item.trans?'rgba':'rgb'}}" default="{{item.default}}" type-name="{{item.name}}"></colorpicker>

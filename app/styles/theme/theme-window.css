@@ -8,7 +8,7 @@ body{
     padding: 0;
     overflow: hidden;
 }
-.wrapper{
+.wrapper,.body-mask{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -18,6 +18,15 @@ body{
     height: calc(100% - 10px);
     box-shadow: 0 0 5px rgba(0,0,0,.5);
     border-radius: 2px;
+    transition: background .6s ease;
+}
+.body-mask{
+    box-shadow: none;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    transition: background .6s ease;
 }
 .header{
     -webkit-app-region: drag;
@@ -46,7 +55,7 @@ body{
     position: absolute;
     width: 98%;
     height: 2px;
-    background: #39AEC6;
+    background: #037BFF;
     left: 50%;
     transform: translateX(-50%);
     bottom: 0;
@@ -79,9 +88,14 @@ body{
 }
 .content-body{
     padding: 15px 8px 0 8px;
+    overflow: hidden;
+    position: relative;
 }
-.content-body .content{
-    display: none;
+.content-body .hot-skin{
+    transform: translateX(0px);
+}
+.content-body .custom-skin{
+    transform: translate(450px,-228px);
 }
 .content-body .hot-skin .row .item{
     height: 72px;
@@ -113,22 +127,22 @@ body{
     width: 100%;
     height: 100%;
 }
-.my-skin{
+.custom-skin{
     display: flex;
     flex-wrap: wrap;
 }
-.my-skin .color-btn{
+.custom-skin .color-btn{
     flex-basis: 50%;
     width: 50%;
     padding: 2px 0 2px 5px;
     display: flex;
     align-items: center;
 }
-.my-skin .color-btn:nth-of-type(even){
+.custom-skin .color-btn:nth-of-type(even){
     padding: 2px 5px 2px 0;
     justify-content: flex-end;
 }
-.my-skin .color-btn .color-title{
+.custom-skin .color-btn .color-title{
     color: #555;
     font-size: 14px;
     margin-left: 5px;
@@ -136,15 +150,15 @@ body{
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.my-skin .color-btn:nth-of-type(even) .color-title{
+.custom-skin .color-btn:nth-of-type(even) .color-title{
     margin-left: 0;
     margin-right: 5px;
 }
-.my-skin .color-btn.selected{
+.custom-skin .color-btn.selected{
     background: #999;
     border-radius: 3px;
 }
-.my-skin .color-btn.selected .color-title{
+.custom-skin .color-btn.selected .color-title{
     color: #fff;
 }
 .confirm-mask{
@@ -205,8 +219,9 @@ body{
     text-decoration: none;
     color: #fff;
     background: #C1C1C1;
-    padding: 6px 20px;
+    padding: 6px 0;
     border-radius: 3px;
+    width: 70px;
 }
 .confirm-wrapper .btns .btn.cancel{
     margin-right: 10px;
@@ -226,4 +241,54 @@ body{
 }
 .confirm-wrapper .btns .btn.ok:active{
     background: #D1860F;
+}
+
+body.default .body-mask{
+    background-color: transparent;
+}
+body.atrovirens .body-mask{
+    background-image: linear-gradient(to bottom, #1F606D -60%,transparent 25%, transparent 100%);
+}
+body.blue .body-mask{
+    background-image: linear-gradient(to bottom, #1B4876 -60%,transparent 25%, transparent 100%);
+}
+body.brown .body-mask{
+    background-image: linear-gradient(to bottom, #776613 -60%,transparent 25%, transparent 100%);
+}
+body.red .body-mask{
+    background-image: linear-gradient(to bottom, #711B1B -60%,transparent 25%, transparent 100%);
+}
+body.violet .body-mask{
+    background-image: linear-gradient(to bottom, #4F1E7D -60%,transparent 25%, transparent 100%);
+}
+
+.wrapper{
+    background-position: 0 0;
+    background-size: 100% 100%;
+}
+body.theme-img0 .wrapper{
+    background-image: url(../../../assets/bg/bkg0.jpg);
+}
+body.theme-img1 .wrapper{
+    background-image: url(../../../assets/bg/bkg1.jpg);
+}
+body.theme-img2 .wrapper{
+    background-image: url(../../../assets/bg/bkg2.jpg);
+}
+body.theme-img3 .wrapper{
+    background-image: url(../../../assets/bg/bkg3.jpg);
+}
+body.theme-img4 .wrapper{
+    background-image: url(../../../assets/bg/bkg4.jpg);
+}
+body.theme-img5 .wrapper{
+    background-image: url(../../../assets/bg/bkg5.jpg);
+}
+body.theme-img0 .wrapper .body-mask,
+body.theme-img1 .wrapper .body-mask,
+body.theme-img2 .wrapper .body-mask,
+body.theme-img3 .wrapper .body-mask,
+body.theme-img4 .wrapper .body-mask,
+body.theme-img5 .wrapper .body-mask{
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.75) 0%,#fff 25%, #fff 100%);
 }

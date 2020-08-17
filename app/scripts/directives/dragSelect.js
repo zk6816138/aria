@@ -14,11 +14,7 @@
                         scope.$apply();
                     }
 
-                    $('#task-table-contextmenu.open').removeClass('open');
-
-                    $('.main-header .navbar .nav .open').removeClass('open');
-
-                    $('.main-footer > .navbar > .navbar-toolbar > .nav > .open').removeClass('open');
+                    $(element).trigger('click');
 
                     if (e.button!=0)return;
                     var border = $('<div class="drag-select-border"></div>');
