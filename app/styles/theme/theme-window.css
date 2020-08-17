@@ -265,6 +265,35 @@ body.violet .body-mask{
 .wrapper{
     background-position: 0 0;
     background-size: 100% 100%;
+    top: -50%;
+}
+.wrapper-open{
+    animation: ani-wrapper-open .25s ease 1 forwards;
+}
+.wrapper-close{
+    animation: ani-wrapper-close .25s ease 1 forwards;
+}
+@keyframes ani-wrapper-open{
+    0% {
+        top: -50%;
+        opacity: 0;
+    }
+
+    100% {
+        top: 50%;
+        opacity: 1;
+    }
+}
+@keyframes ani-wrapper-close{
+    0% {
+        top: 50%;
+        opacity: 1;
+    }
+
+    100% {
+        top: -50%;
+        opacity: 0;
+    }
 }
 body.theme-img0 .wrapper{
     background-image: url(../../../assets/bg/bkg0.jpg);

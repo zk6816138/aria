@@ -32,7 +32,18 @@
     color: #747474;
     font-size: 16px;
 }
-
+.skin-aria-ng .main-header .navbar .nav > li > a .loading-rotate{
+    display: block;
+    animation: ani-loading .8s ease infinite;
+}
+@keyframes ani-loading {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
 .skin-aria-ng .main-header .navbar .nav > li > a:hover,
 .skin-aria-ng .main-header .navbar .nav > li > a:active,
 .skin-aria-ng .main-header .navbar .nav > li > a:focus,

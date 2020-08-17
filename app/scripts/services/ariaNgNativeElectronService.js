@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').factory('ariaNgNativeElectronService', ['ariaNgLocalizationService', function (ariaNgLocalizationService) {
+    angular.module('ariaNg').factory('ariaNgNativeElectronService', ['ariaNgLocalizationService','$rootScope', function (ariaNgLocalizationService,$rootScope) {
         var electron = angular.isFunction(window.nodeRequire) ? nodeRequire('electron') : {};
         var remote = electron.remote || {
             require: function () {
@@ -164,6 +164,9 @@
             onMainColorChange: function (callback) {
                 onMainProcessMessage('color-change', callback);
             },
+            onMainThemeWindowLoaded: function (callback) {
+                onMainProcessMessage('theme-window-loaded', callback);
+            },
             removeMainProcessNewTaskFromFileCallback: function (callback) {
                 removeMainProcessCallback('new-task-from-file', callback);
             },
@@ -183,6 +186,9 @@
                 sendMessageToMainProcess('download-speed', message);
             },
             sendSkinCenterStatusToMainProcess: function(){
+                if (core.themeWindow == null){
+                    $rootScope.themeWindowLoading = true;
+                }
                 sendMessageToMainProcess('skin-center-status','');
             },
             sendLanguageChangeToMainProcess: function(message){

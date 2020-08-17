@@ -294,4 +294,5 @@ app.on('ready', () => {
     ipc.onSelectedTheme();
     ipc.onColorChange();
     ipc.onLanguageChange();
+    ipc.onThemeWindowLoaded();
 });

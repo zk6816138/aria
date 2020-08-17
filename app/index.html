@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="styles/theme/theme.css">
 
     <!--阿里云图标库-->
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_8j9i40443qd.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_fgy6lmta6iv.css">
 
     <style ng-if="mainTheme=='custom-theme'">
         .skin-aria-ng.custom-theme .sidebar-menu > li:hover > a,
@@ -202,7 +202,8 @@
                 <ul class="nav navbar-nav">
                     <li>
                         <a class="toolbar btn-title-minimize" title="{{'SkinCenter' | translate}}" ng-click="skinCenter()">
-                            <i class="iconfont icon-skin"></i>
+                            <i class="iconfont icon-skin" ng-show="!themeWindowLoading"></i>
+                            <i class="iconfont icon-loading" ng-class="{'loading-rotate':themeWindowLoading}" ng-show="themeWindowLoading"></i>
                         </a>
                     </li>
                     <li>

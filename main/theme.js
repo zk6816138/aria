@@ -1,12 +1,10 @@
 'use strict';
 const electron = require('electron');
-const config = require('./config');
 const core = require('./core');
 const electronLocalshortcut = require('electron-localshortcut');
 const url = require('url');
 const path = require('path');
 const ipc = require('./ipc')
-const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
 let getIndexUrl = function () {
@@ -71,7 +69,7 @@ let show = function(parent){
 
 let close = function(){
     if (core.themeWindow != null){
-        core.themeWindow.destroy();
+        ipc.sendThemeWindowClose();
     }
 }
 module.exports = {

@@ -1,6 +1,13 @@
 var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
 
     .controller('themeCtrl',function ($rootScope,$scope, $translate, $timeout) {
+        $timeout(function () {
+            angular.element('.wrapper').addClass('wrapper-open');
+            $timeout(function () {
+                $scope.ipcRenderer.send('theme-window-loaded');
+            },300)
+        },0)
+
         var options = JSON.parse(localStorage.getItem('AriaNg.Options'));
         $translate.use(options ? options.language : 'zh_Hans');
 
@@ -13,6 +20,10 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
 
         $scope.ipcRenderer.on('language-change', function (e,resp) {
             $translate.use(resp);
+        })
+
+        $scope.ipcRenderer.on('theme-window-close', function () {
+            $scope.close();
         })
 
         $scope.selectedIndex = null;
@@ -51,7 +62,10 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
         }
 
         $scope.close = function () {
-            remote.getCurrentWindow().destroy();
+            angular.element('.wrapper').removeClass('wrapper-open').addClass('wrapper-close');
+            $timeout(function () {
+                remote.getCurrentWindow().destroy();
+            },300)
         }
 
         $scope.reset = function () {

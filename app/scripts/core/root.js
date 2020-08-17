@@ -5,7 +5,7 @@
 
         var theme = ariaNgStorageService.get('Theme');
         $rootScope.mainTheme = (theme == null || theme == 'default' || theme == 'custom-theme') ? theme : (theme + ' theme');
-
+        $rootScope.themeWindowLoading = false;
         $rootScope.customColors = {};
         var customColors = ariaNgNativeElectronService.getCustomColors();
         customColors.forEach((item)=>{
@@ -458,6 +458,11 @@
 
         ariaNgNativeElectronService.onMainColorChange(function (e,arg) {
             $rootScope.customColors[arg.name] = arg.color;
+            $rootScope.$apply();
+        })
+
+        ariaNgNativeElectronService.onMainThemeWindowLoaded(function () {
+            $rootScope.themeWindowLoading = false;
             $rootScope.$apply();
         })
 

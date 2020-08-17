@@ -56,6 +56,10 @@ let sendTaskState = function(message){
     core.mainWindow.webContents.send('task-state',message);
 }
 
+let sendThemeWindowClose = function(){
+    core.themeWindow.webContents.send('theme-window-close');
+}
+
 let onNewDropFile = function (callback) {
     ipcMain.on('new-drop-file', callback);
 };
@@ -72,6 +76,12 @@ let onDownloadSpeed = function(){
 
 let onSkinCenterStatus = function(callback){
     ipcMain.on('skin-center-status', callback);
+}
+
+let onThemeWindowLoaded = function(){
+    ipcMain.on('theme-window-loaded', function () {
+        core.mainWindow.webContents.send('theme-window-loaded');
+    });
 }
 
 let onSelectedTheme = function(){
@@ -187,5 +197,7 @@ module.exports = {
     onSkinCenterStatus: onSkinCenterStatus,
     onSelectedTheme: onSelectedTheme,
     onColorChange: onColorChange,
-    onLanguageChange: onLanguageChange
+    onLanguageChange: onLanguageChange,
+    sendThemeWindowClose: sendThemeWindowClose,
+    onThemeWindowLoaded: onThemeWindowLoaded
 };
