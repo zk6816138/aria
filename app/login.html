@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh" ng-app="loginWindow" ng-controller="loginCtrl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="styles/theme/login.css">
+
+    <!--阿里云图标库-->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_74qnlpztqde.css">
+
+    <style ng-if="mainTheme=='custom-theme'">
+        .custom-theme .wrapper{
+            background-color: {{customColors.MainColor}};
+        }
+        .custom-theme .wrapper .tab-control{
+            background-color: {{customColors.MainActiveColor}};
+        }
+        .custom-theme .wrapper .btn button:hover,.custom-theme .wrapper .btn button:active{
+            background: {{customColors.ToolbarHoverColor}};
+            border-color: {{customColors.ToolbarHoverColor}};
+        }
+    </style>
+</head>
+<body ng-class="[mainTheme,currentLanguage]">
+<div class="wrapper">
+    <div class="mask"></div>
+    <div class="header">
+        <span class="title" ng-bind="('Login' | translate).replace('　','')"></span>
+        <a href="javascript:;" class="close" ng-click="close()" title="{{'Close' | translate}}">
+            <i class="fa fa-lg fa-close"></i>
+        </a>
+    </div>
+    <div class="logo">
+        <img src="../assets/user/avatar_hover.png">
+    </div>
+    <div class="tab-control">
+        <a href="javascript:;" ng-class="{'selected':tabIndex==0}" ng-click="tabIndex=0" ng-bind="'Login' | translate"></a>
+        <a href="javascript:;" ng-class="{'selected':tabIndex==1}" ng-click="tabIndex=1" ng-bind="'Register' | translate"></a>
+    </div>
+    <div>
+        <div class="login-form" ng-style="{display:tabIndex==0?'flex':'none'}">
+            <form ng-submit="loginSubmit()">
+                <label for="login-account">
+                    <span translate>Account</span>
+                    <input type="text" maxlength="20" id="login-account" ng-clear
+                           valid-form="{text:'The Account Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern}" ng-model="loginData.account"
+                           placeholder="{{'Enter Your Account' | translate}}">
+                </label>
+                <label for="login-password">
+                    <span translate>Password</span>
+                    <input type="password" maxlength="20" id="login-password" ng-clear
+                           valid-form="{text:'The Password Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern}" ng-model="loginData.password"
+                           placeholder="{{'Enter Your Password' | translate}}">
+                </label>
+                <div class="option">
+                    <div class="iconfont" ng-class="[rememberPassword?'icon-chk-true':'icon-chk-false']" ng-click="loginOption('rememberPassword')"><span translate>Remember Password</span></div>
+                    <div class="iconfont" ng-class="[autoLogin?'icon-chk-true':'icon-chk-false']" ng-click="loginOption('autoLogin')"><span translate>Auto Login</span></div>
+                </div>
+                <div class="btn">
+                    <button translate>Login</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="register-from" ng-style="{display:tabIndex==1?'flex':'none'}">
+            <form ng-submit="registerSubmit()">
+                <label for="reg-account">
+                    <span translate>Account</span>
+                    <input type="text" maxlength="20" id="reg-account" ng-clear
+                           valid-form="{text:'The Account Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern}" ng-model="registerData.account"
+                           placeholder="{{'Enter Your Account' | translate}}">
+                </label>
+                <label for="reg-password">
+                    <span translate>Password</span>
+                    <input type="password" maxlength="20" id="reg-password" ng-clear
+                           valid-form="{text:'The Password Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern}" ng-model="registerData.password"
+                           placeholder="{{'Enter Your Password' | translate}}">
+                </label>
+                <label for="reg-confirm-password">
+                    <span translate>Confirm</span>
+                    <input type="password" maxlength="20" id="reg-confirm-password" ng-clear
+                           valid-form="{text:'The Confirm Password Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern}"
+                           ng-model="registerData.confirmPassword" placeholder="{{'Enter Password Again' | translate}}">
+                </label>
+                <div class="btn">
+                    <button translate>Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    if (window.require) {
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+    }
+</script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+<script src="scripts/modules/validForm.js"></script>
+<script src="scripts/controllers/login.js"></script>
+</html>

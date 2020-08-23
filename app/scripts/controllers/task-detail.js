@@ -229,7 +229,7 @@
             }
 
             $scope.context.currentTab = tabName;
-            $rootScope.simulateScrollReload();
+            $rootScope.simulateScroll.simulateScrollReload();
         };
 
         $rootScope.swipeActions.extentLeftSwipe = function () {

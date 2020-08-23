@@ -62,10 +62,18 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
         }
 
         $scope.close = function () {
-            angular.element('.wrapper').removeClass('wrapper-open').addClass('wrapper-close');
-            $timeout(function () {
-                remote.getCurrentWindow().destroy();
-            },300)
+            if (angular.element('.colorpicker-mask.open').length > 0){
+                angular.element('.colorpicker-mask.open').trigger('click');
+            }
+            else if (angular.element('.confirm-mask.open').length > 0) {
+                angular.element('.confirm-mask.open').trigger('click');
+            }
+            else {
+                angular.element('.wrapper').removeClass('wrapper-open').addClass('wrapper-close');
+                $timeout(function () {
+                    remote.getCurrentWindow().destroy();
+                },250)
+            }
         }
 
         $scope.reset = function () {
@@ -165,13 +173,13 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
                 scope.$watch('confirmShow',function (val) {
                     if (val){
                         confirm.show(0,function () {
-                            mask.css({opacity: 1});
+                            mask.css({opacity: 1}).addClass('open');
                             wrap.css({transform:'translate(-50%, -50%)',opacity:1});
                         })
                     }
                     else {
                         confirm.hide(300);
-                        mask.css({opacity: 0});
+                        mask.css({opacity: 0}).removeClass('open');
                         wrap.css({transform:'translate(-50%, -208%)',opacity:0});
                     }
                 })

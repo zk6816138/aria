@@ -20,6 +20,7 @@
         'oitozero.ngSweetAlert',
         'angular-clipboard',
         'inputDropdown',
-        angularDragula(angular)
+        angularDragula(angular),
+        'simulateScrollModule'
     ]);
 }());

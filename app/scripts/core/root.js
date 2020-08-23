@@ -3,6 +3,12 @@
 
     angular.module('ariaNg').run(['$window', '$rootScope', '$location', '$document', 'ariaNgCommonService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgSettingService', 'aria2TaskService', 'ariaNgNativeElectronService','ariaNgStorageService', function ($window, $rootScope, $location, $document, ariaNgCommonService, ariaNgLocalizationService, ariaNgLogService, ariaNgSettingService, aria2TaskService, ariaNgNativeElectronService,ariaNgStorageService) {
 
+        var token = ariaNgStorageService.get('token');
+        $rootScope.isLogin = false;
+        if (token){
+            //todo 验证token,获取登录状态,判断是否为自动登录
+        }
+
         var theme = ariaNgStorageService.get('Theme');
         $rootScope.mainTheme = (theme == null || theme == 'default' || theme == 'custom-theme') ? theme : (theme + ' theme');
         $rootScope.themeWindowLoading = false;
@@ -12,6 +18,10 @@
             var store = ariaNgStorageService.get(`CustomTheme.${item.name}`);
             $rootScope.customColors[item.name] = store ? store : item.default;
         })
+
+        //虚拟滚动条配置
+        $rootScope.simulateScroll = {duration:300};
+
         var isUrlMatchUrl2 = function (url, url2) {
             if (url === url2) {
                 return true;
@@ -545,11 +555,12 @@
         $rootScope.$on('$viewContentLoaded', function () {
             ariaNgNativeElectronService.sendViewLoadedMessageToMainProcess($location.path());
 
-            $rootScope.simulateScrollReload();
+            $rootScope.simulateScroll.simulateScrollReload();
         });
 
         $rootScope.$on('$translateChangeSuccess', function(event, current, previous) {
             ariaNgNativeElectronService.setMainWindowLanguage();
+            $rootScope.currentLanguage = current.language;
         });
 
         $rootScope.goto = function(url){

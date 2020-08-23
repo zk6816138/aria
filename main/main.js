@@ -14,6 +14,7 @@ const tray = require('./tray');
 const aria2c = require('./aria2c');
 const float = require('./float');
 const theme = require('./theme');
+const login = require('./login');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -179,6 +180,7 @@ app.on('ready', () => {
     menu.init();
     tray.init();
     float.init();
+    login.init(core.mainWindow);
 
     if (ipc.isContainsSupportedFileArg(filePathInCommandLine)) {
         ipc.asyncNewTaskFromFile(filePathInCommandLine);
@@ -295,4 +297,10 @@ app.on('ready', () => {
     ipc.onColorChange();
     ipc.onLanguageChange();
     ipc.onThemeWindowLoaded();
+    ipc.onLoginWindowToMainWindow();
+    ipc.onMainWindowToLoginWindow();
+
+    ipc.onOpenLoginWindow(function () {
+        login.show();
+    });
 });

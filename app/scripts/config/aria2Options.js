@@ -23,7 +23,7 @@
         },
         'log': {
             type: 'string',
-            required: true
+            required: false
         },
         'max-concurrent-downloads': {
             type: 'integer',

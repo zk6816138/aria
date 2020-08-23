@@ -194,6 +194,15 @@
             sendLanguageChangeToMainProcess: function(message){
                 sendMessageToMainProcess('language-change',message);
             },
+            sendOpenLoginWindowToMainProcess: function(){
+                sendMessageToMainProcess('open-login-window','');
+            },
+            onMainProcessLoginToMain: function (callback) {
+                onMainProcessMessage('login-to-main', callback);
+            },
+            sendMainToLoginToMainProcess: function(message){
+                sendMessageToMainProcess('main-to-login',message);
+            },
             setApplicationMenu: function () {
                 if (menu.setApplicationMenu) {
                     menu.setApplicationMenu({

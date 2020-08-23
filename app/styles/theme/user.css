@@ -1,0 +1,57 @@
+.user-box {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+  -webkit-app-region: no-drag;
+}
+.user-box:hover .avatar {
+  background-image: url("../../../assets/user/avatar_hover.png");
+}
+.user-box .avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  overflow: hidden;
+  background-color: #fff;
+  background-image: url("../../../assets/user/avatar.png");
+  background-position: 0 0;
+  background-size: 100% 100%;
+  transition: background-image 0.3s;
+  cursor: pointer;
+}
+.user-box .avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: unset;
+  margin: 0;
+  padding: 0;
+}
+.user-box .user-info .click-login {
+  font-size: 14px;
+  padding-left: 16px;
+  cursor: pointer;
+  color: #ccc;
+  animation-timing-function: ease-in-out;
+  animation-name: ani-login-text;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+body.zh_Hant .user-box .user-info .click-login, body.zh_Hans .user-box .user-info .click-login {
+  letter-spacing: 2px;
+}
+
+@keyframes ani-login-text {
+  0% {
+    color: #ccc;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0);
+  }
+  100% {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  }
+}
+
+/*# sourceMappingURL=user.css.map */

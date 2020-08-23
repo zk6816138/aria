@@ -336,7 +336,7 @@ angular.module('ui.colorpicker', [])
             var target = angular.element(document.body);
 
             var template =
-                '<div class="colorpicker-mask" ng-show="show" ng-click="select()"></div>' +
+                '<div class="colorpicker-mask" ng-class="{\'open\':show}" ng-show="show" ng-click="select()"></div>' +
                 '<div class="colorpicker dropdown" ng-show="show">' +
                 '     <div class="colorpicker-preview">' +
                 '       <div class="inner">' +

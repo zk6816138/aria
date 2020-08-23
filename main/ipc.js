@@ -60,6 +60,10 @@ let sendThemeWindowClose = function(){
     core.themeWindow.webContents.send('theme-window-close');
 }
 
+let sendLoginWindowClose = function(){
+    core.loginWindow.webContents.send('login-window-close');
+}
+
 let onNewDropFile = function (callback) {
     ipcMain.on('new-drop-file', callback);
 };
@@ -88,13 +92,15 @@ let onSelectedTheme = function(){
     ipcMain.on('selected-theme', function (e,arg) {
         core.mainWindow.webContents.send('selected-theme',arg);
         core.floatWindow.webContents.send('selected-theme',arg);
+        core.loginWindow.webContents.send('selected-theme',arg);
     });
 }
 
 let onColorChange = function(){
     ipcMain.on('color-change', function (e,arg) {
         core.mainWindow.webContents.send('color-change',arg);
-        if (arg.name=='MainColor'){
+        core.loginWindow.webContents.send('color-change',arg);
+        if (arg.name == 'MainColor'){
             core.floatWindow.webContents.send('color-change',arg);
         }
     });
@@ -102,8 +108,27 @@ let onColorChange = function(){
 
 let onLanguageChange = function(){
     ipcMain.on('language-change', function (e,arg) {
-        core.themeWindow.webContents.send('language-change',arg);
+        if (core.themeWindow != null){
+            core.themeWindow.webContents.send('language-change',arg);
+        }
         core.floatWindow.webContents.send('language-change',arg);
+        core.loginWindow.webContents.send('language-change',arg);
+    });
+}
+
+let onOpenLoginWindow = function(callback){
+    ipcMain.on('open-login-window', callback);
+}
+
+let onLoginWindowToMainWindow = function(){
+    ipcMain.on('login-to-main', function (e,arg) {
+        core.mainWindow.webContents.send('login-to-main',arg);
+    });
+}
+
+let onMainWindowToLoginWindow = function(){
+    ipcMain.on('main-to-login', function (e,arg) {
+        core.loginWindow.webContents.send('main-to-login',arg);
     });
 }
 
@@ -199,5 +224,9 @@ module.exports = {
     onColorChange: onColorChange,
     onLanguageChange: onLanguageChange,
     sendThemeWindowClose: sendThemeWindowClose,
-    onThemeWindowLoaded: onThemeWindowLoaded
+    onThemeWindowLoaded: onThemeWindowLoaded,
+    onOpenLoginWindow: onOpenLoginWindow,
+    sendLoginWindowClose: sendLoginWindowClose,
+    onLoginWindowToMainWindow: onLoginWindowToMainWindow,
+    onMainWindowToLoginWindow: onMainWindowToLoginWindow
 };

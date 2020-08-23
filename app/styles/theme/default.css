@@ -269,12 +269,8 @@
     margin-top: -1px
 }
 
-.skin-aria-ng .progress-bar-primary {
+.skin-aria-ng .progress-bar-primary,.skin-aria-ng .progress-bar-warning {
     background-color: #208fe5;
-}
-
-.skin-aria-ng .progress-bar-warning {
-    background-color: #f39c12;
 }
 
 .skin-aria-ng .icon-primary {
@@ -555,7 +551,9 @@
 /*微调样式*/
 
 .main-header .logo {
-    line-height: 74px;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
 }
 .sidebar-menu>li .label{
     margin-top: 2px;

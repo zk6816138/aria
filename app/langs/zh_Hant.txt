@@ -270,6 +270,7 @@ Maximize=最大化
 Restore Down=向下還原
 Runtime Environment=運行環境
 Create New Task=建立新工作
+Click To Login=點擊登錄
 
 [menu]
 Quit=退出 AriaNg

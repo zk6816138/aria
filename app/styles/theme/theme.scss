@@ -30,7 +30,7 @@ $task-selected-color: #C7B4E8,#F2E4B3,#ADD4F8,#EBCDB5,#B4DDF0,#DFDFDF;
 $task-border-color: #D9CAEF,#F2E7C7,#C6E5F6,#EED6CC,#CCE3EE,#DEDEDE;
 $task-arrow-color: #AF8FDE,#E4CC89,#A0BAD0,#DBA893,#93C5DB,#BABABA;
 $task-process-color: #7C48CA,#D3AC3E,#2B85E9,#C4714E,#4EA0C4,#8E8E8E;
-$task-process-border-color: #C8B3E9,#EDDCAE,#C0D0DD,#FEFDFD,#B5D7E6,#D0D0D0;
+$task-process-border-color: #C8B3E9,#EDDCAE,#C0D0DD,#E6C4B5,#B5D7E6,#D0D0D0;
 $task-mirror-rgb: (209,162,255),(253,232,177),(167,211,255),(236,194,176),(185,234,255),(184,184,184);
 
 .skin-aria-ng{
@@ -385,7 +385,9 @@ $task-mirror-rgb: (209,162,255),(253,232,177),(167,211,255),(236,194,176),(185,2
     }
 
     .task-table .progress-bar-primary,
-    .row.gu-mirror .progress-bar-primary{
+    .task-table .progress-bar-warning,
+    .row.gu-mirror .progress-bar-primary,
+    .row.gu-mirror .progress-bar-warning{
         background-color: var(--task-process-color);
         transition: background 0.6s ease;
     }

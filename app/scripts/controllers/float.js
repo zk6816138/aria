@@ -24,7 +24,7 @@
         $scope.customColor = JSON.parse(floatMainColor);
 
         var colors = {default:'#2B85E9',atrovirens:'#48B4CA',blue:'#3F8BD6',brown:'#DBC036',red:'#CF4242',violet:'#8E40DC'};
-        options.color = [colors[$scope.mainTheme]];
+        options.color = [colors[$scope.mainTheme]||'#2B85E9'];
 
         ipcRenderer.on('download-speed', function (e,resp) {
             if (!config.showFloat)return;

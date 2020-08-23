@@ -17,7 +17,6 @@ body{
     width: calc(100% - 10px);
     height: calc(100% - 10px);
     box-shadow: 0 0 5px rgba(0,0,0,.5);
-    border-radius: 2px;
     transition: background .6s ease;
 }
 .body-mask{

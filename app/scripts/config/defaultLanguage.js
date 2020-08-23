@@ -275,6 +275,7 @@
             'Restore Down': 'Restore Down',
             'Runtime Environment': 'Runtime Environment',
             'Create New Task': 'Create New Task',
+            'Click To Login': 'Click To Login',
             'menu': {
                 'Quit': 'Quit AriaNg',
             },

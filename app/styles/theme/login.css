@@ -1,0 +1,328 @@
+* {
+  -webkit-user-drag: none;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #3C4852;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  -webkit-app-region: drag;
+  transition: background 0.6s ease;
+}
+.wrapper .header {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px 0 15px;
+}
+.wrapper .header .title {
+  color: #fff;
+  font-size: 14px;
+}
+.wrapper .header .close {
+  color: #ccc;
+  padding: 3px;
+  text-decoration: none;
+  -webkit-app-region: no-drag;
+  font-size: 12px;
+  margin-bottom: 2px;
+}
+.wrapper .header .close:hover {
+  color: #f94e41;
+}
+.wrapper .header .close:active {
+  color: #bf1c00;
+}
+.wrapper .logo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 140px;
+}
+.wrapper .logo img {
+  border: 2px solid #fff;
+  display: block;
+  border-radius: 50%;
+  background-color: #fff;
+}
+.wrapper .tab-control {
+  margin-top: 11px;
+  background-color: #252C30;
+  display: flex;
+  -webkit-app-region: no-drag;
+  transition: background 0.6s ease;
+}
+.wrapper .tab-control a {
+  height: 30px;
+  line-height: 30px;
+  flex: 1;
+  text-align: center;
+  color: #aaa;
+  text-decoration: none;
+  font-size: 14px;
+}
+.wrapper .tab-control a:active, .wrapper .tab-control a.selected {
+  border-bottom: 1px solid #fff;
+}
+.wrapper .tab-control a.selected {
+  color: #fff;
+}
+.wrapper .login-form, .wrapper .register-from {
+  margin-top: 24px;
+  justify-content: center;
+  display: none;
+}
+.wrapper .login-form form, .wrapper .register-from form {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  -webkit-app-region: no-drag;
+}
+.wrapper .login-form form > label, .wrapper .register-from form > label {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+.wrapper .login-form form > label span, .wrapper .register-from form > label span {
+  color: #aaa;
+  font-size: 14px;
+  margin-right: 8px;
+}
+.wrapper .login-form form > label input, .wrapper .register-from form > label input {
+  background: none;
+  border: 1px solid #aaa;
+  width: 160px;
+  outline: none;
+  color: #fff;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 5px;
+}
+.wrapper .login-form form > label input:focus, .wrapper .register-from form > label input:focus {
+  border-color: #fff;
+}
+.wrapper .login-form form .option, .wrapper .register-from form .option {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  margin: 8px 0;
+}
+.wrapper .login-form form .option div.iconfont, .wrapper .register-from form .option div.iconfont {
+  color: #aaa;
+  display: flex;
+  cursor: pointer;
+}
+.wrapper .login-form form .option div.iconfont span, .wrapper .register-from form .option div.iconfont span {
+  font-size: 14px;
+  margin-left: 4px;
+}
+.wrapper .login-form form .option div.iconfont:hover, .wrapper .login-form form .option div.iconfont.icon-chk-true, .wrapper .register-from form .option div.iconfont:hover, .wrapper .register-from form .option div.iconfont.icon-chk-true {
+  color: #fff;
+}
+.wrapper .login-form form .btn, .wrapper .register-from form .btn {
+  display: flex;
+  justify-content: space-between;
+  align-self: stretch;
+  margin-top: 10px;
+}
+.wrapper .login-form form .btn button, .wrapper .register-from form .btn button {
+  flex: 1;
+  height: 42px;
+  background: none;
+  border: 1px solid #9B9FA3;
+  border-radius: 2px;
+  outline: none;
+  color: #fff;
+  font-size: 16px;
+}
+.wrapper .login-form form .btn button:hover, .wrapper .register-from form .btn button:hover {
+  background: #4688F8;
+  border-color: #4688F8;
+}
+.wrapper .login-form form .btn button:active, .wrapper .register-from form .btn button:active {
+  background: #4688F8;
+  border-color: #4688F8;
+  position: relative;
+}
+.wrapper .login-form form .btn button:active:after, .wrapper .register-from form .btn button:active:after {
+  content: "";
+  position: absolute;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  left: -1px;
+  top: -1px;
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  border-radius: 2px;
+}
+.wrapper .register-from form .btn {
+  margin-top: 9px;
+}
+.wrapper.wrapper-close {
+  transform-origin: bottom;
+  animation: ani-wrapper-close 0.3s ease-in-out 1 forwards;
+}
+
+body.en .wrapper form > label span {
+  width: 70px;
+  text-align: left;
+}
+body.en .wrapper form .option div.iconfont {
+  align-items: center;
+}
+body.en .wrapper form .option div.iconfont span {
+  font-size: 12px;
+}
+
+@keyframes ani-wrapper-close {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) perspective(1000px) scale(1) rotateX(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) perspective(1000px) scale(0.95) rotateX(15deg);
+  }
+}
+.mask {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+body.atrovirens .wrapper {
+  background-color: #1F606D;
+}
+body.atrovirens .wrapper .tab-control {
+  background-color: #123940;
+}
+body.atrovirens .wrapper .btn button:hover, body.atrovirens .wrapper .btn button:active {
+  background: #68C1D3;
+  border-color: #68C1D3;
+}
+body.blue .wrapper {
+  background-color: #1B4876;
+}
+body.blue .wrapper .tab-control {
+  background-color: #112C47;
+}
+body.blue .wrapper .btn button:hover, body.blue .wrapper .btn button:active {
+  background: #629FDD;
+  border-color: #629FDD;
+}
+body.brown .wrapper {
+  background-color: #776613;
+}
+body.brown .wrapper .tab-control {
+  background-color: #473D0B;
+}
+body.brown .wrapper .btn button:hover, body.brown .wrapper .btn button:active {
+  background: #E2CC5B;
+  border-color: #E2CC5B;
+}
+body.red .wrapper {
+  background-color: #711B1B;
+}
+body.red .wrapper .tab-control {
+  background-color: #430F0F;
+}
+body.red .wrapper .btn button:hover, body.red .wrapper .btn button:active {
+  background: #D86363;
+  border-color: #D86363;
+}
+body.violet .wrapper {
+  background-color: #4F1E7D;
+}
+body.violet .wrapper .tab-control {
+  background-color: #33164F;
+}
+body.violet .wrapper .btn button:hover, body.violet .wrapper .btn button:active {
+  background: #A566E4;
+  border-color: #A566E4;
+}
+body.theme-img0 .wrapper {
+  background-image: url(../../../assets/bg/bkg0.jpg);
+  background-position: 0 0;
+}
+body.theme-img0 .wrapper .tab-control {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+body.theme-img0 .wrapper .btn button:hover, body.theme-img0 .wrapper .btn button:active {
+  background: #956CD4;
+  border-color: #956CD4;
+}
+body.theme-img1 .wrapper {
+  background-image: url(../../../assets/bg/bkg1.jpg);
+  background-position: 0 0;
+}
+body.theme-img1 .wrapper .tab-control {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+body.theme-img1 .wrapper .btn button:hover, body.theme-img1 .wrapper .btn button:active {
+  background: #DBBB62;
+  border-color: #DBBB62;
+}
+body.theme-img2 .wrapper {
+  background-image: url(../../../assets/bg/bkg2.jpg);
+  background-position: 0 0;
+}
+body.theme-img2 .wrapper .tab-control {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+body.theme-img2 .wrapper .btn button:hover, body.theme-img2 .wrapper .btn button:active {
+  background: #4688F8;
+  border-color: #4688F8;
+}
+body.theme-img3 .wrapper {
+  background-image: url(../../../assets/bg/bkg3.jpg);
+  background-position: 0 0;
+}
+body.theme-img3 .wrapper .tab-control {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+body.theme-img3 .wrapper .btn button:hover, body.theme-img3 .wrapper .btn button:active {
+  background: #CF8D70;
+  border-color: #CF8D70;
+}
+body.theme-img4 .wrapper {
+  background-image: url(../../../assets/bg/bkg4.jpg);
+  background-position: 0 0;
+}
+body.theme-img4 .wrapper .tab-control {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+body.theme-img4 .wrapper .btn button:hover, body.theme-img4 .wrapper .btn button:active {
+  background: #70B3CF;
+  border-color: #70B3CF;
+}
+body.theme-img5 .wrapper {
+  background-image: url(../../../assets/bg/bkg5.jpg);
+  background-position: 0 0;
+}
+body.theme-img5 .wrapper .tab-control {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+body.theme-img5 .wrapper .btn button:hover, body.theme-img5 .wrapper .btn button:active {
+  background: #A3A3A3;
+  border-color: #A3A3A3;
+}
+
+/*# sourceMappingURL=login.css.map */

@@ -32,9 +32,10 @@
     <link rel="stylesheet" href="styles/theme/default.css">
     <link rel="stylesheet" href="styles/theme/default-app-title.css">
     <link rel="stylesheet" href="styles/theme/theme.css">
+    <link rel="stylesheet" href="styles/theme/user.css">
 
     <!--阿里云图标库-->
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_fgy6lmta6iv.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_74qnlpztqde.css">
 
     <style ng-if="mainTheme=='custom-theme'">
         .skin-aria-ng.custom-theme .sidebar-menu > li:hover > a,
@@ -137,7 +138,9 @@
         }
 
         .skin-aria-ng.custom-theme .task-table .progress-bar-primary,
-        .skin-aria-ng.custom-theme .row.gu-mirror .progress-bar-primary{
+        .skin-aria-ng.custom-theme .task-table .progress-bar-warning,
+        .skin-aria-ng.custom-theme .row.gu-mirror .progress-bar-primary,
+        .skin-aria-ng.custom-theme .row.gu-mirror .progress-bar-warning{
             background-color: {{customColors.TaskProcessColor}};
             transition: background 0.6s ease;
         }
@@ -163,7 +166,7 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-aria-ng sidebar-mini fixed ng-cloak" ng-class="[customAppTitleClassName,mainTheme]">
+<body class="hold-transition skin-aria-ng sidebar-mini fixed ng-cloak" ng-class="[customAppTitleClassName,mainTheme,currentLanguage]">
 <div id="dropzone" class="dropzone">
     <div id="dropzone-filezone" class="dropzone-filezone"></div>
     <div class="dropzone-tip-container">
@@ -179,20 +182,30 @@
     <div class="content-mask"></div>
     <header class="main-header">
         <div class="logo">
-            <div class="logo-mini">AriaNg</div>
-            <div class="logo-lg" title="AriaNg {{ariaNgVersion}}">
-                <div class="dropdown">
-                    <span class="dropdown-toggle" style="-webkit-app-region: no-drag" data-toggle="dropdown">
-                        <span class="logo-lg-title">AriaNg</span><i class="fa fa-caret-right fa-right-bottom fa-rotate-45 fa-half" aria-hidden="true"></i>
-                    </span>
-                    <ul class="dropdown-menu dropdown-menu-right rpcselect-dropdown" role="menu">
-                        <li ng-repeat="setting in rpcSettings" ng-class="{'active': setting.isDefault}">
-                            <a class="pointer-cursor" ng-click="switchRpcSetting(setting)">
-                                <span ng-bind="(setting.rpcAlias ? setting.rpcAlias : setting.rpcHost + ':' + setting.rpcPort)">RPC</span>
-                                <i class="fa" ng-class="{'fa-check': setting.isDefault}"></i>
-                            </a>
-                        </li>
-                    </ul>
+<!--            <div class="logo-mini">AriaNg</div>-->
+<!--            <div class="logo-lg" title="AriaNg {{ariaNgVersion}}">-->
+<!--                <div class="dropdown">-->
+<!--                    <span class="dropdown-toggle" style="-webkit-app-region: no-drag" data-toggle="dropdown">-->
+<!--                        <span class="logo-lg-title">AriaNg</span><i class="fa fa-caret-right fa-right-bottom fa-rotate-45 fa-half" aria-hidden="true"></i>-->
+<!--                    </span>-->
+<!--                    <ul class="dropdown-menu dropdown-menu-right rpcselect-dropdown" role="menu">-->
+<!--                        <li ng-repeat="setting in rpcSettings" ng-class="{'active': setting.isDefault}">-->
+<!--                            <a class="pointer-cursor" ng-click="switchRpcSetting(setting)">-->
+<!--                                <span ng-bind="(setting.rpcAlias ? setting.rpcAlias : setting.rpcHost + ':' + setting.rpcPort)">RPC</span>-->
+<!--                                <i class="fa" ng-class="{'fa-check': setting.isDefault}"></i>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="user-box">
+                <div class="avatar" ng-click="avatarClick()">
+                    <img ng-if="isLogin" src="../assets/user/avatar.png"  >
+                </div>
+                <div class="user-info">
+                    <div ng-if="!isLogin" class="click-login" ng-click="openLoginWindow()" translate><span>Click To Login</span></div>
+                    <div ng-if="isLogin" class="info">点击登录</div>
                 </div>
             </div>
         </div>
@@ -405,7 +418,7 @@
     </aside>
 
     <div id="content-wrapper" class="content-wrapper">
-        <div id="content-body" class="content-body" ng-drag-select ng-simulate-scroll="{duration:300}">
+        <div id="content-body" class="content-body" ng-drag-select ng-simulate-scroll="simulateScroll">
             <div ng-view cg-busy="{ promise: loadPromise, message: ('Loading' | translate) }"></div>
         </div>
     </div>
@@ -490,8 +503,8 @@
 <script src="../node_modules/angular-clipboard/angular-clipboard.js"></script>
 <script src="../node_modules/angular-input-dropdown/inputDropdown.js"></script>
 <script src="../node_modules/angular-sweetalert/SweetAlert.js"></script>
-<script src="scripts/core/angularjs-dragula.js"></script>
-<script src="scripts/core/jquery-dom-resize.js"></script>
+<script src="scripts/modules/angularjs-dragula.min.js"></script>
+<script src="scripts/modules/jquery-dom-resize.min.js"></script>
 <script src="scripts/core/__core.js"></script>
 <script src="scripts/core/__fix.js"></script>
 <script src="scripts/core/app.js"></script>
@@ -527,7 +540,7 @@
 <script src="scripts/directives/validUrls.js"></script>
 <script src="scripts/directives/blobDownload.js"></script>
 <script src="scripts/directives/dragSelect.js"></script>
-<script src="scripts/directives/simulateScroll.js"></script>
+<script src="scripts/modules/simulateScroll.js"></script>
 <script src="scripts/filters/dateDuration.js"></script>
 <script src="scripts/filters/fileOrderBy.js"></script>
 <script src="scripts/filters/longDate.js"></script>

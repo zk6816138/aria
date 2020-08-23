@@ -441,7 +441,7 @@
   --task-border-color: #EED6CC;
   --task-arrow-color: #DBA893;
   --task-process-color: #C4714E;
-  --task-process-border-color: #FEFDFD;
+  --task-process-border-color: #E6C4B5;
   --task-mirror-rgb: 236, 194, 176;
 }
 .skin-aria-ng.theme-img3 .wrapper {
@@ -863,7 +863,9 @@
   transition: background 0.6s ease;
 }
 .skin-aria-ng.theme .task-table .progress-bar-primary,
-.skin-aria-ng.theme .row.gu-mirror .progress-bar-primary {
+.skin-aria-ng.theme .task-table .progress-bar-warning,
+.skin-aria-ng.theme .row.gu-mirror .progress-bar-primary,
+.skin-aria-ng.theme .row.gu-mirror .progress-bar-warning {
   background-color: var(--task-process-color);
   transition: background 0.6s ease;
 }

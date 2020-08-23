@@ -4,6 +4,7 @@ let core = {
     mainWindow: null,
     floatWindow: null,
     themeWindow: null,
+    loginWindow: null,
     isConfirmExit: false
 };
 

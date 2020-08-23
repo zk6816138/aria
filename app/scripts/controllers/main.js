@@ -491,5 +491,25 @@
         refreshGlobalStat(true, function () {
             refreshPageTitle();
         });
+
+        //登录注册
+        $scope.avatarClick = function () {
+            if (!$rootScope.isLogin){
+                $scope.openLoginWindow();
+            }
+            else {
+                //todo 更换头像
+            }
+        }
+
+        $scope.openLoginWindow = function () {
+            ariaNgNativeElectronService.sendOpenLoginWindowToMainProcess();
+        }
+
+        //接受主进程发送的登录窗口消息
+        ariaNgNativeElectronService.onMainProcessLoginToMain(function (e, resp) {
+
+        })
+
     }]);
 }());
