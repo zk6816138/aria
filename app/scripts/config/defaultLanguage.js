@@ -276,6 +276,7 @@
             'Runtime Environment': 'Runtime Environment',
             'Create New Task': 'Create New Task',
             'Click To Login': 'Click To Login',
+            'Logging...': 'Logging...',
             'menu': {
                 'Quit': 'Quit AriaNg',
             },

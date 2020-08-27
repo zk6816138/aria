@@ -194,9 +194,6 @@
             sendLanguageChangeToMainProcess: function(message){
                 sendMessageToMainProcess('language-change',message);
             },
-            sendOpenLoginWindowToMainProcess: function(){
-                sendMessageToMainProcess('open-login-window','');
-            },
             onMainProcessLoginToMain: function (callback) {
                 onMainProcessMessage('login-to-main', callback);
             },

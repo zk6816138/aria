@@ -3,11 +3,7 @@
 
     angular.module('ariaNg').run(['$window', '$rootScope', '$location', '$document', 'ariaNgCommonService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgSettingService', 'aria2TaskService', 'ariaNgNativeElectronService','ariaNgStorageService', function ($window, $rootScope, $location, $document, ariaNgCommonService, ariaNgLocalizationService, ariaNgLogService, ariaNgSettingService, aria2TaskService, ariaNgNativeElectronService,ariaNgStorageService) {
 
-        var token = ariaNgStorageService.get('token');
-        $rootScope.isLogin = false;
-        if (token){
-            //todo 验证token,获取登录状态,判断是否为自动登录
-        }
+        $rootScope.loginStatus = 'Not Logged'; //'Not Logged','Logged','Logging'
 
         var theme = ariaNgStorageService.get('Theme');
         $rootScope.mainTheme = (theme == null || theme == 'default' || theme == 'custom-theme') ? theme : (theme + ' theme');

@@ -299,8 +299,4 @@ app.on('ready', () => {
     ipc.onThemeWindowLoaded();
     ipc.onLoginWindowToMainWindow();
     ipc.onMainWindowToLoginWindow();
-
-    ipc.onOpenLoginWindow(function () {
-        login.show();
-    });
 });

@@ -21,6 +21,7 @@
         'angular-clipboard',
         'inputDropdown',
         angularDragula(angular),
-        'simulateScrollModule'
+        'simulateScrollModule',
+        'userModule'
     ]);
 }());

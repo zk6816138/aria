@@ -6,11 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
-    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="styles/theme/login.css">
-
     <!--阿里云图标库-->
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_74qnlpztqde.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_l3ne5z6ky8p.css">
 
     <style ng-if="mainTheme=='custom-theme'">
         .custom-theme .wrapper{
@@ -30,8 +28,8 @@
     <div class="mask"></div>
     <div class="header">
         <span class="title" ng-bind="('Login' | translate).replace('　','')"></span>
-        <a href="javascript:;" class="close" ng-click="close()" title="{{'Close' | translate}}">
-            <i class="fa fa-lg fa-close"></i>
+        <a href="javascript:;" class="close" ng-click="close(true)" title="{{'Close' | translate}}">
+            <i class="iconfont icon-remove"></i>
         </a>
     </div>
     <div class="logo">
@@ -41,7 +39,9 @@
         <a href="javascript:;" ng-class="{'selected':tabIndex==0}" ng-click="tabIndex=0" ng-bind="'Login' | translate"></a>
         <a href="javascript:;" ng-class="{'selected':tabIndex==1}" ng-click="tabIndex=1" ng-bind="'Register' | translate"></a>
     </div>
-    <div>
+
+    <div class="form-wrap">
+        <div class="msg">{{message}}</div>
         <div class="login-form" ng-style="{display:tabIndex==0?'flex':'none'}">
             <form ng-submit="loginSubmit()">
                 <label for="login-account">
@@ -106,5 +106,6 @@
 <script src="../node_modules/angular/angular.min.js"></script>
 <script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
 <script src="scripts/modules/validForm.js"></script>
+<script src="scripts/modules/userModule.js"></script>
 <script src="scripts/controllers/login.js"></script>
 </html>

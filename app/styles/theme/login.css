@@ -38,8 +38,12 @@ body {
   padding: 3px;
   text-decoration: none;
   -webkit-app-region: no-drag;
-  font-size: 12px;
-  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper .header .close i {
+  font-size: 11px;
 }
 .wrapper .header .close:hover {
   color: #f94e41;
@@ -137,7 +141,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-self: stretch;
-  margin-top: 10px;
+  margin-top: 18px;
 }
 .wrapper .login-form form .btn button, .wrapper .register-from form .btn button {
   flex: 1;
@@ -169,11 +173,22 @@ body {
   border-radius: 2px;
 }
 .wrapper .register-from form .btn {
-  margin-top: 9px;
+  margin-top: 17px;
 }
 .wrapper.wrapper-close {
   transform-origin: bottom;
   animation: ani-wrapper-close 0.3s ease-in-out 1 forwards;
+}
+
+.form-wrap {
+  position: relative;
+}
+.form-wrap .msg {
+  position: absolute;
+  color: #c00;
+  top: 104px;
+  left: 55px;
+  font-size: 14px;
 }
 
 body.en .wrapper form > label span {

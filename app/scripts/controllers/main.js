@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').controller('MainController', ['$rootScope', '$scope', '$route', '$window', '$location', '$document', '$interval', 'clipboard', 'aria2RpcErrors', 'ariaNgCommonService', 'ariaNgNotificationService', 'ariaNgLocalizationService', 'ariaNgSettingService', 'ariaNgMonitorService', 'ariaNgTitleService', 'aria2TaskService', 'aria2SettingService', 'ariaNgNativeElectronService','$filter', function ($rootScope, $scope, $route, $window, $location, $document, $interval, clipboard, aria2RpcErrors, ariaNgCommonService, ariaNgNotificationService, ariaNgLocalizationService, ariaNgSettingService, ariaNgMonitorService, ariaNgTitleService, aria2TaskService, aria2SettingService, ariaNgNativeElectronService,$filter) {
+    angular.module('ariaNg').controller('MainController', ['$rootScope', '$scope', '$route', '$window', '$location', '$document', '$interval', 'clipboard', 'aria2RpcErrors', 'ariaNgCommonService', 'ariaNgNotificationService', 'ariaNgLocalizationService', 'ariaNgSettingService', 'ariaNgMonitorService', 'ariaNgTitleService', 'aria2TaskService', 'aria2SettingService', 'ariaNgNativeElectronService','$filter','$user', '$timeout', function ($rootScope, $scope, $route, $window, $location, $document, $interval, clipboard, aria2RpcErrors, ariaNgCommonService, ariaNgNotificationService, ariaNgLocalizationService, ariaNgSettingService, ariaNgMonitorService, ariaNgTitleService, aria2TaskService, aria2SettingService, ariaNgNativeElectronService,$filter,$user,$timeout) {
         var pageTitleRefreshPromise = null;
         var globalStatRefreshPromise = null;
 
@@ -492,23 +492,36 @@
             refreshPageTitle();
         });
 
-        //登录注册
-        $scope.avatarClick = function () {
-            if (!$rootScope.isLogin){
-                $scope.openLoginWindow();
-            }
-            else {
-                //todo 更换头像
-            }
+        //自动登录
+        var token = $user.userInfo('token');
+        var autoLogin = $user.userInfo('autoLogin');
+        if (token && autoLogin){
+            //todo 验证token,获取登录状态,判断是否为自动登录
+            $timeout(function (){
+                ariaNgNativeElectronService.sendMainToLoginToMainProcess('auto-login');
+            },1500)
         }
 
+        //点击头像,更换头像
+        $scope.avatarClick = function (e) {
+            e.stopPropagation();
+        }
+
+        //打开登录窗口
         $scope.openLoginWindow = function () {
-            ariaNgNativeElectronService.sendOpenLoginWindowToMainProcess();
+            ariaNgNativeElectronService.sendMainToLoginToMainProcess('login-window=show');
         }
 
         //接受主进程发送的登录窗口消息
         ariaNgNativeElectronService.onMainProcessLoginToMain(function (e, resp) {
-
+            if (resp.indexOf('login-status') == 0){
+                $rootScope.loginStatus = resp.split('=')[1];
+                $rootScope.$apply();
+                if ($rootScope.loginStatus == 'Logged'){
+                    $scope.avatar = $user.userInfo('avatar');
+                    $scope.lastLoginTime = $user.userInfo('last_login_time');
+                }
+            }
         })
 
     }]);

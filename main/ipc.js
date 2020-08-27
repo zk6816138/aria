@@ -7,6 +7,7 @@ const electron = require('electron');
 
 const pkgfile = require('../package');
 const core = require('./core');
+const login = require('./login');
 
 const ipcMain = electron.ipcMain;
 
@@ -58,10 +59,6 @@ let sendTaskState = function(message){
 
 let sendThemeWindowClose = function(){
     core.themeWindow.webContents.send('theme-window-close');
-}
-
-let sendLoginWindowClose = function(){
-    core.loginWindow.webContents.send('login-window-close');
 }
 
 let onNewDropFile = function (callback) {
@@ -116,10 +113,6 @@ let onLanguageChange = function(){
     });
 }
 
-let onOpenLoginWindow = function(callback){
-    ipcMain.on('open-login-window', callback);
-}
-
 let onLoginWindowToMainWindow = function(){
     ipcMain.on('login-to-main', function (e,arg) {
         core.mainWindow.webContents.send('login-to-main',arg);
@@ -128,7 +121,12 @@ let onLoginWindowToMainWindow = function(){
 
 let onMainWindowToLoginWindow = function(){
     ipcMain.on('main-to-login', function (e,arg) {
-        core.loginWindow.webContents.send('main-to-login',arg);
+        if (arg == 'login-window=show'){
+            login.show();
+        }
+        else {
+            core.loginWindow.webContents.send('main-to-login',arg);
+        }
     });
 }
 
@@ -225,8 +223,6 @@ module.exports = {
     onLanguageChange: onLanguageChange,
     sendThemeWindowClose: sendThemeWindowClose,
     onThemeWindowLoaded: onThemeWindowLoaded,
-    onOpenLoginWindow: onOpenLoginWindow,
-    sendLoginWindowClose: sendLoginWindowClose,
     onLoginWindowToMainWindow: onLoginWindowToMainWindow,
     onMainWindowToLoginWindow: onMainWindowToLoginWindow
 };

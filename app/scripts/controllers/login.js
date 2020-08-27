@@ -1,6 +1,6 @@
-var app = angular.module('loginWindow',['validFormModule','pascalprecht.translate'])
+var app = angular.module('loginWindow',['validFormModule','pascalprecht.translate','userModule'])
 
-    .controller('loginCtrl',function ($scope, $timeout,$translate) {
+    .controller('loginCtrl',function ($scope, $timeout,$translate,$user) {
         var options = JSON.parse(localStorage.getItem('AriaNg.Options'));
         $scope.currentLanguage = options ? options.language : 'zh_Hans';
         $translate.use($scope.currentLanguage);
@@ -9,17 +9,41 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
         var remote = electron.remote;
         var ipcRenderer = electron.ipcRenderer;
         var config = remote.require('./config');
+        var core = remote.require('./core');
+
+        setTimeout(function () {
+            core.loginWindow.showWindow();
+        },3000)
 
         $scope.tabIndex = 0;
-        $scope.rememberPassword = localStorage.getItem('AriaNg.Login.rememberPassword') === 'true' ? true : false;
-        $scope.autoLogin = localStorage.getItem('AriaNg.Login.autoLogin') === 'true' ? true : false;
+        $scope.rememberPassword =  $user.userInfo('rememberPassword') ? 1 : 0;
+        $scope.autoLogin =  $user.userInfo('autoLogin') ? 1 : 0;
 
         $scope.loginData = {account:'',password:''};
         $scope.registerData = {account:'',password:'',confirmPassword:''};
+        $scope.message = '';
+
+        var message = function(msg){
+            $scope.message = msg;
+            $timeout(function () {
+                $scope.message = '';
+            },5000)
+            $scope.$apply();
+        }
 
         $scope.loginOption = function (type) {
-            $scope[type] = !$scope[type];
-            localStorage.setItem(`AriaNg.Login.${type}`,$scope[type]);
+            $scope[type] = $scope[type] === 0 ? 1 : 0;
+            if (type == 'rememberPassword' && $scope[type] === 0) {
+                $scope.autoLogin = 0;
+                $user.userInfo('autoLogin', 0);
+            }
+
+            if (type == 'autoLogin' && $scope[type] === 1) {
+                $scope.rememberPassword = 1;
+                $user.userInfo('rememberPassword', 1);
+            }
+
+            $user.userInfo(type, $scope[type]);
         }
 
         var theme = localStorage.getItem('AriaNg.Theme');
@@ -27,7 +51,7 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             $scope.mainTheme = JSON.parse(theme);
         }
         else {
-            $scope.mainTheme = 'default' ;
+            $scope.mainTheme = 'default';
         }
 
         $scope.customColors = {};
@@ -52,35 +76,114 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             $scope.$apply();
         })
 
-        ipcRenderer.on('login-window-close', function () {
-            $scope.close();
-        })
+        var isAction = false;
+        $scope.queueList = [];
+        function waitForAction() {
+            if ($scope.queueList.length != 0) {
+                var time;
+                var type = $scope.queueList.pop();
+                if (type == 'show') {
+                    $scope.show();
+                    time = 200;
+                } else if (type == 'close-true') {
+                    $scope.close(true);
+                    time = 300;
+                } else {
+                    $scope.close();
+                    time = 300;
+                }
+                $timeout(function () {
+                    waitForAction();
+                }, time)
+            } else {
+                isAction = false;
+            }
+        }
+
+        $scope.loginWindow = function (val) {
+            $scope.queueList.unshift(val);
+        }
+
+        $scope.$watch('queueList', function () {
+            if (isAction) return;
+            isAction = true;
+            waitForAction();
+        }, true)
 
         //接受主进程发送的主窗口消息
         ipcRenderer.on('main-to-login', function (e, resp) {
-
+            $scope.$apply(function (){
+                if (resp == 'auto-login'){
+                    login({account:$user.userInfo('account')});
+                }
+                else if(resp.indexOf('login-window') == 0){
+                    console.log(resp)
+                    var type = resp.split('=')[1];
+                    $scope.loginWindow(type);
+                }
+            });
         })
         //发送给主进程
         $scope.sendToMain = function(data){
             ipcRenderer.send('login-to-main', data);
         }
 
-        $scope.close = function () {
-            angular.element('.wrapper').addClass('wrapper-close');
+        var login = function(data){
+            $scope.loginWindow('close');
+            $scope.sendToMain('login-status=Logging');
+            $user.http({
+                url: 'user/login',
+                method: 'post',
+                data: data
+            }).then(function (resp) {
+                if (resp.code == 0) {
+                    $scope.sendToMain('login-status=Logged');
+                    $user.saveUserInfo(resp.data);
+                    $scope.clearData();
+                    if (data.password && ($scope.rememberPassword || $scope.autoLogin)){
+                        $user.userInfo('pwdLength',data.password.length);
+                    }
+                }
 
+                if (resp.code == 500){
+                    message(resp.msg);
+                    $scope.sendToMain('login-status=Not Logged');
+                    $scope.loginWindow('show');
+                }
+            }, function (err) {
+                    message(err.statusText);
+                    $scope.sendToMain('login-status=Not Logged');
+                    $scope.loginWindow('show');
+                })
+        }
+
+        $scope.show = function(){
+            if (!remote.getCurrentWindow().isVisible()){
+                remote.getCurrentWindow().show();
+            }
+        }
+
+        $scope.close = function (flag=false) {
+            if (!remote.getCurrentWindow().isVisible()) return;
+            angular.element('.wrapper').addClass('wrapper-close');
             $timeout(function () {
                 remote.getCurrentWindow().hide();
-                $scope.tabIndex = 0;
-                $scope.loginData = {account:'',password:''};
-                $scope.registerData = {account:'',password:'',confirmPassword:''};
+                if (flag) {
+                    $scope.clearData();
+                }
                 angular.element('.wrapper').removeClass('wrapper-close');
             },300)
         }
 
+        $scope.clearData = function(){
+            $scope.tabIndex = 0;
+            $scope.loginData = {account:'',password:''};
+            $scope.registerData = {account:'',password:'',confirmPassword:''};
+        }
+
         $scope.pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
         $scope.loginSubmit = function() {
-
-            console.log('login')
+            login($scope.loginData);
         }
 
         $scope.registerSubmit = function() {
@@ -88,7 +191,35 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
                 angular.element('#reg-confirm-password').tooltip({text:'Those Passwords Did Not Match'});
             }
 
-            console.log(2)
+            var data = {
+                account: $scope.registerData.account,
+                password: $scope.registerData.password
+            }
+            $scope.loginWindow('close');
+            $user.http({
+                url: 'user/register',
+                method: 'post',
+                data: data
+            }).then(function (resp) {
+                if (resp.code == 0) {
+                    $scope.sendToMain('login-status=Logged');
+                    $user.saveUserInfo(resp.data);
+                    $scope.clearData();
+                    if (data.password && ($scope.rememberPassword || $scope.autoLogin)){
+                        $user.userInfo('pwdLength',data.password.length);
+                    }
+                }
+
+                if (resp.code == 500){
+                    message(resp.msg);
+                    $scope.sendToMain('login-status=Not Logged');
+                    $scope.loginWindow('show');
+                }
+            },function (err) {
+                message(err.statusText);
+                $scope.sendToMain('login-status=Not Logged');
+                $scope.loginWindow('show');
+            })
         }
     })
 

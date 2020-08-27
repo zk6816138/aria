@@ -10,6 +10,7 @@
 .user-box .avatar {
   width: 54px;
   height: 54px;
+  flex: none;
   border-radius: 50%;
   border: 2px solid #fff;
   overflow: hidden;
@@ -23,10 +24,20 @@
 .user-box .avatar img {
   width: 100%;
   height: 100%;
-  display: block;
+  display: none;
   object-fit: unset;
   margin: 0;
   padding: 0;
+}
+.user-box .avatar .logging {
+  background: #3268A7;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.user-box .avatar .logging .icon-loading {
+  font-size: 30px;
+  color: #eee;
 }
 .user-box .user-info .click-login {
   font-size: 14px;
@@ -38,7 +49,35 @@
   animation-duration: 1.5s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+  display: none;
 }
+.user-box .user-info .logging {
+  display: none;
+}
+.user-box .user-info .info {
+  animation: none;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1;
+  text-align: left;
+  letter-spacing: 0 !important;
+}
+.user-box .user-info .info .account {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 132px;
+}
+.user-box .user-info .info .last {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #999;
+}
+
 body.zh_Hant .user-box .user-info .click-login, body.zh_Hans .user-box .user-info .click-login {
   letter-spacing: 2px;
 }

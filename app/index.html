@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="styles/theme/user.css">
 
     <!--阿里云图标库-->
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_74qnlpztqde.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_l3ne5z6ky8p.css">
 
     <style ng-if="mainTheme=='custom-theme'">
         .skin-aria-ng.custom-theme .sidebar-menu > li:hover > a,
@@ -200,12 +200,20 @@
 <!--            </div>-->
 
             <div class="user-box">
-                <div class="avatar" ng-click="avatarClick()">
-                    <img ng-if="isLogin" src="../assets/user/avatar.png"  >
+                <div class="avatar" ng-click="openLoginWindow()">
+                    <div class="logging" ng-style="{display:loginStatus=='Logging'?'block':'none'}">
+                        <i class="iconfont icon-loading loading-rotate"></i>
+                    </div>
+                    <img ng-style="{display:loginStatus=='Logged'?'block':'none'}" ng-src="{{avatar || '../assets/user/male.png'}}" ng-click="avatarClick($event)">
                 </div>
                 <div class="user-info">
-                    <div ng-if="!isLogin" class="click-login" ng-click="openLoginWindow()" translate><span>Click To Login</span></div>
-                    <div ng-if="isLogin" class="info">点击登录</div>
+                    <div ng-style="{display:loginStatus=='Not Logged'?'block':'none'}" class="click-login" ng-click="openLoginWindow()" translate>Click To Login</div>
+                    <div ng-style="{display:loginStatus=='Logging'?'block':'none'}" class="click-login logging" translate>Logging...</div>
+                    <div ng-style="{display:loginStatus=='Logged'?'flex':'none'}" class="click-login info">
+                        <div class="account">test001</div>
+                        <div class="last">上次登录 :</div>
+                        <div class="last">{{lastLoginTime}}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -568,5 +576,6 @@
 <script src="scripts/services/aria2TaskService.js"></script>
 <script src="scripts/services/aria2SettingService.js"></script>
 <script src="scripts/services/ariaNgNativeElectronService.js"></script>
+<script src="scripts/modules/userModule.js"></script>
 </body>
 </html>

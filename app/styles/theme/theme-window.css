@@ -68,6 +68,13 @@ body{
     font-size: 12px;
     padding: 3px;
     text-decoration: none;
+
+}
+.header a.close{
+    top: 5px;
+}
+.header a.close i{
+    font-size: 12px;
 }
 .header a.reset{
     right: 36px;

@@ -32,7 +32,7 @@
     color: #747474;
     font-size: 16px;
 }
-.skin-aria-ng .main-header .navbar .nav > li > a .loading-rotate{
+.skin-aria-ng .main-header .navbar .nav > li > a .loading-rotate,.loading-rotate{
     display: block;
     animation: ani-loading .8s ease infinite;
 }
