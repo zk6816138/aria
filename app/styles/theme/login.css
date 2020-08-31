@@ -41,6 +41,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  outline: none;
 }
 .wrapper .header .close i {
   font-size: 11px;
@@ -178,17 +179,6 @@ body {
 .wrapper.wrapper-close {
   transform-origin: bottom;
   animation: ani-wrapper-close 0.3s ease-in-out 1 forwards;
-}
-
-.form-wrap {
-  position: relative;
-}
-.form-wrap .msg {
-  position: absolute;
-  color: #c00;
-  top: 104px;
-  left: 55px;
-  font-size: 14px;
 }
 
 body.en .wrapper form > label span {

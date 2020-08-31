@@ -509,7 +509,29 @@
 
         //打开登录窗口
         $scope.openLoginWindow = function () {
+            if ($rootScope.loginStatus == 'Not Logged') {
+                ariaNgNativeElectronService.sendMainToLoginToMainProcess('login-window=show');
+            }
+        }
+
+        //取消登录
+        $scope.cancelLogin = function (){
+            $rootScope.loginStatus = 'Not Logged';
+            ariaNgNativeElectronService.sendMainToLoginToMainProcess('cancelLogin');
+        }
+
+        //切换账号
+        $scope.switchAccount = function(){
+            $rootScope.loginStatus = 'Not Logged';
             ariaNgNativeElectronService.sendMainToLoginToMainProcess('login-window=show');
+        }
+
+        //退出登录
+        $scope.logout = function(){
+            $rootScope.loginStatus = 'Not Logged';
+            $user.userInfo('account','');
+            $user.userInfo('password','');
+            $user.userInfo('token','');
         }
 
         //接受主进程发送的登录窗口消息
@@ -518,9 +540,13 @@
                 $rootScope.loginStatus = resp.split('=')[1];
                 $rootScope.$apply();
                 if ($rootScope.loginStatus == 'Logged'){
-                    $scope.avatar = $user.userInfo('avatar');
+                    $scope.account = $user.userInfo('account');
+                    $scope.avatar = ['male.png','female.png'].indexOf($user.userInfo('avatar')) >=0 ? ('../assets/user/'+ $user.userInfo('avatar')) : $user.userInfo('avatar');
                     $scope.lastLoginTime = $user.userInfo('last_login_time');
                 }
+            }
+            else if (resp.indexOf('login-message:=') == 0){
+                ariaNgLocalizationService.notifyInPage(resp.split(':=')[1],'',{type: 'error',delay: 5000});
             }
         })
 

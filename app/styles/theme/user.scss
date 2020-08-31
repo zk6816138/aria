@@ -55,6 +55,12 @@
         }
         .logging{
             display: none;
+            flex-direction: column;
+            justify-content: center;
+            &>div{
+                line-height: 1.4;
+                text-align: left;
+            }
         }
         .info{
             animation: none;
@@ -64,14 +70,48 @@
             line-height: 1;
             text-align: left;
             letter-spacing: 0!important;
+            cursor: default;
             .account{
                 font-size: 18px;
                 color: #fff;
-                line-height: 1;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                width: 132px;
+                position: relative;
+                &>div{
+                    line-height: 1;
+                    display: flex;
+                    align-items: center;
+                    span{
+                        max-width: 120px;
+                        flex: none;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    i{
+                        font-size: 14px;
+                        transform-origin: bottom;
+                        bottom: -3px;
+                    }
+                }
+                ul.dropdown-menu{
+                    left: 0;
+                    margin-top: 2px;
+                    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+                    border-radius: 4px;
+                    .seperator{
+                        height: 11px;
+                        position: relative;
+                        &:after{
+                            content: '';
+                            position: absolute;
+                            left: 50%;
+                            top: 50%;
+                            transform: translate(-50%,-50%);
+                            height: .5px;
+                            width: 85%;
+                            background: #ccc;
+                        }
+                    }
+                }
             }
             .last{
                 font-size: 12px;

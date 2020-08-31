@@ -53,6 +53,12 @@
 }
 .user-box .user-info .logging {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+}
+.user-box .user-info .logging > div {
+  line-height: 1.4;
+  text-align: left;
 }
 .user-box .user-info .info {
   animation: none;
@@ -62,15 +68,49 @@
   line-height: 1;
   text-align: left;
   letter-spacing: 0 !important;
+  cursor: default;
 }
 .user-box .user-info .info .account {
   font-size: 18px;
   color: #fff;
+  position: relative;
+}
+.user-box .user-info .info .account > div {
   line-height: 1;
+  display: flex;
+  align-items: center;
+}
+.user-box .user-info .info .account > div span {
+  max-width: 120px;
+  flex: none;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 132px;
+}
+.user-box .user-info .info .account > div i {
+  font-size: 14px;
+  transform-origin: bottom;
+  bottom: -3px;
+}
+.user-box .user-info .info .account ul.dropdown-menu {
+  left: 0;
+  margin-top: 2px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  border-radius: 4px;
+}
+.user-box .user-info .info .account ul.dropdown-menu .seperator {
+  height: 11px;
+  position: relative;
+}
+.user-box .user-info .info .account ul.dropdown-menu .seperator:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 0.5px;
+  width: 85%;
+  background: #ccc;
 }
 .user-box .user-info .info .last {
   font-size: 12px;

@@ -54,7 +54,7 @@ let init = function (parentWindow=null) {
     });
 
     electronLocalshortcut.register(core.loginWindow, 'Esc', () => {
-        close(true);
+        core.loginWindow.webContents.send('main-to-login', 'login-window=close-true');
     });
 
     core.loginWindow.closeWindow = close;
@@ -68,13 +68,13 @@ let show = function(){
         var x = pos[0] + parseInt(size[0]/2) - (332/2);
         var y = pos[1] + parseInt(size[1]/2) - (466/2);
         core.loginWindow.setPosition(x,y);
-        core.loginWindow.webContents.send('main-to-login','login-window=show');
+        core.loginWindow.show();
     }
 }
 
-let close = function(flag = false){
+let close = function(){
     if (core.loginWindow != null){
-        core.loginWindow.webContents.send('main-to-login',`login-window=close${flag?'-true':''}`);
+        core.loginWindow.hide();
     }
 }
 

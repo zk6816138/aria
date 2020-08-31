@@ -41,7 +41,6 @@
     </div>
 
     <div class="form-wrap">
-        <div class="msg">{{message}}</div>
         <div class="login-form" ng-style="{display:tabIndex==0?'flex':'none'}">
             <form ng-submit="loginSubmit()">
                 <label for="login-account">
@@ -53,7 +52,7 @@
                 <label for="login-password">
                     <span translate>Password</span>
                     <input type="password" maxlength="20" id="login-password" ng-clear
-                           valid-form="{text:'The Password Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern}" ng-model="loginData.password"
+                           valid-form="{text:'The Password Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern, noCheck:noCheck}" ng-model="loginData.password"
                            placeholder="{{'Enter Your Password' | translate}}">
                 </label>
                 <div class="option">

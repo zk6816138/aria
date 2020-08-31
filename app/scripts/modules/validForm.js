@@ -61,7 +61,7 @@ angular.module('validFormModule', [])
                     angular.element(document).one('click.valid',function () {
                         clear();
                     });
-                    if (!regexp.test(scope.modelValue)) {
+                    if (!regexp.test(scope.modelValue) && !scope.validForm.noCheck) {
                         $validFormService.tooltip(input,opts);
                     }
                     else {

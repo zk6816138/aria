@@ -11,24 +11,34 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
         var config = remote.require('./config');
         var core = remote.require('./core');
 
-        setTimeout(function () {
-            core.loginWindow.showWindow();
-        },3000)
-
         $scope.tabIndex = 0;
         $scope.rememberPassword =  $user.userInfo('rememberPassword') ? 1 : 0;
         $scope.autoLogin =  $user.userInfo('autoLogin') ? 1 : 0;
+        $scope.isCancelLogin = false;
 
         $scope.loginData = {account:'',password:''};
         $scope.registerData = {account:'',password:'',confirmPassword:''};
-        $scope.message = '';
+
+        core.loginWindow.on('show', () => {
+            initForm();
+            $scope.$apply();
+        })
+
+        var initForm = function () {
+            if (!!$scope.rememberPassword && !!$user.userInfo('account') && !!$user.userInfo('pwdLength')) {
+                $scope.loginData.account = $user.userInfo('account');
+                $scope.loginData.password = '*'.padStart($user.userInfo('pwdLength'),'*');
+            }
+            else {
+                $scope.rememberPassword = $scope.autoLogin = 0;
+            }
+            angular.element('#login-account').focus();
+        }
+
+        initForm();
 
         var message = function(msg){
-            $scope.message = msg;
-            $timeout(function () {
-                $scope.message = '';
-            },5000)
-            $scope.$apply();
+            ipcRenderer.send('login-to-main', `login-message:=${msg}`);
         }
 
         $scope.loginOption = function (type) {
@@ -117,9 +127,11 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
                     login({account:$user.userInfo('account')});
                 }
                 else if(resp.indexOf('login-window') == 0){
-                    console.log(resp)
                     var type = resp.split('=')[1];
                     $scope.loginWindow(type);
+                }
+                else if (resp == 'cancelLogin') {
+                    $scope.isCancelLogin = true;
                 }
             });
         })
@@ -131,11 +143,13 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
         var login = function(data){
             $scope.loginWindow('close');
             $scope.sendToMain('login-status=Logging');
+            $scope.isCancelLogin = false;
             $user.http({
                 url: 'user/login',
                 method: 'post',
                 data: data
             }).then(function (resp) {
+                if ($scope.isCancelLogin)return;
                 if (resp.code == 0) {
                     $scope.sendToMain('login-status=Logged');
                     $user.saveUserInfo(resp.data);
@@ -151,23 +165,24 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
                     $scope.loginWindow('show');
                 }
             }, function (err) {
-                    message(err.statusText);
+                if ($scope.isCancelLogin)return;
+                message(err.statusText);
                     $scope.sendToMain('login-status=Not Logged');
                     $scope.loginWindow('show');
                 })
         }
 
         $scope.show = function(){
-            if (!remote.getCurrentWindow().isVisible()){
-                remote.getCurrentWindow().show();
+            if (!core.loginWindow.isVisible()){
+                core.loginWindow.showWindow();
             }
         }
 
         $scope.close = function (flag=false) {
-            if (!remote.getCurrentWindow().isVisible()) return;
+            if (!core.loginWindow.isVisible()) return;
             angular.element('.wrapper').addClass('wrapper-close');
             $timeout(function () {
-                remote.getCurrentWindow().hide();
+                core.loginWindow.closeWindow();
                 if (flag) {
                     $scope.clearData();
                 }
@@ -181,9 +196,27 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             $scope.registerData = {account:'',password:'',confirmPassword:''};
         }
 
+        $scope.$watch('loginData',function (n) {
+            if (n.account == $user.userInfo('account') &&
+                n.password == ('*'.padStart($user.userInfo('pwdLength'),'*')) && !!$scope.rememberPassword){
+                $scope.noCheck = true;
+            }
+            else {
+                $scope.noCheck = false;
+            }
+        },true)
+
         $scope.pattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
         $scope.loginSubmit = function() {
-            login($scope.loginData);
+            if (!!$scope.rememberPassword &&
+                $scope.loginData.account == $user.userInfo('account') &&
+                $scope.loginData.password == ('*'.padStart($user.userInfo('pwdLength'),'*'))
+            ){
+                login({account:$scope.loginData.account});
+            }
+            else {
+                login($scope.loginData);
+            }
         }
 
         $scope.registerSubmit = function() {

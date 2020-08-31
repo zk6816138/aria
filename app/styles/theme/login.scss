@@ -39,6 +39,7 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
+            outline: none;
             i{
                 font-size: 11px;
             }
@@ -182,17 +183,6 @@ body {
     &.wrapper-close{
         transform-origin: bottom;
         animation: ani-wrapper-close .3s ease-in-out 1 forwards;
-    }
-}
-
-.form-wrap{
-    position: relative;
-    .msg{
-        position: absolute;
-        color: #c00;
-        top: 104px;
-        left: 55px;
-        font-size: 14px;
     }
 }
 
