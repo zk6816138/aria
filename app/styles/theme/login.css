@@ -131,6 +131,7 @@ body {
   color: #aaa;
   display: flex;
   cursor: pointer;
+  outline: none;
 }
 .wrapper .login-form form .option div.iconfont span, .wrapper .register-from form .option div.iconfont span {
   font-size: 14px;
@@ -154,6 +155,9 @@ body {
   outline: none;
   color: #fff;
   font-size: 16px;
+}
+.wrapper .login-form form .btn button:focus, .wrapper .register-from form .btn button:focus {
+  border-color: #fff;
 }
 .wrapper .login-form form .btn button:hover, .wrapper .register-from form .btn button:hover {
   background: #4688F8;

@@ -33,7 +33,12 @@ angular.module('userModule', [])
     return{
         isSwitchAccount: function(flag){
             if (flag!==undefined){
-                localStorage.setItem('isSwitchAccount',1);
+                if (flag === true){
+                    localStorage.setItem('isSwitchAccount',1);
+                }
+                else {
+                    localStorage.removeItem('isSwitchAccount');
+                }
             }
             else {
                 var tmp = localStorage.getItem('isSwitchAccount');

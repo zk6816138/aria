@@ -45,22 +45,22 @@
             <form ng-submit="loginSubmit()">
                 <label for="login-account">
                     <span translate>Account</span>
-                    <input type="text" maxlength="20" id="login-account" ng-clear
+                    <input type="text" maxlength="20" id="login-account" tabindex="1" ng-clear
                            valid-form="{text:'The Account Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern}" ng-model="loginData.account"
                            placeholder="{{'Enter Your Account' | translate}}">
                 </label>
                 <label for="login-password">
                     <span translate>Password</span>
-                    <input type="password" maxlength="20" id="login-password" ng-clear
+                    <input type="password" maxlength="20" id="login-password" tabindex="2" ng-clear
                            valid-form="{text:'The Password Must Be A Mixed Of 6-20 Letters And Numbers',pattern:pattern, noCheck:noCheck}" ng-model="loginData.password"
                            placeholder="{{'Enter Your Password' | translate}}">
                 </label>
                 <div class="option">
-                    <div class="iconfont" ng-class="[rememberPassword?'icon-chk-true':'icon-chk-false']" ng-click="loginOption('rememberPassword')"><span translate>Remember Password</span></div>
-                    <div class="iconfont" ng-class="[autoLogin?'icon-chk-true':'icon-chk-false']" ng-click="loginOption('autoLogin')"><span translate>Auto Login</span></div>
+                    <div class="iconfont" tabindex="3" ng-class="[rememberPassword?'icon-chk-true':'icon-chk-false']" ng-click="loginOption('rememberPassword')" ng-keypress="spacePress($event,'rememberPassword')"><span translate>Remember Password</span></div>
+                    <div class="iconfont" tabindex="4" ng-class="[autoLogin?'icon-chk-true':'icon-chk-false']" ng-click="loginOption('autoLogin')" ng-keypress="spacePress($event,'autoLogin')"><span translate>Auto Login</span></div>
                 </div>
                 <div class="btn">
-                    <button translate>Login</button>
+                    <button tabindex="5" translate>Login</button>
                 </div>
             </form>
         </div>

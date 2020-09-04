@@ -127,6 +127,7 @@ body {
                     color: #aaa;
                     display: flex;
                     cursor: pointer;
+                    outline: none;
                     span{
                         font-size: 14px;
                         margin-left: 4px;
@@ -150,6 +151,9 @@ body {
                     outline: none;
                     color: #fff;
                     font-size: 16px;
+                    &:focus{
+                        border-color: #fff;
+                    }
                     &:hover{
                         background: #4688F8;
                         border-color: #4688F8;

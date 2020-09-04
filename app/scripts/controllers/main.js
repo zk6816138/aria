@@ -538,9 +538,20 @@
         //退出登录
         $scope.logout = function(){
             $rootScope.loginStatus = 'Not Logged';
-            $user.userInfo('account','');
-            $user.userInfo('pwdLength','');
-            $user.userInfo('token','');
+            $user.http({
+                url: 'user/logout',
+                method: 'post',
+                data: {token:$user.userInfo('token')}
+            }).then(function (resp) {
+                if (resp.code == 500){
+                    ariaNgLocalizationService.notifyInPage(resp.msg,'',{type: 'error',delay: 5000});
+                }
+                else if (resp.code == 0){
+                    $user.userInfo('account','');
+                    $user.userInfo('pwdLength','');
+                    $user.userInfo('token','');
+                }
+            })
         }
 
         //接受主进程发送的登录窗口消息

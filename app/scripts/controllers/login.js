@@ -146,6 +146,9 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
         }
 
         var login = function(data){
+            if ($user.isSwitchAccount() && !$scope.noCheck){
+                data.token = $user.userInfo('token');
+            }
             $scope.loginWindow('close');
             $scope.sendToMain('login-status=Logging');
             $scope.isCancelLogin = false;
@@ -211,6 +214,9 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             }
             else {
                 $scope.noCheck = false;
+                if (n.password == ('*'.padStart($user.userInfo('pwdLength'),'*'))) {
+                    $scope.loginData.password = '';
+                }
             }
         },true)
 
@@ -235,6 +241,9 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             var data = {
                 account: $scope.registerData.account,
                 password: $scope.registerData.password
+            }
+            if ($user.isSwitchAccount()){
+                data.token = $user.userInfo('token');
             }
             $scope.loginWindow('close');
             $user.http({
@@ -261,6 +270,12 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
                 $scope.sendToMain('login-status=Not Logged');
                 $scope.loginWindow('show');
             })
+        }
+
+        $scope.spacePress = function (e,type) {
+            if (e.keyCode == 32){
+                $scope.loginOption(type);
+            }
         }
     })
 
