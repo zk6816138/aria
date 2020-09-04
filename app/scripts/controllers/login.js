@@ -181,6 +181,9 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
         $scope.close = function (flag=false) {
             if (!core.loginWindow.isVisible()) return;
             angular.element('.wrapper').addClass('wrapper-close');
+            if ($user.isSwitchAccount()){
+                $scope.sendToMain('isSwitchAccount');
+            }
             $timeout(function () {
                 core.loginWindow.closeWindow();
                 if (flag) {

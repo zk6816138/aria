@@ -121,12 +121,7 @@ let onLoginWindowToMainWindow = function(){
 
 let onMainWindowToLoginWindow = function(){
     ipcMain.on('main-to-login', function (e,arg) {
-        if (arg == 'login-window=show'){
-            login.show();
-        }
-        else {
-            core.loginWindow.webContents.send('main-to-login',arg);
-        }
+        core.loginWindow.webContents.send('main-to-login',arg);
     });
 }
 

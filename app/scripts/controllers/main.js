@@ -531,6 +531,7 @@
         //切换账号
         $scope.switchAccount = function(){
             $rootScope.loginStatus = 'Not Logged';
+            $user.isSwitchAccount(true);
             ariaNgNativeElectronService.sendMainToLoginToMainProcess('login-window=show');
         }
 
@@ -546,15 +547,19 @@
         ariaNgNativeElectronService.onMainProcessLoginToMain(function (e, resp) {
             if (resp.indexOf('login-status') == 0){
                 $rootScope.loginStatus = resp.split('=')[1];
-                $rootScope.$apply();
                 if ($rootScope.loginStatus == 'Logged'){
                     $scope.account = $user.userInfo('account');
                     $scope.avatar = ['male.png','female.png'].indexOf($user.userInfo('avatar')) >=0 ? ('../assets/user/'+ $user.userInfo('avatar')) : ($user.getImgUrl() + $user.userInfo('avatar'));
                     $scope.lastLoginTime = $user.userInfo('last_login_time');
                 }
+                $rootScope.$apply();
             }
             else if (resp.indexOf('login-message:=') == 0){
                 ariaNgLocalizationService.notifyInPage(resp.split(':=')[1],'',{type: 'error',delay: 5000});
+            }
+            else if (resp == 'isSwitchAccount' && $rootScope.loginStatus != 'Logged'){
+                $rootScope.loginStatus = 'Logged';
+                $rootScope.$apply();
             }
         })
 

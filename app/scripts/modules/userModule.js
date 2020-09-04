@@ -31,6 +31,22 @@ angular.module('userModule', [])
         }
     }
     return{
+        isSwitchAccount: function(flag){
+            if (flag!==undefined){
+                localStorage.setItem('isSwitchAccount',1);
+            }
+            else {
+                var tmp = localStorage.getItem('isSwitchAccount');
+                if (tmp == null){
+                    return false;
+                }
+                else if (tmp == '1') {
+                    localStorage.removeItem('isSwitchAccount');
+                    return true;
+                }
+                return false;
+            }
+        },
         http: function (opts) {
             return new Promise(function (resolve, reject) {
                 $http({
