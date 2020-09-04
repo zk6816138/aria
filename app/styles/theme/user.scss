@@ -2,7 +2,6 @@
     display: flex;
     align-items: center;
     margin-left: 12px;
-    -webkit-app-region: no-drag;
     &:hover{
         .avatar{
             background-image: url('../../../assets/user/avatar_hover.png');
@@ -95,22 +94,21 @@
                 ul.dropdown-menu{
                     left: 0;
                     margin-top: 2px;
-                    box-shadow: 0 6px 12px rgba(0,0,0,.175);
                     border-radius: 4px;
-                    .seperator{
-                        height: 11px;
-                        position: relative;
-                        &:after{
-                            content: '';
-                            position: absolute;
-                            left: 50%;
-                            top: 50%;
-                            transform: translate(-50%,-50%);
-                            height: .5px;
-                            width: 85%;
-                            background: #ccc;
-                        }
-                    }
+                    //.seperator{
+                    //    height: 11px;
+                    //    position: relative;
+                    //    &:after{
+                    //        content: '';
+                    //        position: absolute;
+                    //        left: 50%;
+                    //        top: 50%;
+                    //        transform: translate(-50%,-50%);
+                    //        height: .5px;
+                    //        width: 85%;
+                    //        background: #ccc;
+                    //    }
+                    //}
                 }
             }
             .last{

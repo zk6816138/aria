@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="styles/theme/user.css">
 
     <!--阿里云图标库-->
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_l3ne5z6ky8p.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_vb0um5f8f8.css">
 
     <style ng-if="mainTheme=='custom-theme'">
         .skin-aria-ng.custom-theme .sidebar-menu > li:hover > a,
@@ -204,7 +204,7 @@
                     <div class="logging" ng-style="{display:loginStatus=='Logging'?'block':'none'}">
                         <i class="iconfont icon-loading loading-rotate"></i>
                     </div>
-                    <img ng-style="{display:loginStatus=='Logged'?'block':'none'}" ng-src="{{avatar}}" ng-click="avatarClick($event)">
+                    <img ng-style="{display:loginStatus=='Logged'?'block':'none'}" draggable="false" ng-src="{{avatar}}">
                 </div>
                 <div class="user-info">
                     <div ng-style="{display:loginStatus=='Not Logged'?'block':'none'}" class="click-login" ng-click="openLoginWindow()" translate>Click To Login</div>
@@ -225,20 +225,20 @@
                                         <i class="fa" ng-class="{'fa-check': setting.isDefault}"></i>
                                     </a>
                                 </li>
-                                <li class="seperator"></li>
+                                <li class="divider"></li>
                                 <li>
                                     <a class="pointer-cursor" ng-click="switchAccount()">
-                                        <span>切换账号</span>
+                                        <span translate>Switch Account</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="pointer-cursor" ng-click="logout()">
-                                        <span>退出登录</span>
+                                        <span translate>Sign Out</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="last">上次登录 :</div>
+                        <div class="last" translate>Last Login :</div>
                         <div class="last">{{lastLoginTime}}</div>
                     </div>
                 </div>

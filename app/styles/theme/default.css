@@ -100,6 +100,7 @@
     background-color: #3c4852;
     color: #ffffff;
     border-bottom: 1px solid #59636b;
+    -webkit-app-region: no-drag;
 }
 
 .skin-aria-ng .main-header .logo .logo-lg:hover {
@@ -767,4 +768,7 @@
 }
 .modal-dialog .btn-default {
     background-color: #f4f4f4!important;
+}
+.dropdown-menu{
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }

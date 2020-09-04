@@ -277,6 +277,9 @@
             'Create New Task': 'Create New Task',
             'Click To Login': 'Click To Login',
             'Logging...': 'Logging...',
+            'Switch Account': 'Switch Account',
+            'Sign Out': 'Sign Out',
+            'Last Login :': 'Last Login :',
             'menu': {
                 'Quit': 'Quit AriaNg',
             },

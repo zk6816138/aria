@@ -502,15 +502,23 @@
             },1500)
         }
 
-        //点击头像,更换头像
-        $scope.avatarClick = function (e) {
-            e.stopPropagation();
-        }
-
         //打开登录窗口
         $scope.openLoginWindow = function () {
             if ($rootScope.loginStatus == 'Not Logged') {
                 ariaNgNativeElectronService.sendMainToLoginToMainProcess('login-window=show');
+            }
+            else if ($rootScope.loginStatus == 'Logged') {//点击头像,更换头像
+                $user.uploadAvatar({url:'user/avatar'}).then(function (resp) {
+                    if (resp.code == 0){
+                        ariaNgLocalizationService.notifyInPage(resp.msg,'',{type: 'success',delay: 5000});
+                        $user.userInfo('avatar',resp.data.avatar);
+                        $scope.avatar = $user.getImgUrl() + resp.data.avatar;
+                    }
+                    else {
+                        ariaNgLocalizationService.notifyInPage(resp.msg,'',{type: 'error',delay: 5000});
+                    }
+                    $scope.$apply();
+                });
             }
         }
 
@@ -530,7 +538,7 @@
         $scope.logout = function(){
             $rootScope.loginStatus = 'Not Logged';
             $user.userInfo('account','');
-            $user.userInfo('password','');
+            $user.userInfo('pwdLength','');
             $user.userInfo('token','');
         }
 
@@ -541,7 +549,7 @@
                 $rootScope.$apply();
                 if ($rootScope.loginStatus == 'Logged'){
                     $scope.account = $user.userInfo('account');
-                    $scope.avatar = ['male.png','female.png'].indexOf($user.userInfo('avatar')) >=0 ? ('../assets/user/'+ $user.userInfo('avatar')) : $user.userInfo('avatar');
+                    $scope.avatar = ['male.png','female.png'].indexOf($user.userInfo('avatar')) >=0 ? ('../assets/user/'+ $user.userInfo('avatar')) : ($user.getImgUrl() + $user.userInfo('avatar'));
                     $scope.lastLoginTime = $user.userInfo('last_login_time');
                 }
             }
