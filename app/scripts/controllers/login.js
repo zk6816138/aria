@@ -31,6 +31,8 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             }
             else {
                 $scope.rememberPassword = $scope.autoLogin = 0;
+                $user.userInfo('rememberPassword', 0);
+                $user.userInfo('autoLogin', 0);
             }
             angular.element('#login-account').focus();
         }
@@ -133,6 +135,9 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
                 else if (resp == 'cancelLogin') {
                     $scope.isCancelLogin = true;
                 }
+                else if (resp == 'enter'){
+                    angular.element('.form-wrap form').eq($scope.tabIndex).submit();
+                }
             });
         })
         //发送给主进程
@@ -151,12 +156,12 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             }).then(function (resp) {
                 if ($scope.isCancelLogin)return;
                 if (resp.code == 0) {
-                    $scope.sendToMain('login-status=Logged');
                     $user.saveUserInfo(resp.data);
                     $scope.clearData();
                     if (data.password && ($scope.rememberPassword || $scope.autoLogin)){
                         $user.userInfo('pwdLength',data.password.length);
                     }
+                    $scope.sendToMain('login-status=Logged');
                 }
 
                 if (resp.code == 500){
@@ -238,12 +243,12 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
                 data: data
             }).then(function (resp) {
                 if (resp.code == 0) {
-                    $scope.sendToMain('login-status=Logged');
                     $user.saveUserInfo(resp.data);
                     $scope.clearData();
                     if (data.password && ($scope.rememberPassword || $scope.autoLogin)){
                         $user.userInfo('pwdLength',data.password.length);
                     }
+                    $scope.sendToMain('login-status=Logged');
                 }
 
                 if (resp.code == 500){

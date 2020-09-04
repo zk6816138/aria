@@ -28,7 +28,7 @@
     <div class="mask"></div>
     <div class="header">
         <span class="title" ng-bind="('Login' | translate).replace('　','')"></span>
-        <a href="javascript:;" class="close" ng-click="close(true)" title="{{'Close' | translate}}">
+        <a href="javascript:;" tabindex="-1" class="close" ng-click="close(true)" title="{{'Close' | translate}}">
             <i class="iconfont icon-remove"></i>
         </a>
     </div>
@@ -36,8 +36,8 @@
         <img src="../assets/user/avatar_hover.png">
     </div>
     <div class="tab-control">
-        <a href="javascript:;" ng-class="{'selected':tabIndex==0}" ng-click="tabIndex=0" ng-bind="'Login' | translate"></a>
-        <a href="javascript:;" ng-class="{'selected':tabIndex==1}" ng-click="tabIndex=1" ng-bind="'Register' | translate"></a>
+        <a href="javascript:;" tabindex="-1" ng-class="{'selected':tabIndex==0}" ng-click="tabIndex=0" ng-bind="'Login' | translate"></a>
+        <a href="javascript:;" tabindex="-1" ng-class="{'selected':tabIndex==1}" ng-click="tabIndex=1" ng-bind="'Register' | translate"></a>
     </div>
 
     <div class="form-wrap">

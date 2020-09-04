@@ -79,6 +79,7 @@ body {
   color: #aaa;
   text-decoration: none;
   font-size: 14px;
+  outline: none;
 }
 .wrapper .tab-control a:active, .wrapper .tab-control a.selected {
   border-bottom: 1px solid #fff;

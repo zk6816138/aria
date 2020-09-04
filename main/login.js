@@ -57,6 +57,10 @@ let init = function (parentWindow=null) {
         core.loginWindow.webContents.send('main-to-login', 'login-window=close-true');
     });
 
+    electronLocalshortcut.register(core.loginWindow, 'Enter', () => {
+        core.loginWindow.webContents.send('main-to-login', 'enter');
+    });
+
     core.loginWindow.closeWindow = close;
     core.loginWindow.showWindow = show;
 }
