@@ -8,7 +8,7 @@
     <title></title>
     <link rel="stylesheet" href="styles/theme/login.css">
     <!--阿里云图标库-->
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_vb0um5f8f8.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_nmnp8dwik2k.css">
 
     <style ng-if="mainTheme=='custom-theme'">
         .custom-theme .wrapper{
@@ -33,7 +33,7 @@
         </a>
     </div>
     <div class="logo">
-        <img src="../assets/user/avatar_hover.png">
+        <img ng-src="{{avatar}}">
     </div>
     <div class="tab-control">
         <a href="javascript:;" tabindex="-1" ng-class="{'selected':tabIndex==0}" ng-click="tabIndex=0" ng-bind="'Login' | translate"></a>

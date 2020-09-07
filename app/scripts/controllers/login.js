@@ -28,11 +28,13 @@ var app = angular.module('loginWindow',['validFormModule','pascalprecht.translat
             if (!!$scope.rememberPassword && !!$user.userInfo('account') && !!$user.userInfo('pwdLength')) {
                 $scope.loginData.account = $user.userInfo('account');
                 $scope.loginData.password = '*'.padStart($user.userInfo('pwdLength'),'*');
+                $scope.avatar = $user.getImgUrl() + $user.userInfo('avatar');
             }
             else {
                 $scope.rememberPassword = $scope.autoLogin = 0;
                 $user.userInfo('rememberPassword', 0);
                 $user.userInfo('autoLogin', 0);
+                $scope.avatar = '../assets/user/avatar_hover.png';
             }
             angular.element('#login-account').focus();
         }

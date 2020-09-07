@@ -200,6 +200,12 @@
             sendMainToLoginToMainProcess: function(message){
                 sendMessageToMainProcess('main-to-login',message);
             },
+            onMainProcessAvatarToMain: function (callback) {
+                onMainProcessMessage('avatar-to-main', callback);
+            },
+            sendMainToAvatarToMainProcess: function(message){
+                sendMessageToMainProcess('main-to-avatar',message);
+            },
             setApplicationMenu: function () {
                 if (menu.setApplicationMenu) {
                     menu.setApplicationMenu({

@@ -110,6 +110,7 @@ let onLanguageChange = function(){
         }
         core.floatWindow.webContents.send('language-change',arg);
         core.loginWindow.webContents.send('language-change',arg);
+        core.avatarWindow.webContents.send('language-change',arg);
     });
 }
 
@@ -122,6 +123,18 @@ let onLoginWindowToMainWindow = function(){
 let onMainWindowToLoginWindow = function(){
     ipcMain.on('main-to-login', function (e,arg) {
         core.loginWindow.webContents.send('main-to-login',arg);
+    });
+}
+
+let onAvatarWindowToMainWindow = function(){
+    ipcMain.on('avatar-to-main', function (e,arg) {
+        core.mainWindow.webContents.send('avatar-to-main',arg);
+    });
+}
+
+let onMainWindowToAvatarWindow = function(){
+    ipcMain.on('main-to-avatar', function (e,arg) {
+        core.avatarWindow.webContents.send('main-to-avatar',arg);
     });
 }
 
@@ -219,5 +232,7 @@ module.exports = {
     sendThemeWindowClose: sendThemeWindowClose,
     onThemeWindowLoaded: onThemeWindowLoaded,
     onLoginWindowToMainWindow: onLoginWindowToMainWindow,
-    onMainWindowToLoginWindow: onMainWindowToLoginWindow
+    onMainWindowToLoginWindow: onMainWindowToLoginWindow,
+    onAvatarWindowToMainWindow: onAvatarWindowToMainWindow,
+    onMainWindowToAvatarWindow: onMainWindowToAvatarWindow
 };

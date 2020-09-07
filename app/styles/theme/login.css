@@ -63,6 +63,8 @@ body {
   display: block;
   border-radius: 50%;
   background-color: #fff;
+  width: 109px;
+  height: 109px;
 }
 .wrapper .tab-control {
   margin-top: 11px;

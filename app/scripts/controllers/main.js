@@ -508,17 +508,9 @@
                 ariaNgNativeElectronService.sendMainToLoginToMainProcess('login-window=show');
             }
             else if ($rootScope.loginStatus == 'Logged') {//点击头像,更换头像
-                $user.uploadAvatar({url:'user/avatar'}).then(function (resp) {
-                    if (resp.code == 0){
-                        ariaNgLocalizationService.notifyInPage(resp.msg,'',{type: 'success',delay: 5000});
-                        $user.userInfo('avatar',resp.data.avatar);
-                        $scope.avatar = $user.getImgUrl() + resp.data.avatar;
-                    }
-                    else {
-                        ariaNgLocalizationService.notifyInPage(resp.msg,'',{type: 'error',delay: 5000});
-                    }
-                    $scope.$apply();
-                });
+                $user.chooseImage().then(function (resp) {
+                    ariaNgNativeElectronService.sendMainToAvatarToMainProcess({type:'avatar-window=show',data: resp});
+                })
             }
         }
 
@@ -571,6 +563,16 @@
             else if (resp == 'isSwitchAccount' && $rootScope.loginStatus != 'Logged'){
                 $rootScope.loginStatus = 'Logged';
                 $rootScope.$apply();
+            }
+        })
+
+        //接受头像窗口消息
+        ariaNgNativeElectronService.onMainProcessAvatarToMain(function (e, resp) {
+            if (resp.type.indexOf('message-') == 0){
+                ariaNgLocalizationService.notifyInPage(resp.data,'',{type: resp.type.split('-')[1],delay: 5000});
+            }
+            else if (resp.type == 'upload-success'){
+                $scope.avatar = $user.getImgUrl() + $user.userInfo('avatar');
             }
         })
 

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh" ng-app="avatarWindow" ng-controller="avatarCtrl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="styles/theme/avatar.css">
+    <!--阿里云图标库-->
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_nmnp8dwik2k.css">
+</head>
+<body>
+<div class="wrapper">
+    <a href="javascript:;" tabindex="-1" class="close" ng-click="close()" title="{{'Close' | translate}}">
+        <i class="iconfont icon-remove"></i>
+    </a>
+    <div class="img-wrap">
+        <div class="clip-wrap" ng-style="{width:data.w,height:data.h}">
+            <img class="base" draggable="false" ng-src="{{data.b}}">
+            <canvas id="canvas" width="{{canvasData.w}}" height="{{canvasData.h}}"></canvas>
+            <div class="mask"></div>
+            <div class="clip" ng-style="{width:data.c,height:data.c,left:data.l,top:data.t,'background-image':'url('+data.b+')','background-size':data.s,'background-position':data.p}"></div>
+        </div>
+        <i ng-if="!data.b" class="iconfont icon-manhua"></i>
+    </div>
+    <div class="btns">
+        <a href="javascript:;" tabindex="-1" class="upload" ng-click="choose()" translate>Select Image</a>
+        <a href="javascript:;" tabindex="-1" class="upload" ng-class="{'disabled':!data.b || isLoading}" ng-click="upload()" translate>Clip And Upload</a>
+    </div>
+</div>
+</body>
+<script>
+    if (window.require) {
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+    }
+</script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+<script src="scripts/modules/userModule.js"></script>
+<script src="scripts/controllers/avatar.js"></script>
+</html>

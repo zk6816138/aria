@@ -15,6 +15,7 @@ const aria2c = require('./aria2c');
 const float = require('./float');
 const theme = require('./theme');
 const login = require('./login');
+const avatar = require('./avatar');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -181,6 +182,8 @@ app.on('ready', () => {
     tray.init();
     float.init();
     login.init(core.mainWindow);
+    avatar.init(core.mainWindow);
+
 
     if (ipc.isContainsSupportedFileArg(filePathInCommandLine)) {
         ipc.asyncNewTaskFromFile(filePathInCommandLine);
@@ -299,4 +302,7 @@ app.on('ready', () => {
     ipc.onThemeWindowLoaded();
     ipc.onLoginWindowToMainWindow();
     ipc.onMainWindowToLoginWindow();
+
+    ipc.onAvatarWindowToMainWindow();
+    ipc.onMainWindowToAvatarWindow();
 });
