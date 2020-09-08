@@ -10,8 +10,8 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
         var ipcRenderer = electron.ipcRenderer;
         var core = remote.require('./core');
 
-        // w,h图片宽高;b图片base64;c裁剪区域宽高;t,l裁剪区域top,left;s裁剪区background-size;p裁剪区background-position
-        $scope.data = {w:null,h:null,b:null,c:null,t:null,l:null,s:null,p:null};
+        // w,h图片宽高;b图片base64;c裁剪区域宽高;t,l裁剪区域top,left;x,y裁剪区图片transform
+        $scope.data = {w:null,h:null,b:null,c:null,t:null,l:null,x:null,y:null};
 
         $scope.canvasData = {w:null,h:null};
 
@@ -48,13 +48,13 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
             $scope.data.w = size.w;
             $scope.data.h = size.h;
             $scope.data.b = data.base64;
-            $scope.data.s = $scope.data.w;
 
             if (data.width >= data.height){
                 $scope.data.c = $scope.data.h;
                 $scope.data.t = 0;
                 $scope.data.l = parseInt($scope.data.w / 2 - $scope.data.h / 2);
-                $scope.data.p = `-${$scope.data.l}px 0`;
+                $scope.data.x = `-${$scope.data.l}px`;
+                $scope.data.y = 0;
 
                 $scope.canvasData.w = $scope.canvasData.h = $scope.data.h;
             }
@@ -62,7 +62,8 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
                 $scope.data.c = $scope.data.w;
                 $scope.data.t = parseInt($scope.data.h / 2 - $scope.data.w / 2);
                 $scope.data.l = 0;
-                $scope.data.p = `0 -${$scope.data.t}px`;
+                $scope.data.x = 0;
+                $scope.data.y = `-${$scope.data.t}px`;
 
                 $scope.canvasData.w = $scope.canvasData.h = $scope.data.w;
             }
@@ -89,7 +90,7 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
                             if (left >= ($scope.data.w - $scope.data.c)) {
                                 left = ($scope.data.w - $scope.data.c);
                             }
-                            $scope.data.p = `-${left}px 0`;
+                            $scope.data.x = `-${left}px`;
                             $scope.data.l = left;
                         }
                         else { //只能垂直移动
@@ -100,7 +101,7 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
                             if (top >= ($scope.data.h - $scope.data.c)) {
                                 top = ($scope.data.h - $scope.data.c);
                             }
-                            $scope.data.p = `0 -${top}px`;
+                            $scope.data.y = `-${top}px`;
                             $scope.data.t = top;
                         }
                         $scope.$apply();
@@ -144,7 +145,7 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
         //选择本地图片
         $scope.choose = function(){
             $user.chooseImage().then(function (resp) {
-                $scope.data = {w:null,h:null,b:null,c:null,t:null,l:null,s:null,p:null};
+                $scope.data = {w:null,h:null,b:null,c:null,t:null,l:null,x:null,y:null};
                 $scope.init(resp);
                 $scope.$apply();
             })

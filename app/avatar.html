@@ -20,9 +20,11 @@
             <img class="base" draggable="false" ng-src="{{data.b}}">
             <canvas id="canvas" width="{{canvasData.w}}" height="{{canvasData.h}}"></canvas>
             <div class="mask"></div>
-            <div class="clip" ng-style="{width:data.c,height:data.c,left:data.l,top:data.t,'background-image':'url('+data.b+')','background-size':data.s,'background-position':data.p}">
+            <div class="clip" ng-style="{width:data.c,height:data.c,left:data.l,top:data.t}">
+                <img class="clip-img" draggable="false" ng-src="{{data.b}}" ng-style="{width:data.w,height:data.h,transform: 'translateX('+data.x+') translateY('+data.y+')'}">
                 <span class="s1" ng-style="{width:(data.c/3),height:data.c}"></span>
                 <span class="s2" ng-style="{width:data.c,height:(data.c/3)}"></span>
+                <em></em>
             </div>
         </div>
         <i ng-if="!data.b" class="iconfont icon-manhua"></i>

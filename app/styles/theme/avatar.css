@@ -120,23 +120,35 @@ body {
   cursor: grab;
   overflow: hidden;
 }
-.wrapper .img-wrap .clip-wrap .clip:before, .wrapper .img-wrap .clip-wrap .clip:after {
-  content: "";
+.wrapper .img-wrap .clip-wrap .clip em {
+  display: block;
+  height: 0;
+  left: 50%;
+  opacity: 0.5;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #eee;
-  opacity: 0.5;
-  border: none;
+  width: 0;
 }
-.wrapper .img-wrap .clip-wrap .clip:before {
-  width: 3%;
+.wrapper .img-wrap .clip-wrap .clip em:before, .wrapper .img-wrap .clip-wrap .clip em:after {
+  background-color: #eee;
+  content: " ";
+  display: block;
+  position: absolute;
+}
+.wrapper .img-wrap .clip-wrap .clip em:before {
   height: 1px;
+  left: -3px;
+  top: 0;
+  width: 7px;
 }
-.wrapper .img-wrap .clip-wrap .clip:after {
+.wrapper .img-wrap .clip-wrap .clip em:after {
+  height: 7px;
+  left: 0;
+  top: -3px;
   width: 1px;
-  height: 3%;
+}
+.wrapper .img-wrap .clip-wrap .clip .clip-img {
+  display: block;
 }
 .wrapper .img-wrap .clip-wrap .clip span {
   position: absolute;
