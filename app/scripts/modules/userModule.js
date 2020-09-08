@@ -16,14 +16,14 @@ angular.module('userModule', [])
     var _chooseImage = function () {
         return new Promise(function (resolve) {
             var input = angular.element('<input type="file" accept="image/*"/>');
-            input.on('change',()=>{
-                $timeout(function () {
+            $timeout(function () {
+                input.on('change',()=>{
                     if (input[0].files[0]==undefined)return;
                     resolve(input[0].files[0]);
                     input = null;
                 })
-            })
-            input.click();
+                input.click();
+            },50)
         })
     }
     var setHeaders = function () {

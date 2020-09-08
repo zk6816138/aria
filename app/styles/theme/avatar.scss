@@ -114,6 +114,45 @@ body {
                 left: 0;
                 top: 0;
                 cursor: grab;
+                overflow: hidden;
+                &:before,&:after{
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    background: #eee;
+                    opacity: .5;
+                    border: none;
+                }
+                &:before{
+                    width: 3%;
+                    height: 1px;
+                }
+                &:after{
+                    width: 1px;
+                    height: 3%;
+                }
+                span{
+                    position: absolute;
+                    display: block;
+                    border: 1px dashed  #eee;
+                    opacity: .5;
+                    &.s1{
+                        top: 0;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        border-top: none;
+                        border-bottom: none;
+                    }
+                    &.s2{
+                        left: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        border-left: none;
+                        border-right: none;
+                    }
+                }
             }
         }
         .iconfont{

@@ -20,7 +20,10 @@
             <img class="base" draggable="false" ng-src="{{data.b}}">
             <canvas id="canvas" width="{{canvasData.w}}" height="{{canvasData.h}}"></canvas>
             <div class="mask"></div>
-            <div class="clip" ng-style="{width:data.c,height:data.c,left:data.l,top:data.t,'background-image':'url('+data.b+')','background-size':data.s,'background-position':data.p}"></div>
+            <div class="clip" ng-style="{width:data.c,height:data.c,left:data.l,top:data.t,'background-image':'url('+data.b+')','background-size':data.s,'background-position':data.p}">
+                <span class="s1" ng-style="{width:(data.c/3),height:data.c}"></span>
+                <span class="s2" ng-style="{width:data.c,height:(data.c/3)}"></span>
+            </div>
         </div>
         <i ng-if="!data.b" class="iconfont icon-manhua"></i>
     </div>

@@ -118,6 +118,45 @@ body {
   left: 0;
   top: 0;
   cursor: grab;
+  overflow: hidden;
+}
+.wrapper .img-wrap .clip-wrap .clip:before, .wrapper .img-wrap .clip-wrap .clip:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #eee;
+  opacity: 0.5;
+  border: none;
+}
+.wrapper .img-wrap .clip-wrap .clip:before {
+  width: 3%;
+  height: 1px;
+}
+.wrapper .img-wrap .clip-wrap .clip:after {
+  width: 1px;
+  height: 3%;
+}
+.wrapper .img-wrap .clip-wrap .clip span {
+  position: absolute;
+  display: block;
+  border: 1px dashed #eee;
+  opacity: 0.5;
+}
+.wrapper .img-wrap .clip-wrap .clip span.s1 {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-top: none;
+  border-bottom: none;
+}
+.wrapper .img-wrap .clip-wrap .clip span.s2 {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: none;
+  border-right: none;
 }
 .wrapper .img-wrap .iconfont {
   position: absolute;
