@@ -1,3 +1,5 @@
+var electron = nodeRequire('electron');
+var remote = electron.remote;
 var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
 
     .controller('avatarCtrl',function ($scope,$timeout,$translate,$user) {
@@ -5,8 +7,6 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
         $scope.currentLanguage = options ? options.language : 'zh_Hans';
         $translate.use($scope.currentLanguage);
 
-        var electron = nodeRequire('electron');
-        var remote = electron.remote;
         var ipcRenderer = electron.ipcRenderer;
         var core = remote.require('./core');
 
