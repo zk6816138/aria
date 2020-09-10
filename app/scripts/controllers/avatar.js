@@ -259,28 +259,8 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
     })
 
     .config(function ($translateProvider) {
-        $translateProvider.translations('en', {
-            'Close': 'Close',
-            'Select Image': 'Select Image',
-            'Clip And Upload': 'Clip And Upload',
-            'Left Mouse Button To Drag The Crop Area':'Left Mouse Button To Drag The Crop Area',
-            'Mouse Wheel Zoom Image':'Mouse Wheel Zoom Image',
-            'Right Mouse Button To Drag Picture':'Right Mouse Button To Drag Picture'
-        });
-        $translateProvider.translations('zh_Hans', {
-            'Close': '关闭',
-            'Select Image': '选择图片',
-            'Clip And Upload': '裁剪并上传',
-            'Left Mouse Button To Drag The Crop Area':'鼠标左键拖动裁剪区',
-            'Mouse Wheel Zoom Image':'鼠标滚轮缩放图片',
-            'Right Mouse Button To Drag Picture':'鼠标右键拖动图片'
-        });
-        $translateProvider.translations('zh_Hant', {
-            'Close': '關閉',
-            'Select Image': '選擇圖片',
-            'Clip And Upload': '裁剪並上傳',
-            'Left Mouse Button To Drag The Crop Area':'鼠標左鍵拖動裁剪區',
-            'Mouse Wheel Zoom Image':'鼠標滾輪縮放圖片',
-            'Right Mouse Button To Drag Picture':'鼠標右鍵拖動圖片'
-        });
+        var langs = remote.require('../app/langs/languages').avatar;
+        for (var k in langs){
+            $translateProvider.translations(k, langs[k]);
+        }
     })

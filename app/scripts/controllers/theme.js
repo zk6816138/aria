@@ -1,3 +1,5 @@
+var electron = nodeRequire('electron');
+var remote = electron.remote;
 var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
 
     .controller('themeCtrl',function ($rootScope,$scope, $translate, $timeout) {
@@ -11,8 +13,6 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
         var options = JSON.parse(localStorage.getItem('AriaNg.Options'));
         $translate.use(options ? options.language : 'zh_Hans');
 
-        var electron = nodeRequire('electron');
-        var remote = electron.remote;
         $scope.colors = remote.require('./config').getCustomColors();
         $scope.ipcRenderer = electron.ipcRenderer;
         $scope.confirmShow = false;
@@ -205,100 +205,8 @@ var app = angular.module('theme', ['ui.colorpicker','pascalprecht.translate'])
     })
 
     .config(function ($translateProvider) {
-        $translateProvider.translations('en', {
-            'Hot Skin': 'Hot Skin',
-            'Custom Skin': 'Custom Skin',
-            'Close': 'Close',
-            'Reset All Colors': 'Reset All Colors',
-            'Sidebar(Main Color)': 'Sidebar(Main Color)',
-            'Search Bar Mouse Enter': 'Search Bar Mouse Enter',
-            'Sidebar Menu Mouse Enter': 'Sidebar Menu Mouse Enter',
-            'Task Mouse Enter': 'Task Mouse Enter',
-            'Sidebar Menu Selected': 'Sidebar Menu Selected',
-            'Task Selected': 'Task Selected',
-            'Sidebar Menu Word': 'Sidebar Menu Word',
-            'Task Border Mouse Enter': 'Task Border Mouse Enter',
-            'Sidebar Menu Word Selected': 'Sidebar Menu Word Selected',
-            'Task Arrow': 'Task Arrow',
-            'Toolbar Mouse Enter': 'Toolbar Mouse Enter',
-            'Task Progressbar': 'Task Progressbar',
-            'Toolbar Selected': 'Toolbar Selected',
-            'Task Progressbar Border': 'Task Progressbar Border',
-            'Search Bar': 'Search Bar',
-            'Task Drag': 'Task Drag',
-            "PALETTE": "Palette",
-            "WHEEL": "Wheel",
-            "HISTORY": "History",
-            "SELECT": "Select",
-            "CANCEL": "Cancel",
-            "DEFAULT": "Default",
-            "Confirm Reset": "Confirm Reset",
-            "Do you want to reset all colors?": "Do you want to reset all colors?",
-            "Cancel": "Cancel",
-            "OK": "OK"
-        });
-        $translateProvider.translations('zh_Hans', {
-            'Hot Skin': '推荐皮肤',
-            'Custom Skin': '自定义皮肤',
-            'Close': '关闭',
-            'Reset All Colors': '重置所有颜色',
-            'Sidebar(Main Color)': '侧边栏(主色调)',
-            'Search Bar Mouse Enter': '搜索框鼠标移入',
-            'Sidebar Menu Mouse Enter': '侧边栏菜单鼠标移入',
-            'Task Mouse Enter': '任务鼠标移入',
-            'Sidebar Menu Selected': '侧边栏菜单选中',
-            'Task Selected': '任务选中',
-            'Sidebar Menu Word': '侧边栏菜单文字',
-            'Task Border Mouse Enter': '任务鼠标移入边框',
-            'Sidebar Menu Word Selected': '侧边栏菜单文字选中',
-            'Task Arrow': '任务箭头',
-            'Toolbar Mouse Enter': '工具栏鼠标移入',
-            'Task Progressbar': '任务进度条',
-            'Toolbar Selected': '工具栏选中',
-            'Task Progressbar Border': '任务进度条边框',
-            'Search Bar': '搜索框',
-            'Task Drag': '任务拖动',
-            "PALETTE": "经典",
-            "WHEEL": "自定义",
-            "HISTORY": "历史记录",
-            "SELECT": "选择",
-            "CANCEL": "取消",
-            "DEFAULT": "默认",
-            "Confirm Reset": "确认重置",
-            "Do you want to reset all colors?": "您是否要重置所有颜色?",
-            "Cancel": "取消",
-            "OK": "确定"
-        });
-        $translateProvider.translations('zh_Hant', {
-            'Hot Skin': '推薦皮膚',
-            'Custom Skin': '自定義皮膚',
-            'Close': '關閉',
-            'Reset All Colors': '重置所有顏色',
-            'Sidebar(Main Color)': '側邊欄(主色調)',
-            'Search Bar Mouse Enter': '搜索框鼠標移入',
-            'Sidebar Menu Mouse Enter': '側邊欄菜單鼠標移入',
-            'Task Mouse Enter': '任務鼠標移入',
-            'Sidebar Menu Selected': '側邊欄菜單選中',
-            'Task Selected': '任務選中',
-            'Sidebar Menu Word': '側邊欄菜單文字',
-            'Task Border Mouse Enter': '任務鼠標移入邊框',
-            'Sidebar Menu Word Selected': '側邊欄菜單文字選中',
-            'Task Arrow': '任務箭頭',
-            'Toolbar Mouse Enter': '工具欄鼠標移入',
-            'Task Progressbar': '任務進度條',
-            'Toolbar Selected': '工具欄選中',
-            'Task Progressbar Border': '任務進度條邊框',
-            'Search Bar': '搜索框',
-            'Task Drag': '任務拖動',
-            "PALETTE": "經典",
-            "WHEEL": "自定義",
-            "HISTORY": "歷史記錄",
-            "SELECT": "選擇",
-            "CANCEL": "取消",
-            "DEFAULT": "默認",
-            "Confirm Reset": "確認重置",
-            "Do you want to reset all colors?": "您是否要重置所有顏色?",
-            "Cancel": "取消",
-            "OK": "確定",
-        });
+        var langs = remote.require('../app/langs/languages').theme;
+        for (var k in langs){
+            $translateProvider.translations(k, langs[k]);
+        }
     })

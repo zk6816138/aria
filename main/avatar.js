@@ -48,7 +48,7 @@ let init = function (parentWindow=null) {
     core.avatarWindow.on('close', (event) => {
         event.preventDefault();
     })
-    core.avatarWindow.webContents.openDevTools();
+
     electronLocalshortcut.register(core.avatarWindow, 'F12', () => {
         core.avatarWindow.webContents.openDevTools();
     });
