@@ -43,6 +43,8 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
 
         //初始化裁剪框
         $scope.init = function(data){
+            angular.element('.tmp-img').remove();
+
             var size = $user.setPicSize({w:data.width,h:data.height});
 
             $scope.data.w = size.w;
@@ -69,18 +71,23 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
             }
 
             var clip = angular.element('.clip').css({cursor:'grab'});
-
-            if (data.width == data.height){
-                clip.css({cursor:'not-allowed'}).off('mousedown');
-                return;
-            }
+            var drag = angular.element('.img-wrap');
+            var stepW = $scope.data.w * 0.1,stepH = $scope.data.h * 0.1;
+            var stepNum = 1,stepMax = 30;
+            $scope.width = $scope.data.w,$scope.height = $scope.data.h;
+            $scope.baseX = 0,$scope.baseY = 0;
 
             clip.off('mousedown').on('mousedown', function (e) {
                 if (e.button == 0){
                     var startX = e.pageX;
                     var startY = e.pageY;
                     var position = (data.width >= data.height) ? $scope.data.l : $scope.data.t;
-                    clip.css({cursor:'grabbing'});
+                    if (data.width == data.height){
+                        clip.css({cursor:'not-allowed'});
+                    }
+                    else {
+                        clip.css({cursor:'grabbing'});
+                    }
                     angular.element(document).on('mousemove.clip',function (e) {
                         if (data.width > data.height){ //只能横向移动
                             var left =  position + (e.pageX - startX);
@@ -106,12 +113,94 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
                         }
                         $scope.$apply();
                     })
-                    angular.element(document).on('mouseup.clip',function () {
-                        $(document).off('.clip');
-                        clip.css({cursor:'grab'});
+                }
+                angular.element(document).on('mouseup.clip',function () {
+                    $(document).off('.clip');
+                    clip.css({cursor:'grab'});
+                })
+            })
+
+            drag.off('mousewheel').on('mousewheel',function (e) {
+                if (e.originalEvent.wheelDelta >= 0){
+                    if (stepNum >= stepMax){
+                        $scope.width = $scope.data.w + stepW * (stepMax -1);
+                        $scope.height = $scope.data.h + stepH * (stepMax -1);
+                        stepNum = stepMax;
+                        return;
+                    }
+                    $scope.width = $scope.data.w + stepW * stepNum;
+                    $scope.height = $scope.data.h + stepH * stepNum;
+                    stepNum++;
+                }
+                else {
+                    if (stepNum <= 1) {
+                        $scope.width = $scope.data.w;
+                        $scope.height = $scope.data.h;
+                        stepNum = 1;
+                        return;
+                    }
+
+                    if (Math.abs(parseFloat($scope.baseX)) > $scope.width - $scope.data.w - stepW){
+                        $scope.baseX = '-' + parseFloat($scope.width - $scope.data.w - stepW) + 'px';
+                    }
+
+                    if (Math.abs(parseFloat($scope.baseY)) > $scope.height - $scope.data.h - stepH){
+                        $scope.baseY = '-' + parseFloat($scope.height - $scope.data.h - stepH) + 'px';
+                    }
+
+                    $scope.width -= stepW;
+                    $scope.height -= stepH;
+                    stepNum--;
+                }
+                $scope.$apply();
+            })
+
+            drag.off('mousedown').on('mousedown',function (e) {
+                if (e.button == 2){
+                    var startX = e.pageX;
+                    var startY = e.pageY;
+                    var baseX = parseFloat($scope.baseX) || 0;
+                    var baseY = parseFloat($scope.baseY) || 0;
+
+                    drag.addClass('move');
+                    clip.addClass('move');
+
+                    angular.element(document).on('mousemove.drag',function (e) {
+                        var _x = e.pageX - startX + baseX;
+                        var _y = e.pageY - startY + baseY;
+                        $scope.baseX = _x + 'px';
+                        $scope.baseY = _y + 'px';
+
+                        $scope.$apply();
+                    })
+
+                    angular.element(document).on('mouseup.drag',function () {
+                        $(document).off('.drag');
+                        drag.removeClass('move');
+                        clip.removeClass('move');
+
+                        angular.element('.base,.clip-img').addClass('tran');
+                        if (parseFloat($scope.baseX) > 0){
+                            $scope.baseX = 0;
+                        }
+                        if (parseFloat($scope.baseY) > 0){
+                            $scope.baseY = 0;
+                        }
+
+                        if (Math.abs(parseFloat($scope.baseX)) > $scope.width - $scope.data.w){
+                            $scope.baseX = '-' + parseInt($scope.width - $scope.data.w) + 'px';
+                        }
+
+                        if (Math.abs(parseFloat($scope.baseY)) > $scope.height - $scope.data.h){
+                            $scope.baseY = '-' + parseInt($scope.height - $scope.data.h) + 'px';
+                        }
+
+                        $timeout(function () {
+                            angular.element('.base,.clip-img').removeClass('tran');
+                        },100)
+                        $scope.$apply();
                     })
                 }
-
             })
         }
 
@@ -124,7 +213,8 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
             var img = new Image();
             img.src = $scope.data.b;
             img.onload = function () {
-                ctx.drawImage(img,-$scope.data.l,-$scope.data.t,$scope.data.w,$scope.data.h);
+                var dx = -$scope.data.l + parseFloat($scope.baseX),dy = -$scope.data.t + parseFloat($scope.baseY);
+                ctx.drawImage(img,dx,dy,$scope.width,$scope.height);
                 $user.http({
                     url: 'user/avatar',
                     method: 'post',
@@ -172,16 +262,25 @@ var app = angular.module('avatarWindow',['pascalprecht.translate','userModule'])
         $translateProvider.translations('en', {
             'Close': 'Close',
             'Select Image': 'Select Image',
-            'Clip And Upload': 'Clip And Upload'
+            'Clip And Upload': 'Clip And Upload',
+            'Left Mouse Button To Drag The Crop Area':'Left Mouse Button To Drag The Crop Area',
+            'Mouse Wheel Zoom Image':'Mouse Wheel Zoom Image',
+            'Right Mouse Button To Drag Picture':'Right Mouse Button To Drag Picture'
         });
         $translateProvider.translations('zh_Hans', {
             'Close': '关闭',
             'Select Image': '选择图片',
-            'Clip And Upload': '裁剪并上传'
+            'Clip And Upload': '裁剪并上传',
+            'Left Mouse Button To Drag The Crop Area':'鼠标左键拖动裁剪区',
+            'Mouse Wheel Zoom Image':'鼠标滚轮缩放图片',
+            'Right Mouse Button To Drag Picture':'鼠标右键拖动图片'
         });
         $translateProvider.translations('zh_Hant', {
             'Close': '關閉',
             'Select Image': '選擇圖片',
-            'Clip And Upload': '裁剪並上傳'
+            'Clip And Upload': '裁剪並上傳',
+            'Left Mouse Button To Drag The Crop Area':'鼠標左鍵拖動裁剪區',
+            'Mouse Wheel Zoom Image':'鼠標滾輪縮放圖片',
+            'Right Mouse Button To Drag Picture':'鼠標右鍵拖動圖片'
         });
     })

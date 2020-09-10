@@ -43,6 +43,55 @@ body {
 .wrapper .close:active {
   color: #bf1c00;
 }
+.wrapper .faq {
+  right: 32px;
+  padding: 1px;
+}
+.wrapper .faq i {
+  font-size: 15px;
+}
+.wrapper .faq .faq-wrap {
+  position: absolute;
+  right: -20px;
+  top: 26px;
+  background-image: linear-gradient(to bottom, #fff 0%, #EFF0F6 100%);
+  padding: 5px 12px;
+  border-radius: 5px;
+  box-shadow: 1px 2px 6px rgba(255, 255, 255, 0.8);
+  color: #666;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+.wrapper .faq .faq-wrap:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -4px;
+  border-top: 1px solid transparent;
+  border-right: 1px solid transparent;
+  transform: rotate(-45deg);
+  right: 25px;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+}
+.wrapper .faq .faq-wrap ul {
+  margin: 0;
+  padding-left: 22px;
+}
+.wrapper .faq .faq-wrap ul li {
+  white-space: nowrap;
+  line-height: 1.8;
+}
+.wrapper .faq:hover, .wrapper .faq:active {
+  color: #f94e41;
+}
+.wrapper .faq:hover .faq-wrap, .wrapper .faq:active .faq-wrap {
+  visibility: visible;
+  opacity: 1;
+}
 .wrapper .btns {
   position: absolute;
   width: 100%;
@@ -91,6 +140,7 @@ body {
 .wrapper .img-wrap .clip-wrap {
   position: relative;
   overflow: hidden;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC");
 }
 .wrapper .img-wrap .clip-wrap .base {
   display: block;
@@ -119,6 +169,13 @@ body {
   top: 0;
   cursor: grab;
   overflow: hidden;
+}
+.wrapper .img-wrap .clip-wrap .clip b {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 0.5px solid #39f;
+  border-radius: 50%;
 }
 .wrapper .img-wrap .clip-wrap .clip em {
   display: block;
@@ -149,6 +206,7 @@ body {
 }
 .wrapper .img-wrap .clip-wrap .clip .clip-img {
   display: block;
+  position: absolute;
 }
 .wrapper .img-wrap .clip-wrap .clip span {
   position: absolute;
@@ -181,6 +239,24 @@ body {
 .wrapper.wrapper-close {
   transform-origin: bottom;
   animation: ani-wrapper-close 0.3s ease-in-out 1 forwards;
+}
+
+.move {
+  cursor: move !important;
+}
+
+.stop {
+  cursor: not-allowed !important;
+}
+
+.tran {
+  transition-property: transform;
+  transition-duration: 100ms;
+  transition-timing-function: ease;
+}
+
+.zh_Hans .faq-wrap li, .zh_Hant .faq-wrap li {
+  letter-spacing: 2px;
 }
 
 @keyframes ani-wrapper-close {

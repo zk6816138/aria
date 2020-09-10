@@ -8,23 +8,34 @@
     <title></title>
     <link rel="stylesheet" href="styles/theme/avatar.css">
     <!--阿里云图标库-->
-    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_nmnp8dwik2k.css">
+    <link rel="stylesheet" href="http://at.alicdn.com/t/font_1961071_bzx7dhgehhs.css">
 </head>
-<body>
+<body ng-class="currentLanguage">
 <div class="wrapper">
     <a href="javascript:;" tabindex="-1" class="close" ng-click="close()" title="{{'Close' | translate}}">
         <i class="iconfont icon-remove"></i>
     </a>
+    <a href="javascript:;" tabindex="-1" class="close faq">
+        <i class="iconfont icon-faq"></i>
+        <div class="faq-wrap ani">
+            <ul>
+                <li translate>Left Mouse Button To Drag The Crop Area</li>
+                <li translate>Mouse Wheel Zoom Image</li>
+                <li translate>Right Mouse Button To Drag Picture</li>
+            </ul>
+        </div>
+    </a>
     <div class="img-wrap">
         <div class="clip-wrap" ng-style="{width:data.w,height:data.h}">
-            <img class="base" draggable="false" ng-src="{{data.b}}">
+            <img class="base" draggable="false" ng-src="{{data.b}}" ng-style="{width:width,height:height,transform: 'translateX('+baseX+') translateY('+baseY+')'}">
             <canvas id="canvas" width="{{canvasData.w}}" height="{{canvasData.h}}"></canvas>
             <div class="mask"></div>
             <div class="clip" ng-style="{width:data.c,height:data.c,left:data.l,top:data.t}">
-                <img class="clip-img" draggable="false" ng-src="{{data.b}}" ng-style="{width:data.w,height:data.h,transform: 'translateX('+data.x+') translateY('+data.y+')'}">
+                <img class="clip-img" draggable="false" ng-src="{{data.b}}" ng-style="{width:width,height:height,left:data.x,top:data.y,transform: 'translateX('+baseX+') translateY('+baseY+')'}">
                 <span class="s1" ng-style="{width:(data.c/3),height:data.c}"></span>
                 <span class="s2" ng-style="{width:data.c,height:(data.c/3)}"></span>
                 <em></em>
+                <b></b>
             </div>
         </div>
         <i ng-if="!data.b" class="iconfont icon-manhua"></i>
