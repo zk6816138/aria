@@ -259,6 +259,19 @@
             return true;
         };
 
+        $scope.isOpenTaskDir = function(){
+            var location = $location.path().substring(1);
+            if (location=='stopped' && !$scope.isSelectedTaskRetryable()){
+                return true;
+            }
+            return false;
+        }
+
+        $scope.openTasksDir = function(){
+            var tasks = $rootScope.taskContext.getSelectedTasks();
+            ariaNgNativeElectronService.openFileInDirectory(tasks[0].files[0].path, '');
+        }
+
         $scope.retryTasks = function () {
             var tasks = $rootScope.taskContext.getSelectedTasks();
 

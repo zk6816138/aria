@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').factory('aria2HttpRpcService', ['$http', 'ariaNgCommonService', 'ariaNgSettingService', 'ariaNgLogService', function ($http, ariaNgCommonService, ariaNgSettingService, ariaNgLogService) {
+    angular.module('ariaNg').factory('aria2HttpRpcService', ['$rootScope', '$interval', '$http', 'ariaNgCommonService', 'ariaNgSettingService', 'ariaNgLogService', function ($rootScope, $interval, $http, ariaNgCommonService, ariaNgSettingService, ariaNgLogService) {
         var rpcUrl = ariaNgSettingService.getCurrentRpcUrl();
         var method = ariaNgSettingService.getCurrentRpcHttpMethod();
 
@@ -112,6 +112,10 @@
 
                     if (context.errorCallback) {
                         context.errorCallback(data.id, data.error);
+                        if ($rootScope.updateTimer){
+                            $interval.cancel($rootScope.updateTimer);
+                            $rootScope.updateTimer = null;
+                        }
                     }
                 });
             },

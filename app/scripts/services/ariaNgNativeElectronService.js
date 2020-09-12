@@ -18,6 +18,7 @@
         var float = remote.require('./float') || {};
         var core = remote.require('./core') || {};
         var icon = remote.require('./icon') || {};
+        var execFile = remote.require('child_process').execFile || {};
 
         var getSetting = function (item) {
             if (!remote || !remote.getGlobal) {
@@ -270,11 +271,11 @@
                 var ext = arr[arr.length-1].trim();
 
                 var iconPath = icon.getSavePath(ext);
-                if (localfs.isExists(iconPath)){
-                    return iconPath;
-                }
-                else {
-                    return new Promise(function (resolve) {
+                return new Promise(function (resolve) {
+                    if (localfs.isExists(iconPath)){
+                        resolve(iconPath);
+                    }
+                    else {
                         icon.getFileIcon(ext,function (res) {
                             if (res){
                                 resolve(res);
@@ -283,11 +284,15 @@
                                 resolve('../assets/default_icon.png')
                             }
                         })
-                    })
-                }
+                    }
+                })
             },
             getCustomColors: function () {
                 return config.getCustomColors();
+            },
+            execFile: function (path) {
+                path = localfs.getFullPath(path,'');
+                execFile(path);
             }
         };
     }]);

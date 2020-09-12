@@ -52,13 +52,20 @@
         </div>
         <div id="task-table-contextmenu">
             <ul class="dropdown-menu" role="menu">
+                <li ng-if="isOpenTaskDir()">
+                    <a tabindex="-1" class="pointer-cursor" title="{{'Open Folder' | translate}}" ng-click="openTasksDir()">
+                        <i class="fa fa-folder-open fa-fw"></i>
+                        <span translate>Open Folder</span>
+                    </a>
+                </li>
+
                 <li ng-if="isSelectedTaskRetryable()">
                     <a tabindex="-1" class="pointer-cursor" title="{{'Retry Selected Tasks' | translate}}" ng-click="retryTasks()">
                         <i class="fa fa-refresh fa-fw"></i>
                         <span translate>Retry Selected Tasks</span>
                     </a>
                 </li>
-                <li class="divider" ng-if="isSelectedTaskRetryable()"></li>
+                <li class="divider" ng-if="isSelectedTaskRetryable() || isOpenTaskDir()"></li>
                 <li ng-if="isSpecifiedTaskSelected('paused')">
                     <a tabindex="-1" class="pointer-cursor" title="{{'Start' | translate}}" ng-click="changeTasksState('start')">
                         <i class="fa fa-play fa-fw"></i>

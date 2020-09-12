@@ -314,15 +314,9 @@
             task.hasIcon = false;
             if (task.hasTaskName && task.icon == undefined && !task.hasIcon){
                 task.hasIcon = true;
-                var icon = ariaNgNativeElectronService.getFileIcon(task.taskName);
-                if (typeof icon == "string"){
-                    task.icon = icon;
-                }
-                else {
-                    icon.then(function (res) {
-                        task.icon = res;
-                    })
-                }
+                ariaNgNativeElectronService.getFileIcon(task.taskName).then(function (res) {
+                    task.icon = res;
+                });
             }
 
             task.errorDescription = getTaskErrorDescription(task);

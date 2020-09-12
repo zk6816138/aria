@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').controller('AriaNgSettingsController', ['$rootScope', '$scope', '$routeParams', '$window', '$interval', '$timeout', '$filter', 'clipboard', 'ariaNgLanguages', 'ariaNgCommonService', 'ariaNgNotificationService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgFileService', 'ariaNgSettingService', 'ariaNgMonitorService', 'ariaNgTitleService', 'aria2SettingService', 'ariaNgVersionService', 'ariaNgNativeElectronService', function ($rootScope, $scope, $routeParams, $window, $interval, $timeout, $filter, clipboard, ariaNgLanguages, ariaNgCommonService, ariaNgNotificationService, ariaNgLocalizationService, ariaNgLogService, ariaNgFileService, ariaNgSettingService, ariaNgMonitorService, ariaNgTitleService, aria2SettingService, ariaNgVersionService, ariaNgNativeElectronService) {
+    angular.module('ariaNg').controller('AriaNgSettingsController', ['$rootScope', '$scope', '$routeParams', '$window', '$interval', '$timeout', '$filter', 'clipboard', 'ariaNgLanguages', 'ariaNgCommonService', 'ariaNgNotificationService', 'ariaNgLocalizationService', 'ariaNgLogService', 'ariaNgFileService', 'ariaNgSettingService', 'ariaNgMonitorService', 'ariaNgTitleService', 'aria2SettingService', 'ariaNgNativeElectronService', '$user', 'aria2TaskService', '$location', function ($rootScope, $scope, $routeParams, $window, $interval, $timeout, $filter, clipboard, ariaNgLanguages, ariaNgCommonService, ariaNgNotificationService, ariaNgLocalizationService, ariaNgLogService, ariaNgFileService, ariaNgSettingService, ariaNgMonitorService, ariaNgTitleService, aria2SettingService, ariaNgNativeElectronService, $user, aria2TaskService, $location) {
         var extendType = $routeParams.extendType;
         var lastRefreshPageNotification = null;
 
@@ -110,26 +110,38 @@
         };
 
         $scope.checkUpdate = function () {
-            return ariaNgVersionService.getTheLatestVersion()
-                .then(function onSuccess(response) {
-                    if (!response || !response.data || !response.data.tag_name) {
-                        ariaNgLogService.warn('[AriaNgSettingsController.checkUpdate] data format of latest version is invalid', response);
-                        ariaNgLocalizationService.showError('Failed to get latest version!');
-                        return;
-                    }
-
-                    var latestVersion = response.data.tag_name;
-
-                    if (ariaNgVersionService.compareVersion($scope.context.ariaNgNativeVersion, latestVersion) >= 0) {
+            return $user.http({
+                url: 'settings/getVersion',
+            }).then(function (resp) {
+                if (resp.code == 0){
+                    var current = parseInt($scope.context.ariaNgNativeVersion.replace(/\./g,''));
+                    var last = parseInt(resp.data.version.replace(/\./g,''));
+                    if (current >= last){
+                        $scope.context.isCurrentLatestVersion = current === last;
                         ariaNgLocalizationService.showInfo('Check Update', 'You have installed the latest version!');
-                        $scope.context.isCurrentLatestVersion = true;
-                    } else {
-                        ariaNgNativeElectronService.openProjectReleaseLink();
                     }
-                }).catch(function onError(response) {
-                    ariaNgLogService.error('[AriaNgSettingsController.checkUpdate] failed to get latest version', response);
-                    ariaNgLocalizationService.showError('Failed to get latest version!');
-                });
+                    else {
+                        ariaNgLocalizationService.confirm('Confirm Update', 'Are you sure you want to update AriaNg?', 'warning', function () {
+                            var task = [{"urls":[resp.data.url],"options":{}}];
+                            aria2TaskService.newUriTasks(task,null,function (resp) {
+                                $location.path('/downloading');
+                                var gid = resp.results[0].data;
+                                $rootScope.updateTimer = $interval(function () {
+                                    aria2TaskService.getTaskStatus(gid,function (response) {
+                                        var path = response.data.files[0].path;
+                                        if (response.data.totalLength > 0 && response.data.totalLength == response.data.completedLength){
+                                            $interval.cancel($rootScope.updateTimer);
+                                            $timeout(function () {
+                                                ariaNgNativeElectronService.execFile(path);
+                                            },1000)
+                                        }
+                                    },false,true)
+                                }, 2000)
+                            })
+                        });
+                    }
+                }
+            })
         };
 
         $scope.updateTitlePreview = function () {

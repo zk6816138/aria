@@ -85,7 +85,9 @@
                     var task = response.data;
 
                     for (var i = 0;i<task.files.length;i++){
-                        task.files[i].icon = ariaNgNativeElectronService.getFileIcon(task.files[i].fileName);
+                        ariaNgNativeElectronService.getFileIcon(task.files[i].fileName).then(function (res) {
+                            task.files[i].icon = res;
+                        });
                     }
 
                     processTask(task);
