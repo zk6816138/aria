@@ -6,6 +6,7 @@ let core = {
     themeWindow: null,
     loginWindow: null,
     avatarWindow: null,
+    folderWindow: null,
     isConfirmExit: false
 };
 

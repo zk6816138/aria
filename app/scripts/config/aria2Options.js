@@ -19,7 +19,8 @@
         // }
         'dir': {
             type: 'string',
-            required: true
+            required: true,
+            folder: true
         },
         'log': {
             type: 'string',

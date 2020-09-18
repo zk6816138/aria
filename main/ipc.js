@@ -7,7 +7,6 @@ const electron = require('electron');
 
 const pkgfile = require('../package');
 const core = require('./core');
-const login = require('./login');
 
 const ipcMain = electron.ipcMain;
 
@@ -138,6 +137,10 @@ let onMainWindowToAvatarWindow = function(){
     });
 }
 
+let onOpenFolderWindow = function(callback){
+    ipcMain.on('open-folder-window', callback);
+}
+
 let isContainsSupportedFileArg = function (arg) {
     if (!arg) {
         return false;
@@ -209,6 +212,10 @@ let asyncNewTaskFromText = function (text) {
     });
 };
 
+let sendFolderWindowMessage = function(arg){
+    core.folderWindow.webContents.send('send-folder-window-message',arg);
+}
+
 module.exports = {
     loadIndexUrl: loadIndexUrl,
     loadNewTaskUrl: loadNewTaskUrl,
@@ -234,5 +241,7 @@ module.exports = {
     onLoginWindowToMainWindow: onLoginWindowToMainWindow,
     onMainWindowToLoginWindow: onMainWindowToLoginWindow,
     onAvatarWindowToMainWindow: onAvatarWindowToMainWindow,
-    onMainWindowToAvatarWindow: onMainWindowToAvatarWindow
+    onMainWindowToAvatarWindow: onMainWindowToAvatarWindow,
+    onOpenFolderWindow: onOpenFolderWindow,
+    sendFolderWindowMessage: sendFolderWindowMessage
 };

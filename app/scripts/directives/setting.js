@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('ariaNg').directive('ngSetting', ['$timeout', '$q', 'ariaNgConstants', 'ariaNgLocalizationService', 'aria2SettingService', function ($timeout, $q, ariaNgConstants, ariaNgLocalizationService, aria2SettingService) {
+    angular.module('ariaNg').directive('ngSetting', ['$timeout', '$q', 'ariaNgConstants', 'ariaNgLocalizationService', 'aria2SettingService', 'ariaNgNativeElectronService', function ($timeout, $q, ariaNgConstants, ariaNgLocalizationService, aria2SettingService, ariaNgNativeElectronService) {
         return {
             restrict: 'E',
             templateUrl: 'views/setting.html',
@@ -160,6 +160,12 @@
 
                     return scope.optionValue.split(scope.option.split).length;
                 };
+
+                scope.openFolder = function(){
+                    // scope.optionValue += '111';
+                    // scope.changeValue(scope.optionValue,true)
+                    ariaNgNativeElectronService.sendOpenFolderWindowToMainProcess();
+                }
 
                 scope.changeValue = function (optionValue, lazySave) {
                     if (pendingSaveRequest) {

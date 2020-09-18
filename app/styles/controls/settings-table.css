@@ -32,6 +32,17 @@
     background-color: #eee;
 }
 
+.settings-table .input-group-addon.folder {
+    background: none!important;
+    border: none!important;
+    padding: 0 0 0 62px;
+    position: relative;
+}
+.settings-table .folder-btn{
+    position: absolute;
+    top: 0;
+    left: 8px;
+}
 .settings-table .asterisk {
     color: red;
 }

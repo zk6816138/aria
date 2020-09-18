@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh" ng-app="folderWindow" ng-controller="folderCtrl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浏览文件夹</title>
+    <link rel="stylesheet" href="styles/theme/folder.css">
+</head>
+<body>
+<div class="wrapper">
+    <div class="title">请选择下载目录</div>
+    <div class="content">
+        <folder-select current-folder="currentFolder" current-name="currentName" create-folder="createFolder" new-folder-name="'新建文件夹'"></folder-select>
+    </div>
+    <div class="path">
+        <label>文件夹(<span ng-class="{'under-line':altKey}">F</span>):</label>
+        <input type="text" ng-model="currentName">
+    </div>
+    <div class="btns">
+        <button class="new" ng-disabled="!currentFolder" ng-click="createFolder()">新建文件夹 (<span ng-class="{'under-line':altKey}">M</span>)</button>
+        <button class="ok" ng-click="ok()" ng-disabled="!currentFolder">确定</button>
+        <button class="cancel" ng-click="cancel()">取消</button>
+    </div>
+</div>
+</body>
+<script>
+    if (window.require) {
+        window.nodeRequire = require;
+        delete window.require;
+        delete window.exports;
+        delete window.module;
+    }
+</script>
+<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../node_modules/angular-translate/dist/angular-translate.min.js"></script>
+<script src="scripts/controllers/folder.js"></script>
+<script src="scripts/modules/folderSelect.js"></script>
+</html>

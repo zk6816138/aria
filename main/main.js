@@ -16,6 +16,7 @@ const float = require('./float');
 const theme = require('./theme');
 const login = require('./login');
 const avatar = require('./avatar');
+const folder = require('./folder');
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -294,6 +295,10 @@ app.on('ready', () => {
         else {
             theme.close();
         }
+    })
+
+    ipc.onOpenFolderWindow(function () {
+        folder.show(core.mainWindow);
     })
 
     ipc.onSelectedTheme();

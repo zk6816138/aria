@@ -207,6 +207,9 @@
             sendMainToAvatarToMainProcess: function(message){
                 sendMessageToMainProcess('main-to-avatar',message);
             },
+            sendOpenFolderWindowToMainProcess: function(){
+                sendMessageToMainProcess('open-folder-window','');
+            },
             setApplicationMenu: function () {
                 if (menu.setApplicationMenu) {
                     menu.setApplicationMenu({

@@ -9,7 +9,7 @@
         <i class="icon-primary fa fa-info-circle" ng-if="(option.since && option.since !== '')" ng-tooltip="{{('format.requires.aria2-version' | translate: {version: option.since})}}" ng-tooltip-container="body" ng-tooltip-placement="right"></i>
     </div>
     <div class="setting-value col-sm-8">
-        <div ng-class="{'input-group': !!option.suffix}">
+        <div ng-class="{'input-group': !!option.suffix || option.folder}">
             <div class="form-group has-feedback" ng-class="[optionStatus.getStatusFeedbackStyle()]">
                 <input class="form-control" type="text" placeholder="{{::placeholder}}" ng-disabled="!!option.readonly"
                        ng-if="(option.type === 'string' && !option.showHistory) || option.type === 'integer' || option.type === 'float'"
@@ -34,6 +34,9 @@
                 </div>
             </div>
             <span class="input-group-addon" ng-if="!!option.suffix" ng-bind="option.suffix | translate"></span>
+            <div class="input-group-addon folder" ng-if="option.folder">
+                <button class="btn btn-default folder-btn" ng-click="openFolder()"><span>浏览</span></button>
+            </div>
         </div>
     </div>
 </div>
