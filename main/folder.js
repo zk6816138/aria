@@ -30,7 +30,7 @@ let init = function (parentWindow=null) {
         minimizable: false,
         maximizable: false,
         skipTaskbar: true,
-        // modal:true,
+        modal:true,
         webPreferences: {
             nodeIntegration: true
         }
