@@ -3,7 +3,16 @@ var remote = electron.remote;
 var app = angular.module('folderWindow',['pascalprecht.translate','folderSelectModule'])
 
     .controller('folderCtrl',function ($scope,$translate,$folderSelectService,$timeout) {
+        var options = JSON.parse(localStorage.getItem('AriaNg.Options'));
+        $scope.currentLanguage = 'zh_Hans';
+        $translate.use($scope.currentLanguage);
+
         var ipcRenderer = electron.ipcRenderer;
+
+        ipcRenderer.on('language-change', function (e,resp) {
+            $translate.use(resp);
+            $scope.currentLanguage = resp;
+        })
 
         $scope.currentFolder = null;
         $scope.currentName = null;
@@ -14,12 +23,16 @@ var app = angular.module('folderWindow',['pascalprecht.translate','folderSelectM
                 $scope.altKey = true;
                 $scope.$apply();
             }
+            else if (e.key == 'Enter'){
+                var edit = angular.element('input.editing');
+                if (edit.length > 0){
+                    edit[0].blur();
+                }
+                else {
+                    $scope.ok();
+                }
+            }
         })
-
-        $scope.ok = function () {
-            console.log($scope.currentFolder);
-            console.log($scope.currentName);
-        }
 
         $scope.cancel = function () {
             remote.getCurrentWindow().hide();
@@ -34,17 +47,21 @@ var app = angular.module('folderWindow',['pascalprecht.translate','folderSelectM
                     angular.element('.path input')[0].focus();
                     angular.element('.path input')[0].select();
                 }
-                else if (resp.value == 'f'){
-
+                else if (resp.value == 'm'){
+                    $scope.createFolder();
                 }
                 $scope.$apply();
             }
         })
+
+        $scope.$on('close',function () {
+            $scope.cancel();
+        })
     })
 
     .config(function ($translateProvider) {
-        // var langs = remote.require('../app/langs/languages').avatar;
-        // for (var k in langs){
-        //     $translateProvider.translations(k, langs[k]);
-        // }
+        var langs = remote.require('../app/langs/languages').folder;
+        for (var k in langs){
+            $translateProvider.translations(k, langs[k]);
+        }
     })

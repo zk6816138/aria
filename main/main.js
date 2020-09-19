@@ -310,4 +310,6 @@ app.on('ready', () => {
 
     ipc.onAvatarWindowToMainWindow();
     ipc.onMainWindowToAvatarWindow();
+
+    ipc.onSelectFolder();
 });

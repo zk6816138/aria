@@ -162,9 +162,14 @@
                 };
 
                 scope.openFolder = function(){
-                    // scope.optionValue += '111';
-                    // scope.changeValue(scope.optionValue,true)
                     ariaNgNativeElectronService.sendOpenFolderWindowToMainProcess();
+                    ariaNgNativeElectronService.onMainProcessSelectFolder(function (e,resp) {
+                        if (resp){
+                            scope.optionValue = resp;
+                            scope.changeValue(scope.optionValue,true)
+                            scope.$apply();
+                        }
+                    })
                 }
 
                 scope.changeValue = function (optionValue, lazySave) {

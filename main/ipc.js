@@ -110,6 +110,7 @@ let onLanguageChange = function(){
         core.floatWindow.webContents.send('language-change',arg);
         core.loginWindow.webContents.send('language-change',arg);
         core.avatarWindow.webContents.send('language-change',arg);
+        core.folderWindow.webContents.send('language-change',arg);
     });
 }
 
@@ -215,6 +216,11 @@ let asyncNewTaskFromText = function (text) {
 let sendFolderWindowMessage = function(arg){
     core.folderWindow.webContents.send('send-folder-window-message',arg);
 }
+let onSelectFolder = function(){
+    ipcMain.on('select-folder', function (e,arg) {
+        core.mainWindow.webContents.send('select-folder',arg);
+    })
+}
 
 module.exports = {
     loadIndexUrl: loadIndexUrl,
@@ -243,5 +249,6 @@ module.exports = {
     onAvatarWindowToMainWindow: onAvatarWindowToMainWindow,
     onMainWindowToAvatarWindow: onMainWindowToAvatarWindow,
     onOpenFolderWindow: onOpenFolderWindow,
-    sendFolderWindowMessage: sendFolderWindowMessage
+    sendFolderWindowMessage: sendFolderWindowMessage,
+    onSelectFolder: onSelectFolder
 };

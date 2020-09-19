@@ -30,7 +30,7 @@ let init = function (parentWindow=null) {
         minimizable: false,
         maximizable: false,
         skipTaskbar: true,
-        modal:true,
+        // modal:true,
         webPreferences: {
             nodeIntegration: true
         }
@@ -38,6 +38,7 @@ let init = function (parentWindow=null) {
 
     core.folderWindow.loadURL(getIndexUrl());
     core.folderWindow.on('close', (event) => {
+        core.mainWindow.webContents.send('select-folder','');
         event.preventDefault();
         close();
     })

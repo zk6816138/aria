@@ -178,8 +178,36 @@ const avatar = {
     }
 }
 
+const folder = {
+    'en': {
+        'Browse Folders': 'Browse Folders',
+        'Please Select Download Folder': 'Please Select Download Folder',
+        'Folder': 'Folder',
+        'New Folder': 'New Folder',
+        'OK': 'OK',
+        'Cancel': 'Cancel'
+    },
+    'zh_Hans': {
+        'Browse Folders': '浏览文件夹',
+        'Please Select Download Folder': '请选择下载文件夹',
+        'Folder': '文件夹',
+        'New Folder': '新建文件夹',
+        'OK': '确定',
+        'Cancel': '取消'
+    },
+    'zh_Hant': {
+        'Browse Folders': '瀏覽文件夾',
+        'Please Select Download Folder': '請選擇下載文件夾',
+        'Folder': '文件夾',
+        'New Folder': '新建文件夾',
+        'OK': '確定',
+        'Cancel': '取消'
+    }
+}
+
 module.exports = {
     theme,
     login,
-    avatar
+    avatar,
+    folder
 }

@@ -5,23 +5,23 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>浏览文件夹</title>
+    <title translate>Browse Folders</title>
     <link rel="stylesheet" href="styles/theme/folder.css">
 </head>
 <body>
 <div class="wrapper">
-    <div class="title">请选择下载目录</div>
+    <div class="title" translate>Please Select Download Folder</div>
     <div class="content">
-        <folder-select current-folder="currentFolder" current-name="currentName" create-folder="createFolder" new-folder-name="'新建文件夹'"></folder-select>
+        <folder-select current-folder="currentFolder" current-name="currentName" ok="ok" create-folder="createFolder" new-folder-name="'新建文件夹'"></folder-select>
     </div>
     <div class="path">
-        <label>文件夹(<span ng-class="{'under-line':altKey}">F</span>):</label>
+        <label><span translate>Folder</span>(<span ng-class="{'under-line':altKey}">F</span>):</label>
         <input type="text" ng-model="currentName">
     </div>
     <div class="btns">
-        <button class="new" ng-disabled="!currentFolder" ng-click="createFolder()">新建文件夹 (<span ng-class="{'under-line':altKey}">M</span>)</button>
-        <button class="ok" ng-click="ok()" ng-disabled="!currentFolder">确定</button>
-        <button class="cancel" ng-click="cancel()">取消</button>
+        <button class="new" ng-disabled="!currentFolder" ng-click="createFolder()"><span translate>New Folder</span>(<span ng-class="{'under-line':altKey}">M</span>)</button>
+        <button class="ok" ng-click="ok()" ng-disabled="!currentFolder" translate>OK</button>
+        <button class="cancel" ng-click="cancel()" translate>Cancel</button>
     </div>
 </div>
 </body>

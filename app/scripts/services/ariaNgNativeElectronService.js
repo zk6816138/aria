@@ -210,6 +210,9 @@
             sendOpenFolderWindowToMainProcess: function(){
                 sendMessageToMainProcess('open-folder-window','');
             },
+            onMainProcessSelectFolder: function(callback){
+                ipcRenderer.once('select-folder', callback);
+            },
             setApplicationMenu: function () {
                 if (menu.setApplicationMenu) {
                     menu.setApplicationMenu({

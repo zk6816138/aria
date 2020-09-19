@@ -9,7 +9,8 @@ angular.module('folderSelectModule', [])
                 currentFolder: '=',
                 currentName: '=',
                 createFolder: '=',
-                newFolderName: '='
+                newFolderName: '=',
+                ok: '='
             },
             template: `
 <ul class="folder-select">
@@ -22,7 +23,7 @@ angular.module('folderSelectModule', [])
                 <span class="logo icon" ng-class="item.name.toLowerCase()=='c:' ? 'system' : 'disk'"></span>
             </div>
             <span class="text" ng-style="{visibility:item.isEdit?'hidden':'visible'}">本地磁盘 ({{item.name}})</span>
-            <input class="edit" type="text" ng-style="{display:item.isEdit?'block':'none'}" ng-value="item.name" ng-click="editClick($event)" ng-blur="changeFolderName($event, item)">
+            <input class="edit" type="text" ng-class="item.isEdit?'editing':''" ng-style="{display:item.isEdit?'block':'none'}" ng-value="item.name" ng-click="editClick($event)" ng-blur="changeFolderName($event, item)">
         </div>
         <ul class="folder-select" ng-style="{display: item.open?'block':'none'}"></ul>
     </li>
@@ -36,6 +37,11 @@ angular.module('folderSelectModule', [])
                 $timeout(function () {
                     currentNode = angular.element('li.folder-item').eq(0);
                 })
+
+                $scope.ok = function () {
+                    $folderSelectService.ok($scope.currentName,$scope.currentFolder);
+                    $scope.$emit('close');
+                }
 
                 $scope.selectedFolder = function (e,item,flag) {
                     var li = angular.element(e.target).parents('li.folder-item:first').eq(0);
@@ -82,7 +88,6 @@ angular.module('folderSelectModule', [])
                             currentNode.find('.edit:first')[0].select();
                         },200)
                     })
-
                 }
 
                 $scope.editClick = function(e){
@@ -93,7 +98,6 @@ angular.module('folderSelectModule', [])
                     item.isEdit = false;
                     var name = e.target.value;
                     var path = $scope.prevFolder + e.target.value + '\\';
-
                     item.name = $scope.currentName = name;
                     item.path = $scope.currentFolder = path;
                     $folderSelectService.renameFolder($scope.oldFolder, item.path);
@@ -116,7 +120,7 @@ angular.module('folderSelectModule', [])
             <span class="logo icon folder"></span>
         </div>    
         <span class="text" ng-style="{visibility:item.isEdit?'hidden':'visible'}">{{item.name}}</span>
-        <input class="edit" type="text" ng-style="{display:item.isEdit?'block':'none'}" ng-value="item.name" ng-blur="changeFolderName($event, item)">
+        <input class="edit" type="text" ng-class="item.isEdit?'editing':''" ng-style="{display:item.isEdit?'block':'none'}" ng-value="item.name" ng-blur="changeFolderName($event, item)">
     </div>
     <ul class="folder-select" ng-style="{display: item.open?'block':'none'}"></ul>
 </li>
@@ -139,6 +143,7 @@ angular.module('folderSelectModule', [])
 
     .factory('$folderSelectService', function () {
         var electron = nodeRequire('electron');
+        var ipcRenderer = electron.ipcRenderer;
         var remote = electron.remote;
         var execSync = remote.require('child_process').execSync;
         var fs = remote.require('fs');
@@ -146,8 +151,12 @@ angular.module('folderSelectModule', [])
         var iconv = remote.require('iconv-lite');
 
         return{
-            getRootNode: function(){
-
+            ok: function(name,folder){
+                var path = fs.existsSync(name) ? name : folder;
+                if (!path.endsWith('\\')){
+                    path += '\\';
+                }
+                ipcRenderer.send('select-folder',path);
             },
             getAllVolume: function () {
                 var stdout = execSync('wmic logicaldisk get caption');
