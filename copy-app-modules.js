@@ -96,3 +96,43 @@ let dependencies = getDependencies(pkgfile.entry);
 if (!argv.dryrun) {
     copyDependencies(dependencies, argv.dist);
 }
+
+
+let childList = [];
+function mapDir(dir){
+    if (!fs.existsSync(dir)) {
+        return;
+    }
+    let files = fs.readdirSync(dir);
+    for (let i = 0; i < files.length; i++) {
+        if (files[i].startsWith('.')) continue;
+        let pathName = path.join(dir, files[i]);
+        let dist = path.join(__dirname,'dist', pathName.replace(__dirname,''));
+        let stats = fs.statSync(pathName);
+        if (stats.isDirectory()) {
+            mapDir(pathName);
+        }
+        else if (stats.isFile()){
+            childList.push({'old':pathName,'dist':dist});
+        }
+    }
+}
+
+let addons = [
+    'iconv-lite',
+    'safer-buffer',
+]
+for (let i = 0; i < addons.length; i++) {
+    var dir = path.join(__dirname,'node_modules', addons[i]);
+    mapDir(dir);
+    for (let n = 0; n < childList.length; n++) {
+        let distDir = path.dirname(childList[n].dist);
+        let oldPath = childList[n].old;
+        let distPath = childList[n].dist;
+        if (!fs.existsSync(distDir)) {
+            fs.mkdirpSync(distDir);
+        }
+        fs.copyFileSync(oldPath, distPath);
+    }
+    childList = [];
+}
