@@ -382,16 +382,17 @@
         $scope.resetSettings = function () {
             ariaNgLocalizationService.confirm('Confirm Reset', 'Are you sure you want to reset all settings?', 'warning', function () {
                 ariaNgSettingService.resetSettings();
-                $window.location.reload();
-            });
-        };
-
-        $scope.clearHistory = function () {
-            ariaNgLocalizationService.confirm('Confirm Clear', 'Are you sure you want to clear all settings history?', 'warning', function () {
                 aria2SettingService.clearSettingsHistorys();
                 $window.location.reload();
             });
         };
+
+        // $scope.clearHistory = function () {
+        //     ariaNgLocalizationService.confirm('Confirm Clear', 'Are you sure you want to clear all settings history?', 'warning', function () {
+        //         aria2SettingService.clearSettingsHistorys();
+        //         $window.location.reload();
+        //     });
+        // };
 
         $scope.reloadApp = function () {
             ariaNgNativeElectronService.reload();
