@@ -91,7 +91,8 @@ body {
     .login-form,.register-from{
         margin-top: 24px;
         justify-content: center;
-        display: none;
+        display: flex;
+        transition: transform .3s ease;
         form{
             display: inline-flex;
             flex-direction: column;
@@ -179,7 +180,17 @@ body {
             }
         }
     }
+    .login-form{
+        transform: translate(-322px, 0);
+        &.show{
+            transform: translate(0, 0);
+        }
+    }
     .register-from{
+        transform: translate(322px, -194px);
+        &.show{
+            transform: translate(0, -194px);
+        }
         form{
             .btn{
                 margin-top: 17px;

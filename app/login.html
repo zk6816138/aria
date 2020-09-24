@@ -41,7 +41,7 @@
     </div>
 
     <div class="form-wrap">
-        <div class="login-form" ng-style="{display:tabIndex==0?'flex':'none'}">
+        <div class="login-form" ng-class="{'show':tabIndex==0}">
             <form ng-submit="loginSubmit()">
                 <label for="login-account">
                     <span translate>Account</span>
@@ -65,7 +65,7 @@
             </form>
         </div>
 
-        <div class="register-from" ng-style="{display:tabIndex==1?'flex':'none'}">
+        <div class="register-from" ng-class="{'show':tabIndex==1}">
             <form ng-submit="registerSubmit()">
                 <label for="reg-account">
                     <span translate>Account</span>

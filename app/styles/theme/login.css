@@ -92,7 +92,8 @@ body {
 .wrapper .login-form, .wrapper .register-from {
   margin-top: 24px;
   justify-content: center;
-  display: none;
+  display: flex;
+  transition: transform 0.3s ease;
 }
 .wrapper .login-form form, .wrapper .register-from form {
   display: inline-flex;
@@ -179,6 +180,18 @@ body {
   top: -1px;
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
   border-radius: 2px;
+}
+.wrapper .login-form {
+  transform: translate(-322px, 0);
+}
+.wrapper .login-form.show {
+  transform: translate(0, 0);
+}
+.wrapper .register-from {
+  transform: translate(322px, -194px);
+}
+.wrapper .register-from.show {
+  transform: translate(0, -194px);
 }
 .wrapper .register-from form .btn {
   margin-top: 17px;
